@@ -166,3 +166,10 @@ At the moment only 3 control types are supported:
 * select
 * multiselect
 * number
+
+## Testing, building and publishing
+* To run unit tests with jest: `npm test`
+* To build distribution files: `npm build`
+* To publish to npm: 
+    * first iterate the version in `package.json`
+    * then `npm publish --access public`

@@ -4,7 +4,8 @@
   "description": "A metadata driven form component",
   "scripts": {
     "test": "jest -c jest.config.js",
-    "sass": "gulp sass"
+    "sass": "gulp sass",
+    "build": "webpack & gulp sass"
   },
   "main": "./dist/js/index.js",
   "files": [
