@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
     entry: path.resolve(__dirname + '/src/index.ts'),
     output: {
-        filename: 'js/vue-dynamic-form.js',
+        filename: 'js/index.js',
         libraryTarget: 'umd',
         library: 'vueDynamicForm',
         umdNamedDefine: true
@@ -14,7 +14,12 @@ module.exports = {
         extensions: ['.ts', '.js', '.vue', '.json']
     },
     externals: {
-        vue: 'Vue',
+        'vue': {
+            commonjs: 'vue',
+            commonjs2: 'vue',
+            amd: 'vue',
+            root: 'Vue'
+        }
     },
     module: {
         rules: [

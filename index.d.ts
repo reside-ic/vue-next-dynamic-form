@@ -50,6 +50,10 @@ declare module "vue-dynamic-form" {
         controlSections: DynamicControlSection[]
     }
 
+    type Dict<V> = { [k: string]: V }
+
+    export type DynamicFormData = Dict<string | string[] | number | null>
+
     export class DynamicForm extends Vue {
         formMeta: DynamicFormMeta;
         includeSubmitButton?: boolean;
