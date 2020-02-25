@@ -56,4 +56,21 @@ declare module "vue-dynamic-form" {
         submitText?: string;
         id?: string;
     }
+
+    export function isControl(object: any): Boolean
+
+    export function isNumberControl(object: any): object is NumberControl
+
+    export function isSelectControl(object: any): object is SelectControl
+
+    export function isMultiSelectControl(object: any): object is MultiSelectControl
+
+    export function isSelectOption(object: any): object is Option
+
+    export function isDynamicControlGroup(object: any): object is DynamicControlGroup
+
+    export function isDynamicControlSection(object: any): object is DynamicControlSection
+
+    export function isDynamicFormMeta(object: any): object is DynamicFormMeta
+
 }

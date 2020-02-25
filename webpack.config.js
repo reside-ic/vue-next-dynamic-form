@@ -1,13 +1,20 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const merge = require('webpack-merge');
 const path = require('path');
 
-const config = {
+module.exports = {
+    entry: path.resolve(__dirname + '/src/index.ts'),
+    output: {
+        filename: 'js/vue-dynamic-form.js',
+        libraryTarget: 'umd',
+        library: 'vueDynamicForm',
+        umdNamedDefine: true
+    },
+    mode: "production",
     resolve: {
-        extensions: ['.ts', '.js', '.vue', '.json'],
-        alias: {
-            'vue$': 'vue/dist/vue.esm.js'
-        }
+        extensions: ['.ts', '.js', '.vue', '.json']
+    },
+    externals: {
+        vue: 'Vue',
     },
     module: {
         rules: [
@@ -39,24 +46,3 @@ const config = {
         new VueLoaderPlugin()
     ]
 };
-
-
-module.exports = [
-    merge(config, {
-        entry: path.resolve(__dirname + '/src/plugin.js'),
-        output: {
-            filename: 'js/vue-dynamic-form.min.js',
-            libraryTarget: 'window',
-            library: 'vue-dynamic-form',
-        }
-    }),
-    merge(config, {
-        entry: path.resolve(__dirname + '/src/DynamicForm.vue'),
-        output: {
-            filename: 'js/vue-dynamic-form.js',
-            libraryTarget: 'umd',
-            library: 'vue-dynamic-form',
-            umdNamedDefine: true
-        }
-    })
-];

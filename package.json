@@ -1,7 +1,7 @@
 {
-  "name": "vue-modelvis",
+  "name": "@reside-ic/vue-dynamic-form",
   "version": "0.0.1",
-  "description": "A library of Vue components for model visualisation and exploration",
+  "description": "A metadata driven form component",
   "scripts": {
     "test": "jest -c jest.config.js",
     "sass": "gulp sass"
@@ -9,22 +9,22 @@
   "main": "./dist/js/index.js",
   "files": [
     "/dist",
-    "/types"
+    "index.d.ts"
   ],
-  "types": "./src/index.d.ts",
+  "types": "./index.d.ts",
   "directories": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reside-ic/vue-modelvis.git"
+    "url": "git+https://github.com/reside-ic/vue-dynamic-form.git"
   },
   "author": "reside-ic",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/reside-ic/vue-modelvis/issues"
+    "url": "https://github.com/reside-ic/vue-dynamic-form/issues"
   },
-  "homepage": "https://github.com/reside-ic/vue-modelvis#readme",
+  "homepage": "https://github.com/reside-ic/vue-dynamic-form#readme",
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -52,7 +52,6 @@
     "vue-loader": "^15.9.0",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11",
-    "webpack-merge": "^4.2.2"
+    "webpack-cli": "^3.3.11"
   }
 }
