@@ -1,0 +1,101 @@
+<html>
+<head>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/css/style.min.css"/>
+    <title>Vue dynamic form demo</title>
+</head>
+<body>
+<div id="app" class="container mt-5">
+    <div class="row">
+        <vue-dynamic-form v-model="demoFormMeta" @submit="handleSubmit"></vue-dynamic-form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../dist/js/vue-dynamic-form.min.js"></script>
+<script>
+    const demoFormMeta = {
+        controlSections: [
+            {
+                label: "General",
+                description: "Select general model options:",
+                controlGroups: [
+                    {
+                        label: "Area scope",
+                        controls: [
+                            {
+                                name: "area_scope",
+                                type: "multiselect",
+                                options: [{id: "MWI", label: "Malawi"}, {id: "MWI.1", label: "Central"}],
+                                value: ["MWI", "MWI.1"],
+                                required: true
+                            }]
+                    },
+                    {
+                        label: "Area level",
+                        controls: [
+                            {
+                                name: "area_level",
+                                type: "multiselect",
+                                options: [{id: "q1", label: "Apr - Jun 2015"}, {id: "q2", label: "Jul - Sep 2015"}]
+                            }]
+                    }
+                ]
+            },
+            {
+                label: "ART",
+                description: "Optionally select which quarter of data to use at time point 1 and 2",
+                controlGroups: [
+                    {
+                        label: "Number on ART",
+                        controls: [
+                            {
+                                name: "art_t1",
+                                label: "Time 1",
+                                type: "select",
+                                value: "q1",
+                                helpText: "Quarter matching midpoint of survey",
+                                options: [{id: "q1", label: "Jan - Mar 2015"}, {id: "q2", label: "Apr - Jun 2015"}],
+                                required: true
+                            },
+                            {
+                                name: "art_t2",
+                                label: "Time 2",
+                                type: "select",
+                                helpText: "Quarter matching midpoint of survey",
+                                options: [{id: "q1", label: "Jan - Mar 2015"}, {id: "q2", label: "Apr - Jun 2015"}],
+                                required: false
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                label: "Advanced options",
+                controlGroups: [
+                    {
+                        label: "Number of simulations",
+                        controls: [{
+                            name: "num_sim",
+                            type: "number",
+                            required: true
+                        }]
+                    }
+                ]
+            }
+        ]
+    };
+
+    new Vue({
+        el: "#app",
+        data: {
+            demoFormMeta
+        },
+        methods: {
+            handleSubmit(formData) {
+                alert("Form data: " + JSON.stringify(formData))
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -10,7 +10,7 @@ const gulp = require('gulp'),
 sass.compiler = require('node-sass');
 
 gulp.task('sass', function () {
-    return gulp.src('src/**/*.scss')
+    return gulp.src('src/style.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(through(function (file) {
             file.named = path.basename(path.dirname(file.path).split("/").pop(), path.extname(file.path));
