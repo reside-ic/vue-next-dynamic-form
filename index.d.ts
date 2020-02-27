@@ -1,4 +1,4 @@
-declare module "vue-dynamic-form" {
+declare module "@reside-ic/vue-dynamic-form" {
     import Vue from "vue";
 
     export type DynamicControlSection = {
