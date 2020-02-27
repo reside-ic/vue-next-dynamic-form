@@ -1,4 +1,7 @@
-# vue-dynamic-form
+# vue-dynamic-form 
+
+[![Build Status](https://travis-ci.com/reside-ic/vue-dynamic-form.svg?branch=master)](https://travis-ci.com/reside-ic/vue-dynamic-form)
+
 Vue component for generating a form dynamically from metadata.
 
 ## Installation
