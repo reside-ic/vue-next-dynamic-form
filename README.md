@@ -45,7 +45,7 @@ just include `dist/js/vue-dynamic-form.min.js` on the page, after Vue:
 ```
 
 In this case the component will be automatically registered. 
-See [example/index.html](example/index.html).
+See [example/index.html](https://reside-ic.github.io/vue-dynamic-form/example/index.html).
 
 ## Usage
 ### Example
@@ -157,7 +157,7 @@ the payload would be of the form:
 }
 ```
 
-See this as a working example [here](example/index.html)
+See this as a working example [here](https://reside-ic.github.io/vue-dynamic-form/example/index.html)
 
 ### Example without v-model
 If for some reason you don't want form values to be automatically updated, you can handle the change event
