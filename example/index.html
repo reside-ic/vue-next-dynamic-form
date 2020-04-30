@@ -7,7 +7,10 @@
 <body>
 <div id="app" class="container mt-5">
     <div class="row">
-        <vue-dynamic-form v-model="demoFormMeta" @submit="handleSubmit"></vue-dynamic-form>
+        <vue-dynamic-form v-model="demoFormMeta" @submit="handleSubmit" @validate="handleValidate"></vue-dynamic-form>
+        <div v-if="!valid" class="text-danger">
+            Form is not valid
+        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -88,11 +91,15 @@
     new Vue({
         el: "#app",
         data: {
-            demoFormMeta
+            demoFormMeta,
+            valid: true
         },
         methods: {
             handleSubmit(formData) {
                 alert("Form data: " + JSON.stringify(formData))
+            },
+            handleValidate(valid) {
+                this.valid = valid;
             }
         }
     })
