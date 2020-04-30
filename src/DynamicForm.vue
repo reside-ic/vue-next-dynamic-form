@@ -126,6 +126,14 @@
                 this.$emit("submit", result);
                 return result;
             }
+        },
+        watch: {
+            disabled: function(value: Boolean) {
+                this.$emit("validated", !value);
+            }
+        },
+        mounted() {
+            this.$emit("validated", !this.disabled);
         }
     })
 </script>
