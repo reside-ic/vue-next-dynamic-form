@@ -129,11 +129,11 @@
         },
         watch: {
             disabled: function(value: Boolean) {
-                this.$emit("validated", !value);
+                this.$emit("validate", !value);
             }
         },
         mounted() {
-            this.$emit("validated", !this.disabled);
+            this.$emit("validate", !this.disabled);
         }
     })
 </script>

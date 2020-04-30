@@ -174,23 +174,23 @@ describe('Dynamic form component', function () {
     });
 
 
-    it("initial validated event is emitted with false value when required values are missing", async () => {
+    it("initial validate event is emitted with false value when required values are missing", async () => {
         const rendered = getWrapper(invalidFormMeta, {}, shallowMount);
 
         await Vue.nextTick();
-        expect(rendered.emitted().validated.length).toBe(1);
-        expect(rendered.emitted().validated[0][0]).toBe(false);
+        expect(rendered.emitted().validate.length).toBe(1);
+        expect(rendered.emitted().validate[0][0]).toBe(false);
     });
 
-    it("initial validated event is emitted with true  value when when required values are present", async () => {
+    it("initial validate event is emitted with true  value when when required values are present", async () => {
         const rendered = getWrapper(validFormMeta, {}, mount);
 
         await Vue.nextTick();
-        expect(rendered.emitted().validated.length).toBe(1);
-        expect(rendered.emitted().validated[0][0]).toBe(true);
+        expect(rendered.emitted().validate.length).toBe(1);
+        expect(rendered.emitted().validate[0][0]).toBe(true);
     });
 
-    it("validated event is emitted with false value when form becomes invalid", async () => {
+    it("validate event is emitted with false value when form becomes invalid", async () => {
        const formMeta: DynamicFormMeta = {
             controlSections: [
                 {
@@ -215,11 +215,11 @@ describe('Dynamic form component', function () {
 
         await Vue.nextTick();
 
-        expect(rendered.emitted().validated.length).toBe(2);
-        expect(rendered.emitted().validated[1][0]).toBe(false);
+        expect(rendered.emitted().validate.length).toBe(2);
+        expect(rendered.emitted().validate[1][0]).toBe(false);
     });
 
-    it("validated event is emitted with true value when form becomes valid", async () => {
+    it("validate event is emitted with true value when form becomes valid", async () => {
         const formMeta: DynamicFormMeta = {
             controlSections: [
                 {
@@ -244,7 +244,7 @@ describe('Dynamic form component', function () {
 
         await Vue.nextTick();
 
-        expect(rendered.emitted().validated.length).toBe(2);
-        expect(rendered.emitted().validated[1][0]).toBe(true);
+        expect(rendered.emitted().validate.length).toBe(2);
+        expect(rendered.emitted().validate[1][0]).toBe(true);
     });
 });
