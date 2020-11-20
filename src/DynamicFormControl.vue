@@ -6,7 +6,7 @@
                   v-tooltip="formControl.helpText">
                 <help-circle-icon></help-circle-icon>
             </span>
-            <span v-if="formControl.required" class="small">(required)</span>
+            <span v-if="formControl.required" :class="{'text-danger': isRed(formControl.value), small: true}">(required)</span>
         </label>
         <component :is="dynamicComponent"
                    v-model="formControlLocal"></component>
@@ -28,12 +28,16 @@
         formControlLocal: DynamicControl
     }
 
+    interface Methods {
+        isRed: (value: any) => boolean
+    }
+
     interface Props {
         formControl: DynamicControl,
         colWidth: string
     }
 
-    export default Vue.extend<{}, {}, Computed, Props>({
+    export default Vue.extend<{}, Methods, Computed, Props>({
         name: "DynamicFormControl",
         model: {
             prop: "formControl",
@@ -42,6 +46,20 @@
         props: {
             formControl: Object,
             colWidth: String
+        },
+        methods: {
+            isRed(value){
+                if (value){
+                    if(value.constructor === Array){
+                        if (value.length > 0){
+                            return false
+                        } else return true
+                    }
+                }
+                if(value){
+                    return false
+                } else return true
+            }
         },
         computed: {
             formControlLocal: {

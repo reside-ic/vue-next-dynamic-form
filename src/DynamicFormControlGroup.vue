@@ -4,7 +4,7 @@
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
                     <help-circle-icon></help-circle-icon>
                 </span>
-            <span v-if="required" class="small">(required)</span>
+            <span v-if="required" :class="{'text-danger': isRed(controlGroup.controls[0].value), small: true}">(required)</span>
         </label>
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
@@ -22,6 +22,7 @@
     import {HelpCircleIcon} from "vue-feather-icons";
 
     interface Methods {
+        isRed: (value: any) => boolean,
         change: (newVal: Control, index: number) => void
     }
 
@@ -54,6 +55,18 @@
             tooltip: VTooltip
         },
         methods: {
+            isRed(value){
+                if (value){
+                    if(value.constructor === Array){
+                        if (value.length > 0){
+                            return false
+                        } else return true
+                    }
+                }
+                if(value){
+                    return false
+                } else return true
+            },
             change(newVal: Control, index: number) {
                 const controls = [...this.controlGroup.controls];
                 controls[index] = newVal;
