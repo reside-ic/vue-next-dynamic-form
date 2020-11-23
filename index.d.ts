@@ -4,6 +4,8 @@ declare module "@reside-ic/vue-dynamic-form" {
     export type DynamicControlSection = {
         label: string
         description?: string
+        documentation?: string
+        collapsible?: boolean
         controlGroups: DynamicControlGroup[]
     }
 

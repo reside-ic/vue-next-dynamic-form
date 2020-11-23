@@ -3,6 +3,8 @@ export type Dict<V> = { [k: string]: V }
 export type DynamicControlSection = {
     label: string
     description?: string
+    documentation?: string
+    collapsible?: boolean
     controlGroups: DynamicControlGroup[]
 }
 
