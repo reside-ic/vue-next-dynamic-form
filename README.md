@@ -45,7 +45,7 @@ just include `dist/js/vue-dynamic-form.min.js` on the page, after Vue:
 ```
 
 In this case the component will be automatically registered. 
-See [docs/index.html](docs/index.html).
+See [example/index.html](https://reside-ic.github.io/vue-dynamic-form/example/index.html).
 
 ## Usage
 ### Example
@@ -157,7 +157,11 @@ the payload would be of the form:
 }
 ```
 
-See this as a working example [here](docs/index.html)
+See this as a working example [here](https://reside-ic.github.io/vue-dynamic-form/example/index.html)
+
+The form also emits a `validate` event when its valid state changes. The form is valid if all controls which are `required`
+ have values. The valid event provides a single boolean parameter which is `true` is the form has become valid, `false` 
+ if it has become invalid. The `validate` event is also emitted when the form is mounted, indicating the initial valid state. 
 
 ### Example without v-model
 If for some reason you don't want form values to be automatically updated, you can handle the change event
