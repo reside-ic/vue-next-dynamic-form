@@ -12,17 +12,19 @@
                                         :key="index"
                                         :control-group="group"
                                         @change="change($event, index)"></dynamic-form-control-group>
-            <div v-if="controlSection.documentation" class="documentation mb-4">
-                <a href="#" @click="toggleDocumentation">
-                    <info-icon></info-icon>
-                    How to use these settings
-                    <component style="vertical-align: top"
-                               :is="documentationChevronComponent"></component>
-                </a>
-                <b-collapse v-model="showDocumentation">
-                    <div class="my-1" v-html="controlSection.documentation"></div>
-                </b-collapse>
-            </div>
+            <b-row v-if="controlSection.documentation" class="documentation mb-4">
+                <b-col>
+                    <a href="#" @click="toggleDocumentation">
+                        <info-icon></info-icon>
+                        How to use these settings
+                        <component style="vertical-align: top"
+                                   :is="documentationChevronComponent"></component>
+                    </a>
+                    <b-collapse v-model="showDocumentation">
+                        <div class="my-1" v-html="controlSection.documentation"></div>
+                    </b-collapse>
+                </b-col>
+            </b-row>
         </b-collapse>
     </div>
 </template>
@@ -33,7 +35,7 @@
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import {DynamicControlGroup, DynamicControlSection} from "./types";
     import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather-icons";
-    import {BCollapse} from "bootstrap-vue";
+    import {BCollapse, BRow, BCol} from "bootstrap-vue";
 
     interface Methods {
         change: (newVal: DynamicControlGroup, index: number) => void
@@ -102,7 +104,9 @@
             InfoIcon,
             ChevronDownIcon,
             ChevronUpIcon,
-            BCollapse
+            BCollapse,
+            BRow,
+            BCol
         }
     })
 </script>
