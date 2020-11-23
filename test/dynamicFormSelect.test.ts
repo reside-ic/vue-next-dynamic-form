@@ -1,4 +1,5 @@
 import {mount} from "@vue/test-utils";
+import Vue from "vue";
 import DynamicFormSelect from "../src/DynamicFormSelect.vue";
 import {SelectControl} from "../src/types";
 
@@ -54,6 +55,24 @@ describe('Dynamic form select component', function () {
 
         const select = rendered.find("select");
         expect((select.element as HTMLSelectElement).value).toBe("");
+    });
+
+    it("first value is selected if explicitOptionsOnly", async () => {
+        const formControl = {...fakeSelect, explicitOptionsOnly: true};
+        const rendered = mount(DynamicFormSelect, {
+            propsData: {
+                formControl
+            }
+        });
+        const options = rendered.findAll("option");
+        expect(options.length).toBe(2);
+        expect((options.at(0).element as HTMLSelectElement).value).toBe("opt1");
+        expect(options.at(0).text()).toBe("option 1");
+
+        const select = rendered.find("select");
+
+        await Vue.nextTick();
+        expect(rendered.emitted("change")[0][0]).toEqual({...formControl, value: "opt1"});
     });
 
     it("is required if formControl.required is true", () => {
