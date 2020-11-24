@@ -35,7 +35,7 @@ export type DynamicControl = {
 export type SelectControl = DynamicControl & {
     options: Option[]
     value?: string | null
-    explicitOptionsOnly?: boolean
+    excludeNullOption?: boolean
 }
 
 export type MultiSelectControl = DynamicControl & {

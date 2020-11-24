@@ -57,8 +57,8 @@ describe('Dynamic form select component', function () {
         expect((select.element as HTMLSelectElement).value).toBe("");
     });
 
-    it("first value is selected if explicitOptionsOnly", async () => {
-        const formControl = {...fakeSelect, explicitOptionsOnly: true};
+    it("first value is selected if excludeNullOption", async () => {
+        const formControl = {...fakeSelect, excludeNullOption: true};
         const rendered = mount(DynamicFormSelect, {
             propsData: {
                 formControl
