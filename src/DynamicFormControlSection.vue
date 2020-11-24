@@ -107,6 +107,11 @@
             BCollapse,
             BRow,
             BCol
+        },
+        mounted() {
+            if (this.controlSection.collapsible && this.controlSection.collapsed) {
+                this.open = false
+            }
         }
     })
 </script>

@@ -8,6 +8,7 @@ export type DynamicControlSection = {
     description?: string
     documentation?: string
     collapsible?: boolean
+    collapsed?: boolean
     controlGroups: DynamicControlGroup[]
 }
 
