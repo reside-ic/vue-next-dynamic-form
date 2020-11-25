@@ -6,6 +6,8 @@ import DynamicFormMultiSelect from "../src/DynamicFormMultiSelect.vue";
 import TreeSelect from '@riophae/vue-treeselect';
 import {VTooltip} from 'v-tooltip';
 import {NumberControl, SelectControl} from "../src/types";
+import Vue from "vue";
+import { nextTick } from "vue/types/umd";
 
 const tooltipSpy = jest.spyOn(VTooltip, "bind");
 
@@ -54,9 +56,16 @@ describe('Dynamic form control component', function () {
         expect((tooltipSpy.mock.calls[0][1] as any).value).toBe("Some help text")
     });
 
-    it("renders required indicator if input is required", () => {
+    it("renders required indicator if input is required and sets text-danger class if no value given", () => {
         const rendered = getWrapper({...fakeNumber, required: true}, shallowMount);
         expect(rendered.find("label").find("span").text()).toBe("(required)");
+        expect(rendered.find("label").find("span").attributes("class")).toBe("small text-danger");
+    });
+
+    it("renders required indicator if input is required and removes set text-danger class if value given", () => {
+        const rendered = getWrapper({...fakeNumber, required: true, value: 123}, shallowMount);
+        expect(rendered.find("label").find("span").text()).toBe("(required)");
+        expect(rendered.find("label").find("span").attributes("class")).toBe("small");
     });
 
     it("does not renders label if it does not exist", () => {

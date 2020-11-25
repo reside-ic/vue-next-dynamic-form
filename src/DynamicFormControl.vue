@@ -6,7 +6,7 @@
                   v-tooltip="formControl.helpText">
                 <help-circle-icon></help-circle-icon>
             </span>
-            <span v-if="formControl.required" :class="{'text-danger': isRed(formControl.value), small: true}">(required)</span>
+            <span v-if="formControl.required" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">(required)</span>
         </label>
         <component :is="dynamicComponent"
                    v-model="formControlLocal"></component>
@@ -22,6 +22,8 @@
     import DynamicFormNumberInput from "./DynamicFormNumberInput.vue";
     import {VTooltip} from 'v-tooltip'
     import {HelpCircleIcon} from "vue-feather-icons";
+    import {valueIsEmpty} from "./utils";
+    
 
     interface Computed {
         dynamicComponent: string,
@@ -29,7 +31,7 @@
     }
 
     interface Methods {
-        isRed: (value: any) => boolean
+        valueIsEmpty: (value: any) => boolean
     }
 
     interface Props {
@@ -48,17 +50,8 @@
             colWidth: String
         },
         methods: {
-            isRed(value){
-                if (value){
-                    if(value.constructor === Array){
-                        if (value.length > 0){
-                            return false
-                        } else return true
-                    }
-                }
-                if(value){
-                    return false
-                } else return true
+            valueIsEmpty(value){
+                return valueIsEmpty(value)
             }
         },
         computed: {
