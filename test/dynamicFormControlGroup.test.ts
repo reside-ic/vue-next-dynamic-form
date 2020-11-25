@@ -1,4 +1,4 @@
-import {shallowMount} from "@vue/test-utils";
+import {shallowMount, mount, Wrapper} from "@vue/test-utils";
 import {BCol} from "bootstrap-vue";
 import DynamicFormControlGroup from "../src/DynamicFormControlGroup.vue";
 import DynamicFormControl from "../src/DynamicFormControl.vue";
@@ -25,6 +25,37 @@ describe('Dynamic form control group component', function () {
         ]
     };
 
+    const fakeFormGroup2: DynamicControlGroup = {
+        label: "Test 1",
+        controls: [
+            {
+                name: "id_1",
+                type: "number",
+                required: true
+            } as NumberControl
+        ]
+    };
+
+    const fakeFormGroup3: DynamicControlGroup = {
+        label: "Test 1",
+        controls: [
+            {
+                name: "id_1",
+                value: 123,
+                type: "number",
+                required: true
+            } as NumberControl
+        ]
+    };
+
+    const getWrapper = (controlGroup: any, mount: (component: any, options: any) => Wrapper<Vue>) => {
+        return mount(DynamicFormControlGroup, {
+            propsData: {
+                controlGroup: controlGroup,
+            }
+        });
+    };
+
     it("renders label if it exists", () => {
         const rendered = shallowMount(DynamicFormControlGroup, {
             propsData: {
@@ -45,6 +76,18 @@ describe('Dynamic form control group component', function () {
         });
 
         expect(rendered.findAll(BCol).length).toBe(0);
+    });
+
+    it("renders required indicator if input is required and sets text-danger class if no value given", () => {
+        const rendered = getWrapper({...fakeFormGroup2}, shallowMount);
+        expect(rendered.find("label").find("span").text()).toBe("(required)");
+        expect(rendered.find("label").find("span").attributes("class")).toBe("small text-danger");
+    });
+
+    it("renders required indicator if input is required and removes set text-danger class if value given", () => {
+        const rendered = getWrapper({...fakeFormGroup3}, shallowMount);
+        expect(rendered.find("label").find("span").text()).toBe("(required)");
+        expect(rendered.find("label").find("span").attributes("class")).toBe("small");
     });
 
     it("renders tooltip with help text if only one control exists", () => {
