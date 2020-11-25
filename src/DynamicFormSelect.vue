@@ -3,7 +3,7 @@
             v-model="value"
             :name="formControl.name"
             :required="formControl.required">
-        <option value>Select...</option>
+        <option v-if="!formControl.excludeNullOption" value>Select...</option>
         <option v-for="opt in formControl.options"
                 :key="opt.id"
                 :value="opt.id">
@@ -48,6 +48,11 @@
         },
         components: {
             BFormSelect
+        },
+        mounted() {
+            if (this.formControl.excludeNullOption && !this.formControl.value) {
+                this.value = this.formControl.options[0].id;
+            }
         }
     })
 </script>

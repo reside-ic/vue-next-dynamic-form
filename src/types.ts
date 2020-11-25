@@ -3,6 +3,9 @@ export type Dict<V> = { [k: string]: V }
 export type DynamicControlSection = {
     label: string
     description?: string
+    documentation?: string
+    collapsible?: boolean
+    collapsed?: boolean
     controlGroups: DynamicControlGroup[]
 }
 
@@ -32,6 +35,7 @@ export type DynamicControl = {
 export type SelectControl = DynamicControl & {
     options: Option[]
     value?: string | null
+    excludeNullOption?: boolean
 }
 
 export type MultiSelectControl = DynamicControl & {

@@ -21,6 +21,7 @@
             {
                 label: "General",
                 description: "Select general model options:",
+                collapsible: true,
                 controlGroups: [
                     {
                         label: "Area scope",
@@ -42,10 +43,13 @@
                                 options: [{id: "q1", label: "Apr - Jun 2015"}, {id: "q2", label: "Jul - Sep 2015"}]
                             }]
                     }
-                ]
+                ],
+                documentation: "Some more details about how to use these settings: <ul><li>Info point 1</li></ul>"
             },
             {
                 label: "ART",
+                collapsible: true,
+                collapsed: true,
                 description: "Optionally select which quarter of data to use at time point 1 and 2",
                 controlGroups: [
                     {
@@ -55,7 +59,7 @@
                                 name: "art_t1",
                                 label: "Time 1",
                                 type: "select",
-                                value: "q1",
+                                value: "q2",
                                 helpText: "Quarter matching midpoint of survey",
                                 options: [{id: "q1", label: "Jan - Mar 2015"}, {id: "q2", label: "Apr - Jun 2015"}],
                                 required: true
@@ -64,6 +68,7 @@
                                 name: "art_t2",
                                 label: "Time 2",
                                 type: "select",
+                                excludeNullOption: true,
                                 helpText: "Quarter matching midpoint of survey",
                                 options: [{id: "q1", label: "Jan - Mar 2015"}, {id: "q2", label: "Apr - Jun 2015"}],
                                 required: false

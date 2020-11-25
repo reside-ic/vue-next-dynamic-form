@@ -23,7 +23,6 @@
     import {VTooltip} from 'v-tooltip'
     import {HelpCircleIcon} from "vue-feather-icons";
     import {valueIsEmpty} from "./utils";
-    
 
     interface Computed {
         dynamicComponent: string,

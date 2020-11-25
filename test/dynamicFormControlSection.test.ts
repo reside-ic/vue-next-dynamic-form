@@ -1,7 +1,10 @@
-import {mount} from "@vue/test-utils";
+import {mount, shallowMount} from "@vue/test-utils";
+import Vue from "vue";
 import DynamicFormControlSection from "../src/DynamicFormControlSection.vue";
 import DynamicFormControlGroup from "../src/DynamicFormControlGroup.vue";
 import {DynamicControlSection} from "../src/types";
+import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather-icons";
+import {BCollapse} from "bootstrap-vue";
 
 describe('Dynamic form control section component', function () {
 
@@ -22,7 +25,7 @@ describe('Dynamic form control section component', function () {
     };
 
     it("renders label and description", () => {
-        const rendered = mount(DynamicFormControlSection, {
+        const rendered = shallowMount(DynamicFormControlSection, {
             propsData: {
                 controlSection: fakeFormSection
             }
@@ -32,14 +35,122 @@ describe('Dynamic form control section component', function () {
         expect(rendered.find("p").text()).toBe("Desc 1");
     });
 
+    it("can toggle section if collapsible", async () => {
+        const rendered = shallowMount(DynamicFormControlSection, {
+            propsData: {
+                controlSection: {...fakeFormSection, collapsible: true}
+            }
+        });
+
+        await Vue.nextTick();
+
+        expect(rendered.find("h3").classes()).toContain("cursor-pointer");
+        expect(rendered.findAll(ChevronDownIcon).length).toBe(0);
+        expect(rendered.findAll(ChevronUpIcon).length).toBe(1);
+        expect(rendered.find(BCollapse).props("visible")).toBe(true);
+
+        await Vue.nextTick();
+
+        rendered.find("h3").trigger("click");
+
+        await Vue.nextTick();
+
+        expect(rendered.findAll(ChevronDownIcon).length).toBe(1);
+        expect(rendered.findAll(ChevronUpIcon).length).toBe(0);
+        expect(rendered.find(BCollapse).props("visible")).toBe(false);
+
+        rendered.find("h3").trigger("click");
+        await Vue.nextTick();
+
+        expect(rendered.findAll(ChevronDownIcon).length).toBe(0);
+        expect(rendered.findAll(ChevronUpIcon).length).toBe(1);
+        expect(rendered.find(BCollapse).props("visible")).toBe(true);
+    });
+
+
+    it("defaults to collapsed if control section collapsed property is true", async () => {
+        const rendered = shallowMount(DynamicFormControlSection, {
+            propsData: {
+                controlSection: {...fakeFormSection, collapsible: true, collapsed: true}
+            }
+        });
+
+        await Vue.nextTick();
+
+        expect(rendered.find("h3").classes()).toContain("cursor-pointer");
+        expect(rendered.findAll(ChevronDownIcon).length).toBe(1);
+        expect(rendered.findAll(ChevronUpIcon).length).toBe(0);
+        expect(rendered.find(BCollapse).props("visible")).toBe(false);
+
+        await Vue.nextTick();
+
+        rendered.find("h3").trigger("click");
+
+        await Vue.nextTick();
+
+        expect(rendered.findAll(ChevronDownIcon).length).toBe(0);
+        expect(rendered.findAll(ChevronUpIcon).length).toBe(1);
+        expect(rendered.find(BCollapse).props("visible")).toBe(true);
+    });
+
+    it("does not render toggle icon if section is not collapsible", () => {
+        const rendered = shallowMount(DynamicFormControlSection, {
+            propsData: {
+                controlSection: fakeFormSection
+            }
+        });
+
+        expect(rendered.findAll(ChevronUpIcon).length).toBe(0);
+        expect(rendered.find("h3").classes()).not.toContain("cursor-pointer");
+    });
+
     it("does not render description if absent", () => {
-        const rendered = mount(DynamicFormControlSection, {
+        const rendered = shallowMount(DynamicFormControlSection, {
             propsData: {
                 controlSection: {...fakeFormSection, description: null}
             }
         });
 
         expect(rendered.findAll("p").length).toBe(0);
+    });
+
+    it("does not render documentation if absent", () => {
+        const rendered = mount(DynamicFormControlSection, {
+            propsData: {
+                controlSection: {...fakeFormSection, collapsible: true, documentation: null}
+            }
+        });
+
+        expect(rendered.findAll(".documentation").length).toBe(0);
+        expect(rendered.findAll(BCollapse).length).toBe(1);
+    });
+
+    it("can toggle documentation if present", async () => {
+        const rendered = mount(DynamicFormControlSection, {
+            propsData: {
+                controlSection: {...fakeFormSection, documentation: "<ul><li>something</li></ul>"}
+            }
+        });
+
+        expect(rendered.findAll(".documentation").length).toBe(1);
+
+        let documentation = rendered.find(".documentation");
+        expect(documentation.find(BCollapse).props("visible")).toBe(false);
+        expect(documentation.findAll(ChevronDownIcon).length).toBe(1);
+        expect(documentation.findAll(ChevronUpIcon).length).toBe(0);
+        expect(documentation.find("ul").isVisible()).toBe(false);
+
+        await Vue.nextTick();
+
+        documentation.find("a").trigger("click");
+
+        await Vue.nextTick();
+
+        documentation = rendered.find(".documentation");
+        expect(documentation.find(BCollapse).props("visible")).toBe(true);
+        expect(documentation.findAll(ChevronDownIcon).length).toBe(0);
+        expect(documentation.findAll(ChevronUpIcon).length).toBe(1);
+        expect(documentation.find("ul").isVisible()).toBe(true);
     });
 
     it("renders control groups", async () => {

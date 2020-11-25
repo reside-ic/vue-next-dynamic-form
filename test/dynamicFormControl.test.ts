@@ -6,8 +6,6 @@ import DynamicFormMultiSelect from "../src/DynamicFormMultiSelect.vue";
 import TreeSelect from '@riophae/vue-treeselect';
 import {VTooltip} from 'v-tooltip';
 import {NumberControl, SelectControl} from "../src/types";
-import Vue from "vue";
-import { nextTick } from "vue/types/umd";
 
 const tooltipSpy = jest.spyOn(VTooltip, "bind");
 
