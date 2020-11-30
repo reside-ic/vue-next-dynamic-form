@@ -20,7 +20,7 @@
     import DynamicFormControl from "./DynamicFormControl.vue";
     import {VTooltip} from 'v-tooltip';
     import {HelpCircleIcon} from "vue-feather-icons";
-    import {valueIsEmpty} from "./utils";
+    import FormsMixin from "./FormsMixin";
 
     interface Methods {
         anyValueEmpty: (controlGroup: DynamicControlGroup) => boolean
@@ -37,7 +37,7 @@
         controlGroup: DynamicControlGroup
     }
 
-    export default Vue.extend<{}, Methods, Computed, Props>({
+    export default FormsMixin.extend<{}, Methods, Computed, Props>({
         name: "DynamicFormControlGroup",
         props: {
             controlGroup: Object
@@ -57,7 +57,7 @@
         },
         methods: {
             anyValueEmpty(controlGroup: DynamicControlGroup){
-                return !!controlGroup.controls.find(c => valueIsEmpty(c.value))
+                return !!controlGroup.controls.find(c => this.valueIsEmpty(c.value))
             },
             change(newVal: Control, index: number) {
                 const controls = [...this.controlGroup.controls];

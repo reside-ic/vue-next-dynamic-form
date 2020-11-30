@@ -22,15 +22,11 @@
     import DynamicFormNumberInput from "./DynamicFormNumberInput.vue";
     import {VTooltip} from 'v-tooltip'
     import {HelpCircleIcon} from "vue-feather-icons";
-    import {valueIsEmpty} from "./utils";
+    import FormsMixin from "./FormsMixin";
 
     interface Computed {
         dynamicComponent: string,
         formControlLocal: DynamicControl
-    }
-
-    interface Methods {
-        valueIsEmpty: (value: any) => boolean
     }
 
     interface Props {
@@ -38,7 +34,7 @@
         colWidth: string
     }
 
-    export default Vue.extend<{}, Methods, Computed, Props>({
+    export default FormsMixin.extend<{}, unknown, Computed, Props>({
         name: "DynamicFormControl",
         model: {
             prop: "formControl",
@@ -47,11 +43,6 @@
         props: {
             formControl: Object,
             colWidth: String
-        },
-        methods: {
-            valueIsEmpty(value){
-                return valueIsEmpty(value)
-            }
         },
         computed: {
             formControlLocal: {
