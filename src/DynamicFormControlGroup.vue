@@ -4,7 +4,7 @@
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
                     <help-circle-icon></help-circle-icon>
                 </span>
-            <span v-if="required" class="small">(required)</span>
+            <span v-if="required" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">(required)</span>
         </label>
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
@@ -20,8 +20,10 @@
     import DynamicFormControl from "./DynamicFormControl.vue";
     import {VTooltip} from 'v-tooltip';
     import {HelpCircleIcon} from "vue-feather-icons";
+    import FormsMixin from "./FormsMixin";
 
     interface Methods {
+        anyValueEmpty: (controlGroup: DynamicControlGroup) => boolean
         change: (newVal: Control, index: number) => void
     }
 
@@ -35,7 +37,7 @@
         controlGroup: DynamicControlGroup
     }
 
-    export default Vue.extend<{}, Methods, Computed, Props>({
+    export default FormsMixin.extend<{}, Methods, Computed, Props>({
         name: "DynamicFormControlGroup",
         props: {
             controlGroup: Object
@@ -54,6 +56,9 @@
             tooltip: VTooltip
         },
         methods: {
+            anyValueEmpty(controlGroup: DynamicControlGroup){
+                return !!controlGroup.controls.find(c => this.valueIsEmpty(c.value))
+            },
             change(newVal: Control, index: number) {
                 const controls = [...this.controlGroup.controls];
                 controls[index] = newVal;

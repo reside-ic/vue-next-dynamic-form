@@ -6,7 +6,7 @@
                   v-tooltip="formControl.helpText">
                 <help-circle-icon></help-circle-icon>
             </span>
-            <span v-if="formControl.required" class="small">(required)</span>
+            <span v-if="formControl.required" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">(required)</span>
         </label>
         <component :is="dynamicComponent"
                    v-model="formControlLocal"></component>
@@ -22,6 +22,7 @@
     import DynamicFormNumberInput from "./DynamicFormNumberInput.vue";
     import {VTooltip} from 'v-tooltip'
     import {HelpCircleIcon} from "vue-feather-icons";
+    import FormsMixin from "./FormsMixin";
 
     interface Computed {
         dynamicComponent: string,
@@ -33,7 +34,7 @@
         colWidth: string
     }
 
-    export default Vue.extend<{}, {}, Computed, Props>({
+    export default FormsMixin.extend<{}, unknown, Computed, Props>({
         name: "DynamicFormControl",
         model: {
             prop: "formControl",
