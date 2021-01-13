@@ -36,6 +36,7 @@ describe('Dynamic form control component', function () {
         return mount(DynamicFormControl, {
             propsData: {
                 formControl: formControl,
+                requiredText: 'required'
             }
         });
     };

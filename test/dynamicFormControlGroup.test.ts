@@ -52,6 +52,7 @@ describe('Dynamic form control group component', function () {
         return mount(DynamicFormControlGroup, {
             propsData: {
                 controlGroup: controlGroup,
+                requiredText: 'required'
             }
         });
     };
