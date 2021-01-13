@@ -29,7 +29,6 @@
         DynamicFormData,
         DynamicFormMeta
     } from "./types";
-    import EventBus from './EventBus.vue';
 
     interface Methods {
         buildValue: (control: DynamicControl) => string | string[] | number | null

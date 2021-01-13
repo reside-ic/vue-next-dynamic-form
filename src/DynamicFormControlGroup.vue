@@ -9,8 +9,8 @@
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
                               :form-control="control"
-                                      :required-text="requiredText"
-                                      :select-text="selectText"
+                              :required-text="requiredText"
+                              :select-text="selectText"
                               @change="change($event, index)"
                               :col-width="colWidth"></dynamic-form-control>
     </b-row>

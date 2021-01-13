@@ -10,7 +10,7 @@
         </label>
         <component :is="dynamicComponent"
                    v-model="formControlLocal"
-                                      :select-text="selectText"></component>
+                   :select-text="selectText"></component>
     </b-col>
 </template>
 
@@ -68,9 +68,6 @@
                         return "dynamic-form-number-input";
                 }
             }
-        },
-        mounted(){
-            console.log(this.requiredText)
         },
         components: {
             BCol,
