@@ -3,6 +3,8 @@
         <dynamic-form-control-section v-for="(section, index) in formMeta.controlSections"
                                       :key="index"
                                       :control-section="section"
+                                      :required-text="requiredText"
+                                      :select-text="selectText"
                                       @change="change($event, index)">
         </dynamic-form-control-section>
         <button v-if="includeSubmitButton"
@@ -27,11 +29,13 @@
         DynamicFormData,
         DynamicFormMeta
     } from "./types";
+    import EventBus from './EventBus.vue';
 
     interface Methods {
         buildValue: (control: DynamicControl) => string | string[] | number | null
         submit: (e: Event) => DynamicFormData
         change: (newVal: DynamicControlSection, index: number) => void;
+        // emitMethod: () => void
     }
 
     interface Computed {
@@ -44,6 +48,8 @@
         includeSubmitButton?: boolean
         submitText?: string
         id?: string
+        requiredText?: string
+        selectText?: string
     }
 
     const props = {
@@ -61,6 +67,14 @@
         },
         formMeta: {
             type: Object
+        },
+        requiredText: {
+            type: String,
+            default: "required777"
+        },
+        selectText: {
+            type: String,
+            default: "Select...777"
         }
     };
 
@@ -104,6 +118,9 @@
             }
         },
         methods: {
+            // emitMethod () {
+            //     EventBus.$emit('selectText', this.selectText);
+            // },
             change(newVal: DynamicControlSection, index: number) {
                 const controlSections = [...this.formMeta.controlSections];
                 controlSections[index] = newVal;

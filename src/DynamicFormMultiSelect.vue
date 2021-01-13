@@ -3,7 +3,8 @@
         <tree-select :multiple="true"
                      :clearable="false"
                      v-model="value"
-                     :options="formControl.options"></tree-select>
+                     :options="formControl.options" 
+                     :placeholder="selectText"></tree-select>
         <input type="hidden" :value="formControl.value" :name="formControl.name"/>
     </div>
 </template>
@@ -15,6 +16,7 @@
 
     interface Props {
         formControl: MultiSelectControl
+        selectText?: string
     }
 
     interface Computed {
@@ -30,6 +32,10 @@
         props: {
             formControl: {
                 type: Object
+            },
+            selectText: {
+                type: String,
+                default: "Select..."
             }
         },
         computed: {

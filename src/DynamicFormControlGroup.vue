@@ -4,11 +4,13 @@
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
                     <help-circle-icon></help-circle-icon>
                 </span>
-            <span v-if="required" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">(required)</span>
+            <span v-if="required" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
         </label>
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
                               :form-control="control"
+                                      :required-text="requiredText"
+                                      :select-text="selectText"
                               @change="change($event, index)"
                               :col-width="colWidth"></dynamic-form-control>
     </b-row>
@@ -35,12 +37,22 @@
 
     interface Props {
         controlGroup: DynamicControlGroup
+        requiredText?: string
+        selectText?: string
     }
 
     export default FormsMixin.extend<{}, Methods, Computed, Props>({
         name: "DynamicFormControlGroup",
         props: {
-            controlGroup: Object
+            controlGroup: Object,
+        requiredText: {
+            type: String,
+            default: "required!!!"
+        },
+        selectText: {
+            type: String,
+            default: "Select..."
+        }
         },
         model: {
             prop: "controlGroup",

@@ -6,6 +6,7 @@ export type DynamicControlSection = {
     documentation?: string
     collapsible?: boolean
     collapsed?: boolean
+    hiddenByDefault?: boolean
     controlGroups: DynamicControlGroup[]
 }
 

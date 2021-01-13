@@ -11,6 +11,8 @@
             <dynamic-form-control-group v-for="(group, index) in controlSection.controlGroups"
                                         :key="index"
                                         :control-group="group"
+                                      :required-text="requiredText"
+                                      :select-text="selectText"
                                         @change="change($event, index)"></dynamic-form-control-group>
             <b-row v-if="controlSection.documentation" class="documentation mb-4">
                 <b-col>
@@ -45,6 +47,8 @@
 
     interface Props {
         controlSection: DynamicControlSection
+        requiredText?: string
+        selectText?: string
     }
 
     interface Data {
@@ -63,7 +67,15 @@
         props: {
             controlSection: {
                 type: Object
-            }
+            },
+        requiredText: {
+            type: String,
+            default: "required"
+        },
+        selectText: {
+            type: String,
+            default: "Select..."
+        }
         },
         model: {
             prop: "controlSection",
