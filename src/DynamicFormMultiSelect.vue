@@ -33,10 +33,7 @@
             formControl: {
                 type: Object
             },
-            selectText: {
-                type: String,
-                default: "Select..."
-            }
+            selectText: String
         },
         computed: {
             value: {

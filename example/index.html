@@ -7,7 +7,7 @@
 <body>
 <div id="app" class="container mt-5">
     <div class="row">
-        <vue-dynamic-form v-model="demoFormMeta" @submit="handleSubmit" @validate="handleValidate" select-text="cheese" required-text="turnips"></vue-dynamic-form>
+        <vue-dynamic-form v-model="demoFormMeta" @submit="handleSubmit" @validate="handleValidate"></vue-dynamic-form>
         <div v-if="!valid" class="text-danger">
             Form is not valid
         </div>

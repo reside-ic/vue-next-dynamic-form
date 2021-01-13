@@ -68,14 +68,8 @@
             controlSection: {
                 type: Object
             },
-        requiredText: {
-            type: String,
-            default: "required"
-        },
-        selectText: {
-            type: String,
-            default: "Select..."
-        }
+        requiredText: String,
+        selectText: String
         },
         model: {
             prop: "controlSection",

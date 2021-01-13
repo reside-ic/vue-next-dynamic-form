@@ -35,7 +35,6 @@
         buildValue: (control: DynamicControl) => string | string[] | number | null
         submit: (e: Event) => DynamicFormData
         change: (newVal: DynamicControlSection, index: number) => void;
-        // emitMethod: () => void
     }
 
     interface Computed {
@@ -70,11 +69,11 @@
         },
         requiredText: {
             type: String,
-            default: "required777"
+            default: "required"
         },
         selectText: {
             type: String,
-            default: "Select...777"
+            default: "Select..."
         }
     };
 
@@ -118,9 +117,6 @@
             }
         },
         methods: {
-            // emitMethod () {
-            //     EventBus.$emit('selectText', this.selectText);
-            // },
             change(newVal: DynamicControlSection, index: number) {
                 const controlSections = [...this.formMeta.controlSections];
                 controlSections[index] = newVal;
