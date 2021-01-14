@@ -4,6 +4,7 @@ import DynamicFormComponent from "../src/DynamicForm.vue";
 import DynamicForm from "../src/DynamicForm.vue";
 import DynamicFormControlSection from "../src/DynamicFormControlSection.vue";
 import {DynamicControlSection, DynamicFormMeta, MultiSelectControl, NumberControl, SelectControl} from "../src/types";
+import DynamicFormControlGroup from "../src/DynamicFormControlGroup.vue";
 
 describe('Dynamic form component', function () {
 
@@ -128,6 +129,12 @@ describe('Dynamic form component', function () {
         });
     });
 
+    it("emits confirmEditing event when triggered", async () => {
+        const rendered = getWrapper(validFormMeta, {}, mount);
+        rendered.vm.$emit("confirmEditing")
+        expect(rendered.emitted("confirmEditing").length).toBe(1);
+    });
+
     it("emits event and returns serialised form data on programmatic submit", () => {
         const rendered = getWrapper(validFormMeta, {}, mount);
         const expected = {
@@ -172,7 +179,6 @@ describe('Dynamic form component', function () {
         await Vue.nextTick();
         expect(rendered.find("span").text()).toBe("TEST");
     });
-
 
     it("initial validate event is emitted with false value when required values are missing", async () => {
         const rendered = getWrapper(invalidFormMeta, {}, shallowMount);

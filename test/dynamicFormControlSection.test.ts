@@ -183,4 +183,18 @@ describe('Dynamic form control section component', function () {
             .controlGroups[0].controls[0]).toBe("TEST");
     });
 
+    it("emits confirmEditing event when child component does", () => {
+        const controlSection = {...fakeFormSection};
+        const rendered = mount(DynamicFormControlSection, {
+            propsData: {
+                controlSection: controlSection
+            }
+        });
+
+        rendered.findAll(DynamicFormControlGroup).at(0)
+            .vm.$emit("confirmEditing");
+
+        expect(rendered.emitted().confirmEditing.length).toBe(1);
+    });
+
 });

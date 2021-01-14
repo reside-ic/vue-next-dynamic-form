@@ -9,6 +9,7 @@
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
                               :form-control="control"
+                              @click.native="confirmEditing"
                               @change="change($event, index)"
                               :col-width="colWidth"></dynamic-form-control>
     </b-row>
@@ -25,6 +26,7 @@
     interface Methods {
         anyValueEmpty: (controlGroup: DynamicControlGroup) => boolean
         change: (newVal: Control, index: number) => void
+        confirmEditing:(newVal: Control, index: number) => void
     }
 
     interface Computed {
@@ -63,7 +65,10 @@
                 const controls = [...this.controlGroup.controls];
                 controls[index] = newVal;
                 this.$emit("change", {...this.controlGroup, controls})
-            }
+            },
+          confirmEditing() {
+            this.$emit("confirmEditing")
+          }
         },
         computed: {
             colWidth() {

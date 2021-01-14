@@ -11,6 +11,7 @@
             <dynamic-form-control-group v-for="(group, index) in controlSection.controlGroups"
                                         :key="index"
                                         :control-group="group"
+                                        @confirmEditing="confirmEditing"
                                         @change="change($event, index)"></dynamic-form-control-group>
             <b-row v-if="controlSection.documentation" class="documentation mb-4">
                 <b-col>
@@ -33,7 +34,7 @@
 
     import Vue from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
-    import {DynamicControlGroup, DynamicControlSection} from "./types";
+    import {Control, DynamicControlGroup, DynamicControlSection} from "./types";
     import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather-icons";
     import {BCollapse, BRow, BCol} from "bootstrap-vue";
 
@@ -41,6 +42,7 @@
         change: (newVal: DynamicControlGroup, index: number) => void
         toggleDocumentation: (e: Event) => void
         toggleSection: () => void
+        confirmEditing: () => void
     }
 
     interface Props {
@@ -97,7 +99,10 @@
                 if (this.controlSection.collapsible) {
                     this.open = !this.open;
                 }
-            }
+            },
+          confirmEditing() {
+            this.$emit("confirmEditing")
+          }
         },
         components: {
             DynamicFormControlGroup,
