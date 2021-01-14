@@ -101,7 +101,7 @@ describe('Dynamic form control component', function () {
     });
 
     it("renders multi-select when formControl type is multiselect", () => {
-        const rendered = getWrapper({...fakeMultiSelect}, mount);
+        const rendered = getWrapper(fakeMultiSelect, mount);
         expect(rendered.findAll(DynamicFormMultiSelect).length).toBe(1);
         expect(rendered.findAll(DynamicFormMultiSelect).at(0).props("selectText")).toBe("Select");
         rendered.find(DynamicFormMultiSelect).find(TreeSelect).vm.$emit("input", "opt1");
