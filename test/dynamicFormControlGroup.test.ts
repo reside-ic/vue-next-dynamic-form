@@ -52,7 +52,8 @@ describe('Dynamic form control group component', function () {
         return mount(DynamicFormControlGroup, {
             propsData: {
                 controlGroup: controlGroup,
-                requiredText: 'required'
+                requiredText: 'compulsory',
+                selectText: 'Select'
             }
         });
     };
@@ -81,13 +82,13 @@ describe('Dynamic form control group component', function () {
 
     it("renders required indicator if input is required and sets text-danger class if no value given", () => {
         const rendered = getWrapper({...fakeFormGroup2}, shallowMount);
-        expect(rendered.find("label").find("span").text()).toBe("(required)");
+        expect(rendered.find("label").find("span").text()).toBe("(compulsory)");
         expect(rendered.find("label").find("span").attributes("class")).toBe("small text-danger");
     });
 
     it("renders required indicator if input is required and removes set text-danger class if value given", () => {
         const rendered = getWrapper({...fakeFormGroup3}, shallowMount);
-        expect(rendered.find("label").find("span").text()).toBe("(required)");
+        expect(rendered.find("label").find("span").text()).toBe("(compulsory)");
         expect(rendered.find("label").find("span").attributes("class")).toBe("small");
     });
 
@@ -109,13 +110,17 @@ describe('Dynamic form control group component', function () {
         const controlGroup = {...fakeFormGroup};
         const rendered = shallowMount(DynamicFormControlGroup, {
             propsData: {
-                controlGroup: controlGroup
+                controlGroup: controlGroup,
+                selectText: "Select",
+                requiredText: "compulsory"
             }
         });
 
         expect(rendered.findAll(DynamicFormControl).length).toBe(2);
         expect(rendered.findAll(DynamicFormControl).at(0).props("formControl"))
             .toStrictEqual(controlGroup.controls[0]);
+        expect(rendered.findAll(DynamicFormControl).at(0).props("selectText")).toBe("Select");
+        expect(rendered.findAll(DynamicFormControl).at(0).props("requiredText")).toBe("compulsory");
     });
 
     it("emits change event when a control changes", () => {
