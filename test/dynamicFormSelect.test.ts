@@ -15,12 +15,14 @@ describe('Dynamic form select component', function () {
     it("renders options", () => {
         const rendered = mount(DynamicFormSelect, {
             propsData: {
-                formControl: fakeSelect
+                formControl: fakeSelect,
+                selectText: 'Select...'
             }
         });
         const options = rendered.findAll("option");
         expect(options.length).toBe(3);
         expect((options.at(1).element as HTMLSelectElement).value).toBe("opt1");
+        expect(options.at(0).text()).toBe("Select...");
         expect(options.at(1).text()).toBe("option 1");
     });
 
