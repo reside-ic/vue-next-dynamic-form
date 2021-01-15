@@ -7,22 +7,6 @@ import {DynamicControlSection, DynamicFormMeta, MultiSelectControl, NumberContro
 
 describe('Dynamic form component', function () {
 
-    const fakeFormSection: DynamicControlSection = {
-        label: "Test 1",
-        description: "Desc 1",
-        controlGroups: [{
-            label: "Group 1",
-            controls: [{
-                type: "number",
-                name: "id_1",
-                required: false
-            }]
-        }, {
-            label: "Group 2",
-            controls: []
-        }]
-    };
-
     const validFormMeta: DynamicFormMeta = {
         controlSections: [
             {
@@ -147,6 +131,7 @@ describe('Dynamic form component', function () {
     it("emits confirmEditing event when triggered", async () => {
         const rendered = getWrapper(validFormMeta, {}, mount);
         rendered.vm.$emit("confirmEditing")
+
         expect(rendered.emitted("confirmEditing").length).toBe(1);
     });
 
