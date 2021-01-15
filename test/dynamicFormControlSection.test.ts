@@ -157,13 +157,17 @@ describe('Dynamic form control section component', function () {
         const controlSection = {...fakeFormSection};
         const rendered = mount(DynamicFormControlSection, {
             propsData: {
-                controlSection: controlSection
+                controlSection: controlSection,
+                selectText: "Select",
+                requiredText: "compulsory"
             }
         });
 
         expect(rendered.findAll(DynamicFormControlGroup).length).toBe(2);
         expect(rendered.findAll(DynamicFormControlGroup).at(0).props("controlGroup"))
             .toStrictEqual(controlSection.controlGroups[0]);
+        expect(rendered.findAll(DynamicFormControlGroup).at(0).props("selectText")).toBe("Select");
+        expect(rendered.findAll(DynamicFormControlGroup).at(0).props("requiredText")).toBe("compulsory");
     });
 
     it("emits change event when child component does", () => {
