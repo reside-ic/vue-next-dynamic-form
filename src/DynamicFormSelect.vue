@@ -3,7 +3,7 @@
             v-model="value"
             :name="formControl.name"
             :required="formControl.required">
-        <option v-if="!formControl.excludeNullOption" value>Select...</option>
+        <option v-if="!formControl.excludeNullOption" value>{{selectText}}</option>
         <option v-for="opt in formControl.options"
                 :key="opt.id"
                 :value="opt.id">
@@ -19,6 +19,7 @@
 
     interface Props {
         formControl: SelectControl
+        selectText?: string
     }
 
     interface Computed {
@@ -30,7 +31,8 @@
         props: {
             formControl: {
                 type: Object
-            }
+            },
+            selectText: String
         },
         model: {
             prop: "formControl",
@@ -44,7 +46,7 @@
                 set(newVal: string) {
                     this.$emit("change", {...this.formControl, value: newVal});
                 }
-            },
+            }
         },
         components: {
             BFormSelect

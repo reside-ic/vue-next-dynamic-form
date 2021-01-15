@@ -99,6 +99,22 @@ describe('Dynamic form component', function () {
         expect(rendered.findAll(DynamicFormControlSection).length).toBe(2);
     });
 
+    it("sends default props to control sections", () => {
+        const rendered = getWrapper(validFormMeta, {}, shallowMount);
+        expect(rendered.findAll(DynamicFormControlSection).at(0).props("requiredText")).toBe("required");
+        expect(rendered.findAll(DynamicFormControlSection).at(0).props("selectText")).toBe("Select...");
+        expect(rendered.findAll(DynamicFormControlSection).at(1).props("requiredText")).toBe("required");
+        expect(rendered.findAll(DynamicFormControlSection).at(1).props("selectText")).toBe("Select...");
+    });
+
+    it("sends custom props to control sections", () => {
+        const rendered = getWrapper(validFormMeta, {requiredText: 'compulsory', selectText: 'Select'}, shallowMount);
+        expect(rendered.findAll(DynamicFormControlSection).at(0).props("requiredText")).toBe("compulsory");
+        expect(rendered.findAll(DynamicFormControlSection).at(0).props("selectText")).toBe("Select");
+        expect(rendered.findAll(DynamicFormControlSection).at(1).props("requiredText")).toBe("compulsory");
+        expect(rendered.findAll(DynamicFormControlSection).at(1).props("selectText")).toBe("Select");
+    });
+
     it("does not render button if includeSubmitButton is false", () => {
         const rendered = getWrapper(validFormMeta, {includeSubmitButton: false}, shallowMount);
         expect(rendered.findAll("button").length).toBe(0);

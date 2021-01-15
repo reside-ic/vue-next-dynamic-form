@@ -3,6 +3,8 @@
         <dynamic-form-control-section v-for="(section, index) in formMeta.controlSections"
                                       :key="index"
                                       :control-section="section"
+                                      :required-text="requiredText"
+                                      :select-text="selectText"
                                       @change="change($event, index)">
         </dynamic-form-control-section>
         <button v-if="includeSubmitButton"
@@ -44,6 +46,8 @@
         includeSubmitButton?: boolean
         submitText?: string
         id?: string
+        requiredText?: string
+        selectText?: string
     }
 
     const props = {
@@ -61,6 +65,14 @@
         },
         formMeta: {
             type: Object
+        },
+        requiredText: {
+            type: String,
+            default: "required"
+        },
+        selectText: {
+            type: String,
+            default: "Select..."
         }
     };
 

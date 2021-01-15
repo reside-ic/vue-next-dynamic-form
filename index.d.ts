@@ -65,6 +65,8 @@ export declare class DynamicForm extends Vue {
     includeSubmitButton?: boolean;
     submitText?: string;
     id?: string;
+    requiredText?: string;
+    selectText?: string;
 }
 
 export declare function isControl(object: any): Boolean

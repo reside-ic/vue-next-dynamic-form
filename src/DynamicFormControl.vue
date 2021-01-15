@@ -6,10 +6,11 @@
                   v-tooltip="formControl.helpText">
                 <help-circle-icon></help-circle-icon>
             </span>
-            <span v-if="formControl.required" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">(required)</span>
+            <span v-if="formControl.required" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">({{requiredText}})</span>
         </label>
         <component :is="dynamicComponent"
-                   v-model="formControlLocal"></component>
+                   v-model="formControlLocal"
+                   :select-text="selectText"></component>
     </b-col>
 </template>
 
@@ -32,6 +33,8 @@
     interface Props {
         formControl: DynamicControl,
         colWidth: string
+        requiredText?: string
+        selectText?: string
     }
 
     export default FormsMixin.extend<{}, unknown, Computed, Props>({
@@ -42,7 +45,9 @@
         },
         props: {
             formControl: Object,
-            colWidth: String
+            colWidth: String,
+            requiredText: String,
+            selectText: String
         },
         computed: {
             formControlLocal: {

@@ -15,7 +15,8 @@ describe('Dynamic form multi-select component', function () {
     it("renders treeselect with no value", () => {
         const rendered = shallowMount(DynamicFormMultiSelect, {
             propsData: {
-                formControl: fakeSelect
+                formControl: fakeSelect,
+                selectText: "Select..."
             }
         });
 
@@ -24,6 +25,7 @@ describe('Dynamic form multi-select component', function () {
         expect(treeSelect.props("options")).toStrictEqual(fakeSelect.options);
         expect(treeSelect.props("multiple")).toBe(true);
         expect(treeSelect.props("clearable")).toBe(false);
+        expect(treeSelect.props("placeholder")).toBe("Select...");
     });
 
     it("renders treeselect with starting array value", () => {

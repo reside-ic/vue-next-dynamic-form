@@ -210,9 +210,22 @@ You can also hide the submit button:
 
     <dynamic-form v-model="myFormMeta"
                   @submit="handleSubmit"
-                  :include-submit-buttom="false">
+                  :include-submit-button="false">
     </dynamic-form>
 ```
+
+Similarly, you can customize the 'required' warning text and the placeholder text 
+used by the select and multi-select inputs by passing strings to the `required-text` 
+and `select-text` attributes, respectively.
+```
+
+    <dynamic-form v-model="myFormMeta"
+                  @submit="handleSubmit"
+                  :select-text="Select an option"
+                  :required-text="Compulsory">
+    </dynamic-form>
+```
+
 
 ### Control types
 At the moment only 3 control types are supported:
