@@ -4,6 +4,8 @@ import DynamicFormComponent from "../src/DynamicForm.vue";
 import DynamicForm from "../src/DynamicForm.vue";
 import DynamicFormControlSection from "../src/DynamicFormControlSection.vue";
 import {DynamicControlSection, DynamicFormMeta, MultiSelectControl, NumberControl, SelectControl} from "../src/types";
+import DynamicFormControlGroup from "../src/DynamicFormControlGroup.vue";
+import DynamicFormControl from "../src/DynamicFormControl.vue";
 
 describe('Dynamic form component', function () {
 
@@ -144,11 +146,14 @@ describe('Dynamic form component', function () {
         });
     });
 
-    it("emits confirmEditing event when triggered", async () => {
-        const rendered = getWrapper(validFormMeta, {}, mount);
-        rendered.vm.$emit("confirmEditing")
 
-        expect(rendered.emitted("confirmEditing").length).toBe(1);
+    it("emits confirmEditing event when click event triggerecd", async() => {
+        const rendered = getWrapper(validFormMeta, {}, mount);
+        rendered.findAll(DynamicFormControlSection).at(0)
+            .vm.$emit("confirmEditing")
+
+        await Vue.nextTick();
+        expect(rendered.emitted().confirmEditing.length).toBe(1);
     });
 
     it("emits event and returns serialised form data on programmatic submit", () => {
