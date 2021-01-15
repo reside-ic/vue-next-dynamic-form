@@ -193,7 +193,6 @@ describe('Dynamic form control section component', function () {
 
         rendered.findAll(DynamicFormControlGroup).at(0)
             .vm.$emit("confirmEditing");
-
         expect(rendered.emitted().confirmEditing.length).toBe(1);
     });
 

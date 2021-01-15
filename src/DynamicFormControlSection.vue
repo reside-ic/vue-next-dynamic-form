@@ -34,7 +34,7 @@
 
     import Vue from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
-    import {Control, DynamicControlGroup, DynamicControlSection} from "./types";
+    import {DynamicControlGroup, DynamicControlSection} from "./types";
     import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather-icons";
     import {BCollapse, BRow, BCol} from "bootstrap-vue";
 
