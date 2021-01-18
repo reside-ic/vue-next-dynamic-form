@@ -11,7 +11,7 @@
             <dynamic-form-control-group v-for="(group, index) in controlSection.controlGroups"
                                         :key="index"
                                         :control-group="group"
-                                        @confirmEditing="confirmEditing"
+                                        @confirm="confirm"
                                         :required-text="requiredText"
                                         :select-text="selectText"
                                         @change="change($event, index)"></dynamic-form-control-group>
@@ -44,7 +44,7 @@
         change: (newVal: DynamicControlGroup, index: number) => void
         toggleDocumentation: (e: Event) => void
         toggleSection: () => void
-        confirmEditing: () => void
+        confirm: () => void
     }
 
     interface Props {
@@ -106,8 +106,8 @@
                     this.open = !this.open;
                 }
             },
-          confirmEditing() {
-            this.$emit("confirmEditing")
+          confirm() {
+            this.$emit("confirm")
           }
         },
         components: {

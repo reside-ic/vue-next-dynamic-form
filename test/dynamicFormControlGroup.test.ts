@@ -173,7 +173,7 @@ describe('Dynamic form control group component', function () {
         rendered.findAll(DynamicFormControl).at(0).trigger("click")
         await Vue.nextTick();
 
-        expect(rendered.emitted().confirmEditing.length).toBe(1);
+        expect(rendered.emitted().confirm.length).toBe(1);
     });
 
 });
