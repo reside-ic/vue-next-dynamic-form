@@ -176,4 +176,18 @@ describe('Dynamic form control group component', function () {
         expect(rendered.emitted().confirm.length).toBe(1);
     });
 
+    it("emits confirmEditing event when mousedown event triggered", async() => {
+        const controlGroup = {...fakeFormGroup};
+        const rendered = shallowMount(DynamicFormControlGroup, {
+            propsData: {
+                controlGroup: controlGroup
+            }
+        });
+
+        rendered.findAll(DynamicFormControl).at(0).trigger("mousedown")
+        await Vue.nextTick();
+
+        expect(rendered.emitted().confirm.length).toBe(1);
+    });
+
 });

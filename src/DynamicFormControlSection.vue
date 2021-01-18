@@ -107,7 +107,8 @@
                 }
             },
           confirm() {
-            this.$emit("confirm")
+            this.$emit("confirm"
+            )
           }
         },
         components: {

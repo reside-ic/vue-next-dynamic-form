@@ -9,6 +9,7 @@
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
                               :form-control="control"
+                              @mousedown.native="confirm"
                               @click.native="confirm"
                               :required-text="requiredText"
                               :select-text="selectText"
@@ -28,7 +29,7 @@
     interface Methods {
         anyValueEmpty: (controlGroup: DynamicControlGroup) => boolean
         change: (newVal: Control, index: number) => void
-        confirm:() => void
+        confirm:(e: Event) => void
     }
 
     interface Computed {
@@ -72,7 +73,8 @@
                 controls[index] = newVal;
                 this.$emit("change", {...this.controlGroup, controls})
             },
-          confirm() {
+          confirm(e: Event) {
+              e.preventDefault()
               this.$emit("confirm")
           }
         },
