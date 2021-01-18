@@ -235,7 +235,10 @@ At the moment only 3 control types are supported:
 
 ## Testing, building and publishing
 * To run unit tests with jest: `npm test`
-* To build distribution files: `npm build`
+* To build distribution files: `npm run-script build`
 * To publish to npm: 
     * first iterate the version in `package.json`
+    * create a user account if you don't have one
+    * request organization membership to join `reside-ic`
+    * log into your account : `npm login`
     * then `npm publish --access public`
