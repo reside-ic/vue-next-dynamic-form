@@ -3,8 +3,10 @@
         <dynamic-form-control-section v-for="(section, index) in formMeta.controlSections"
                                       :key="index"
                                       :control-section="section"
+                                      @confirmEditing="confirmEditing"
                                       :required-text="requiredText"
                                       :select-text="selectText"
+
                                       @change="change($event, index)">
         </dynamic-form-control-section>
         <button v-if="includeSubmitButton"
@@ -34,6 +36,7 @@
         buildValue: (control: DynamicControl) => string | string[] | number | null
         submit: (e: Event) => DynamicFormData
         change: (newVal: DynamicControlSection, index: number) => void;
+        confirmEditing: () => void
     }
 
     interface Computed {
@@ -137,7 +140,10 @@
                     }, {} as DynamicFormData);
                 this.$emit("submit", result);
                 return result;
-            }
+            },
+          confirmEditing() {
+            this.$emit("confirmEditing")
+          }
         },
         watch: {
             disabled: function(value: Boolean) {

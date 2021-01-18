@@ -4,6 +4,7 @@ import DynamicFormControlGroup from "../src/DynamicFormControlGroup.vue";
 import DynamicFormControl from "../src/DynamicFormControl.vue";
 import {VTooltip} from 'v-tooltip';
 import {DynamicControlGroup, NumberControl, SelectControl} from "../src/types";
+import Vue from "vue";
 
 const tooltipSpy = jest.spyOn(VTooltip, "bind");
 
@@ -159,6 +160,20 @@ describe('Dynamic form control group component', function () {
 
         expect(rendered.findAll(DynamicFormControl).length).toBe(1);
         expect(rendered.findAll(DynamicFormControl).at(0).props("colWidth")).toBe("6");
+    });
+
+    it("emits confirmEditing event when click event triggered", async() => {
+        const controlGroup = {...fakeFormGroup};
+        const rendered = shallowMount(DynamicFormControlGroup, {
+            propsData: {
+                controlGroup: controlGroup
+            }
+        });
+
+        rendered.findAll(DynamicFormControl).at(0).trigger("click")
+        await Vue.nextTick();
+
+        expect(rendered.emitted().confirmEditing.length).toBe(1);
     });
 
 });
