@@ -44,7 +44,7 @@
         change: (newVal: DynamicControlGroup, index: number) => void
         toggleDocumentation: (e: Event) => void
         toggleSection: () => void
-        confirm: () => void
+        confirm: (e: Event) => void
     }
 
     interface Props {
@@ -106,9 +106,8 @@
                     this.open = !this.open;
                 }
             },
-          confirm() {
-            this.$emit("confirm"
-            )
+          confirm(e: Event) {
+            this.$emit("confirm", e)
           }
         },
         components: {

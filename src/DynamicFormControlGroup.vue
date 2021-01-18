@@ -74,8 +74,7 @@
                 this.$emit("change", {...this.controlGroup, controls})
             },
           confirm(e: Event) {
-              e.preventDefault()
-              this.$emit("confirm")
+              this.$emit("confirm", e)
           }
         },
         computed: {
