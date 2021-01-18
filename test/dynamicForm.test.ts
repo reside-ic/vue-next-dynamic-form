@@ -147,7 +147,7 @@ describe('Dynamic form component', function () {
     });
 
 
-    it("emits confirmEditing event when click event triggerecd", async() => {
+    it("emits confirmEditing event when event is emitted ", async() => {
         const rendered = getWrapper(validFormMeta, {}, mount);
         rendered.findAll(DynamicFormControlSection).at(0)
             .vm.$emit("confirmEditing")
