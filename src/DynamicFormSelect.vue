@@ -1,6 +1,5 @@
 <template>
     <select class="form-control"
-            @mousedown="$emit('confirm')"
             v-model="value"
             :name="formControl.name"
             :required="formControl.required">
