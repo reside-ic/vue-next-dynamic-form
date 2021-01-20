@@ -35,7 +35,7 @@
         buildValue: (control: DynamicControl) => string | string[] | number | null
         submit: (e: Event) => DynamicFormData
         change: (newVal: DynamicControlSection, index: number) => void;
-        confirm: () => void
+        confirm: (e: Event) => void
     }
 
     interface Computed {
@@ -140,8 +140,8 @@
                 this.$emit("submit", result);
                 return result;
             },
-          confirm() {
-            this.$emit("confirm")
+          confirm(e: Event) {
+            this.$emit("confirm", e)
           }
         },
         watch: {

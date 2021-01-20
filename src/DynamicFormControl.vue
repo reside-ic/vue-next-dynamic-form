@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
     import {BCol} from "bootstrap-vue";
     import DynamicFormMultiSelect from "./DynamicFormMultiSelect.vue";
     import DynamicFormSelect from "./DynamicFormSelect.vue";

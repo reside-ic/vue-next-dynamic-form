@@ -9,6 +9,7 @@
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
                               :form-control="control"
+                              @mousedown.native="confirm"
                               @click.native="confirm"
                               :required-text="requiredText"
                               :select-text="selectText"
@@ -17,7 +18,6 @@
     </b-row>
 </template>
 <script lang="ts">
-    import Vue from "vue";
     import {BCol, BRow} from "bootstrap-vue";
     import {Control, DynamicControlGroup} from "./types";
     import DynamicFormControl from "./DynamicFormControl.vue";
@@ -28,7 +28,7 @@
     interface Methods {
         anyValueEmpty: (controlGroup: DynamicControlGroup) => boolean
         change: (newVal: Control, index: number) => void
-        confirm:() => void
+        confirm:(e: Event) => void
     }
 
     interface Computed {
@@ -72,8 +72,8 @@
                 controls[index] = newVal;
                 this.$emit("change", {...this.controlGroup, controls})
             },
-          confirm() {
-              this.$emit("confirm")
+          confirm(e: Event) {
+              this.$emit("confirm", e)
           }
         },
         computed: {

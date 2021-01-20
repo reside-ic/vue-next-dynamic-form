@@ -150,10 +150,11 @@ describe('Dynamic form component', function () {
     it("emits confirmEditing event when event is emitted ", async() => {
         const rendered = getWrapper(validFormMeta, {}, mount);
         rendered.findAll(DynamicFormControlSection).at(0)
-            .vm.$emit("confirm")
+            .vm.$emit("confirm", "Param")
 
         await Vue.nextTick();
         expect(rendered.emitted().confirm.length).toBe(1);
+        expect(rendered.emitted().confirm[0][0]).toBe("Param");
     });
 
     it("emits event and returns serialised form data on programmatic submit", () => {
