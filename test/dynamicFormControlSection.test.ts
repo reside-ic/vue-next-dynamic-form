@@ -3,7 +3,7 @@ import Vue from "vue";
 import DynamicFormControlSection from "../src/DynamicFormControlSection.vue";
 import DynamicFormControlGroup from "../src/DynamicFormControlGroup.vue";
 import {DynamicControlSection} from "../src/types";
-import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather-icons";
+import {ChevronDownIcon, ChevronUpIcon} from "vue-feather-icons";
 import {BCollapse} from "bootstrap-vue";
 
 describe('Dynamic form control section component', function () {
@@ -196,8 +196,9 @@ describe('Dynamic form control section component', function () {
         });
 
         rendered.findAll(DynamicFormControlGroup).at(0)
-            .vm.$emit("confirm");
+            .vm.$emit("confirm","Param");
         expect(rendered.emitted().confirm.length).toBe(1);
+        expect(rendered.emitted().confirm[0][0]).toBe("Param");
     });
 
 });

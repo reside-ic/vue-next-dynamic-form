@@ -18,7 +18,6 @@
     </b-row>
 </template>
 <script lang="ts">
-    import Vue from "vue";
     import {BCol, BRow} from "bootstrap-vue";
     import {Control, DynamicControlGroup} from "./types";
     import DynamicFormControl from "./DynamicFormControl.vue";
