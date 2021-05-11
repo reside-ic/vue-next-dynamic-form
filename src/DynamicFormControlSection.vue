@@ -11,6 +11,7 @@
             <dynamic-form-control-group v-for="(group, index) in controlSection.controlGroups"
                                         :key="index"
                                         :control-group="group"
+                                        :readonly="readonly"
                                         @confirm="confirm"
                                         :required-text="requiredText"
                                         :select-text="selectText"
@@ -51,6 +52,7 @@
         controlSection: DynamicControlSection
         requiredText?: string
         selectText?: string
+        readonly: boolean
     }
 
     interface Data {
@@ -71,7 +73,8 @@
                 type: Object
             },
             requiredText: String,
-            selectText: String
+            selectText: String,
+            readonly: Boolean
         },
         model: {
             prop: "controlSection",

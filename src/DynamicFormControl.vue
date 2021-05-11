@@ -6,7 +6,7 @@
                   v-tooltip="formControl.helpText">
                 <help-circle-icon></help-circle-icon>
             </span>
-            <span v-if="formControl.required" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">({{requiredText}})</span>
+            <span v-if="formControl.required && !readonly" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">({{requiredText}})</span>
         </label>
         <component :is="dynamicComponent"
                    v-model="formControlLocal"
@@ -20,6 +20,7 @@
     import DynamicFormSelect from "./DynamicFormSelect.vue";
     import {DynamicControl} from "./types";
     import DynamicFormNumberInput from "./DynamicFormNumberInput.vue";
+    import DynamicFormReadonlyValue from "./DynamicFormReadonlyValue.vue";
     import {VTooltip} from 'v-tooltip'
     import {HelpCircleIcon} from "vue-feather-icons";
     import FormsMixin from "./FormsMixin";
@@ -33,7 +34,8 @@
         formControl: DynamicControl,
         colWidth: string
         requiredText?: string
-        selectText?: string
+        selectText?: string,
+        readonly?: boolean
     }
 
     export default FormsMixin.extend<{}, unknown, Computed, Props>({
@@ -46,7 +48,8 @@
             formControl: Object,
             colWidth: String,
             requiredText: String,
-            selectText: String
+            selectText: String,
+            readonly: Boolean
         },
         computed: {
             formControlLocal: {
@@ -58,13 +61,17 @@
                 }
             },
             dynamicComponent() {
-                switch (this.formControl.type) {
-                    case "select":
-                        return "dynamic-form-select";
-                    case "multiselect":
-                        return "dynamic-form-multi-select";
-                    case "number":
-                        return "dynamic-form-number-input";
+                if (this.readonly) {
+                    return "dynamic-form-readonly-value";
+                } else {
+                    switch (this.formControl.type) {
+                        case "select":
+                            return "dynamic-form-select";
+                        case "multiselect":
+                            return "dynamic-form-multi-select";
+                        case "number":
+                            return "dynamic-form-number-input";
+                    }
                 }
             }
         },
@@ -73,6 +80,7 @@
             DynamicFormNumberInput,
             DynamicFormSelect,
             DynamicFormMultiSelect,
+            DynamicFormReadonlyValue,
             HelpCircleIcon
         },
         directives: {

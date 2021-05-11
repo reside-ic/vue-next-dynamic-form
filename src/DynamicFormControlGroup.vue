@@ -4,11 +4,12 @@
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
                     <help-circle-icon></help-circle-icon>
                 </span>
-            <span v-if="required" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
+            <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
         </label>
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
                               :form-control="control"
+                              :readonly="readonly"
                               @mousedown.native="confirm"
                               @click.native="confirm"
                               :required-text="requiredText"
@@ -41,6 +42,7 @@
         controlGroup: DynamicControlGroup
         requiredText?: string
         selectText?: string
+        readonly?: boolean
     }
 
     export default FormsMixin.extend<{}, Methods, Computed, Props>({
@@ -48,7 +50,8 @@
         props: {
             controlGroup: Object,
             requiredText: String,
-            selectText: String
+            selectText: String,
+            readonly: Boolean
         },
         model: {
             prop: "controlGroup",
