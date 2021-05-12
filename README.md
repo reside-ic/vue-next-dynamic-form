@@ -163,6 +163,7 @@ The form also emits a `validate` event when its valid state changes. The form is
  have values. The valid event provides a single boolean parameter which is `true` is the form has become valid, `false` 
  if it has become invalid. The `validate` event is also emitted when the form is mounted, indicating the initial valid state. 
 
+
 ### Example without v-model
 If for some reason you don't want form values to be automatically updated, you can handle the change event
 yourself:
@@ -226,6 +227,14 @@ and `select-text` attributes, respectively.
     </dynamic-form>
 ```
 
+You can also put the form into read-only mode, by setting the `readonly` attribute, which defaults to false. In read-only
+mode, input controls are replaced by text fields, and no submit button or required indicators are displayed. 
+```
+
+    <dynamic-form v-model="myFormMeta"
+                  :readonly="true>
+    </dynamic-form>
+```
 
 ### Control types
 At the moment only 3 control types are supported:
