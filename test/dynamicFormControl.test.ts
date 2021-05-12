@@ -7,6 +7,7 @@ import TreeSelect from '@riophae/vue-treeselect';
 import {VTooltip} from 'v-tooltip';
 import {NumberControl, SelectControl} from "../src/types";
 import Vue from "vue";
+import DynamicFormReadonlyValue from "../src/DynamicFormReadonlyValue.vue";
 
 const tooltipSpy = jest.spyOn(VTooltip, "bind");
 
@@ -33,12 +34,13 @@ describe('Dynamic form control component', function () {
         options: [{id: "opt1", label: "option 1"}, {id: "opt2", label: "option2"}]
     };
 
-    const getWrapper = (formControl: any, mount: (component: any, options: any) => Wrapper<Vue>) => {
+    const getWrapper = (formControl: any, mount: (component: any, options: any) => Wrapper<Vue>, readonly: Boolean = false) => {
         return mount(DynamicFormControl, {
             propsData: {
                 formControl: formControl,
                 requiredText: 'compulsory',
-                selectText: 'Select'
+                selectText: 'Select',
+                readonly
             }
         });
     };
@@ -67,6 +69,11 @@ describe('Dynamic form control component', function () {
         const rendered = getWrapper({...fakeNumber, required: true, value: 123}, shallowMount);
         expect(rendered.find("label").find("span").text()).toBe("(compulsory)");
         expect(rendered.find("label").find("span").attributes("class")).toBe("small");
+    });
+
+    it("does not render required indicator if readonly", () => {
+        const rendered = getWrapper({...fakeNumber, required: true}, shallowMount, true);
+        expect(rendered.find("label").find("span").exists()).toBe(false);
     });
 
     it("does not renders label if it does not exist", () => {
@@ -107,6 +114,25 @@ describe('Dynamic form control component', function () {
         expect(rendered.findAll(DynamicFormMultiSelect).at(0).props("selectText")).toBe("Select");
         rendered.find(DynamicFormMultiSelect).find(TreeSelect).vm.$emit("input", "opt1");
         expect(rendered.emitted("change")[0][0]).toStrictEqual({...fakeMultiSelect, value: "opt1"})
+    });
+
+    it("renders readonly value when readonly is true", () => {
+        const numberControl = {...fakeNumber};
+        const renderedNumber = getWrapper(numberControl, mount, true);
+        expect(renderedNumber.findAll(DynamicFormNumberInput).length).toBe(0);
+        expect(renderedNumber.findAll(DynamicFormReadonlyValue).length).toBe(1);
+        expect((renderedNumber.find(DynamicFormReadonlyValue).vm as any).formControl).toBe(numberControl);
+
+        const selectControl = {...fakeSelect};
+        const renderedSelect = getWrapper(selectControl, mount, true);
+        expect(renderedSelect.findAll(DynamicFormSelect).length).toBe(0);
+        expect(renderedSelect.findAll(DynamicFormReadonlyValue).length).toBe(1);
+        expect((renderedSelect.find(DynamicFormReadonlyValue).vm as any).formControl).toBe(selectControl);
+
+        const renderedMulti = getWrapper(fakeMultiSelect, mount, true);
+        expect(renderedMulti.findAll(DynamicFormMultiSelect).length).toBe(0);
+        expect(renderedMulti.findAll(DynamicFormReadonlyValue).length).toBe(1);
+        expect((renderedMulti.find(DynamicFormReadonlyValue).vm as any).formControl).toBe(fakeMultiSelect);
     });
 
 });

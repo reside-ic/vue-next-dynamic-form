@@ -49,12 +49,13 @@ describe('Dynamic form control group component', function () {
         ]
     };
 
-    const getWrapper = (controlGroup: any, mount: (component: any, options: any) => Wrapper<Vue>) => {
+    const getWrapper = (controlGroup: any, mount: (component: any, options: any) => Wrapper<Vue>, readonly: Boolean = false) => {
         return mount(DynamicFormControlGroup, {
             propsData: {
                 controlGroup: controlGroup,
                 requiredText: 'compulsory',
-                selectText: 'Select'
+                selectText: 'Select',
+                readonly
             }
         });
     };
@@ -93,6 +94,11 @@ describe('Dynamic form control group component', function () {
         expect(rendered.find("label").find("span").attributes("class")).toBe("small");
     });
 
+    it("does not render required indicator if readonly", () => {
+        const rendered = getWrapper({...fakeFormGroup3}, shallowMount, true);
+        expect(rendered.find("label").find("span").exists()).toBe(false);
+    });
+
     it("renders tooltip with help text if only one control exists", () => {
         const fakeGroup = {...fakeFormGroup, controls: [{...fakeFormGroup.controls[0]}]};
         fakeGroup.controls[0].helpText = "Some help text";
@@ -113,7 +119,8 @@ describe('Dynamic form control group component', function () {
             propsData: {
                 controlGroup: controlGroup,
                 selectText: "Select",
-                requiredText: "compulsory"
+                requiredText: "compulsory",
+                readonly: true
             }
         });
 
@@ -122,6 +129,7 @@ describe('Dynamic form control group component', function () {
             .toStrictEqual(controlGroup.controls[0]);
         expect(rendered.findAll(DynamicFormControl).at(0).props("selectText")).toBe("Select");
         expect(rendered.findAll(DynamicFormControl).at(0).props("requiredText")).toBe("compulsory");
+        expect(rendered.findAll(DynamicFormControl).at(0).props("readonly")).toBe(true);
     });
 
     it("emits change event when a control changes", () => {

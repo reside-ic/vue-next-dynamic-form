@@ -159,7 +159,8 @@ describe('Dynamic form control section component', function () {
             propsData: {
                 controlSection: controlSection,
                 selectText: "Select",
-                requiredText: "compulsory"
+                requiredText: "compulsory",
+                readonly: false
             }
         });
 
@@ -168,6 +169,7 @@ describe('Dynamic form control section component', function () {
             .toStrictEqual(controlSection.controlGroups[0]);
         expect(rendered.findAll(DynamicFormControlGroup).at(0).props("selectText")).toBe("Select");
         expect(rendered.findAll(DynamicFormControlGroup).at(0).props("requiredText")).toBe("compulsory");
+        expect(rendered.findAll(DynamicFormControlGroup).at(0).props("readonly")).toBe(false);
     });
 
     it("emits change event when child component does", () => {
