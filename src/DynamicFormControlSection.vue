@@ -122,7 +122,7 @@
             BRow,
             BCol
         },
-        mounted() {
+        beforeMount() {
             if (this.controlSection.collapsible && this.controlSection.collapsed) {
                 this.open = false
             }
