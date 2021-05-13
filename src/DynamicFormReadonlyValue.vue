@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-6 dynamic-form-readonly-value">{{value}}</div>
+    <div class="dynamic-form-readonly-value">{{value}}</div>
 </template>
 
 <script lang="ts">

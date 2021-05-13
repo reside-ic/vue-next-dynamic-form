@@ -26,7 +26,7 @@
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import DynamicFormControlSection from "./DynamicFormControlSection.vue";
     import {
-        Control,
+        Control, ControlValue,
         DynamicControl,
         DynamicControlSection,
         DynamicFormData,
@@ -34,8 +34,8 @@
     } from "./types";
 
     interface Methods {
-        buildValue: (control: DynamicControl) => string | string[] | number | null
-        transformValue(value: string | string[] | number | null, transform: string): any
+        buildValue: (control: DynamicControl) => ControlValue
+        transformValue(value: ControlValue, transform: string): any
         submit: (e: Event) => DynamicFormData
         change: (newVal: DynamicControlSection, index: number) => void;
         confirm: (e: Event) => void
@@ -136,7 +136,7 @@
                     return []
                 } else return control.value == undefined ? null : control.value;
             },
-            transformValue(value: string | string[] | number | null, transform: string) {
+            transformValue(value: ControlValue, transform: string) {
                 return jsonata(transform).evaluate(value);
             },
             submit(e: Event) {

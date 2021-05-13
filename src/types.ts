@@ -54,4 +54,6 @@ export type DynamicFormMeta = {
     controlSections: DynamicControlSection[]
 }
 
-export type DynamicFormData = Dict<string | string[] | number | null>
+export type ControlValue = string | string[] | number | null
+
+export type DynamicFormData = Dict<ControlValue>
