@@ -3,12 +3,13 @@
         <dynamic-form-control-section v-for="(section, index) in formMeta.controlSections"
                                       :key="index"
                                       :control-section="section"
+                                      :readonly="readonly"
                                       @confirm="confirm"
                                       :required-text="requiredText"
                                       :select-text="selectText"
                                       @change="change($event, index)">
         </dynamic-form-control-section>
-        <button v-if="includeSubmitButton"
+        <button v-if="includeSubmitButton && !readonly"
                 class="btn"
                 :class="disabled? 'btn-secondary' : 'btn-submit'"
                 :disabled="disabled"
@@ -50,6 +51,7 @@
         id?: string
         requiredText?: string
         selectText?: string
+        readonly?: boolean
     }
 
     const props = {
@@ -75,6 +77,10 @@
         selectText: {
             type: String,
             default: "Select..."
+        },
+        readonly:{
+            type: Boolean,
+            default: false
         }
     };
 
