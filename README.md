@@ -134,7 +134,8 @@ const myFormMeta = {
                     controls: [{
                         name: "num_sim",
                         type: "number",
-                        required: true
+                        required: true,
+                        transform: "$/100"
                     }]
                 }
             ]
@@ -156,6 +157,9 @@ the payload would be of the form:
     num_sim: null
 }
 ```
+
+If the optional `transform` property is present on any control, this string is interpreted as a [jsonata](https://jsonata.org/) 
+transform and will be applied to the value emitted. 
 
 See this as a working example [here](https://reside-ic.github.io/vue-dynamic-form/example/index.html)
 

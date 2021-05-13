@@ -22,10 +22,11 @@
 
     import Vue from "vue";
     import {BForm} from "bootstrap-vue";
+    import jsonata from "jsonata";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import DynamicFormControlSection from "./DynamicFormControlSection.vue";
     import {
-        Control,
+        Control, ControlValue,
         DynamicControl,
         DynamicControlSection,
         DynamicFormData,
@@ -33,7 +34,8 @@
     } from "./types";
 
     interface Methods {
-        buildValue: (control: DynamicControl) => string | string[] | number | null
+        buildValue: (control: DynamicControl) => ControlValue
+        transformValue(value: ControlValue, transform: string): any
         submit: (e: Event) => DynamicFormData
         change: (newVal: DynamicControlSection, index: number) => void;
         confirm: (e: Event) => void
@@ -134,13 +136,20 @@
                     return []
                 } else return control.value == undefined ? null : control.value;
             },
+            transformValue(value: ControlValue, transform: string) {
+                return jsonata(transform).evaluate(value);
+            },
             submit(e: Event) {
                 if (e) {
                     e.preventDefault();
                 }
                 const result = this.controls
                     .reduce((formData, control) => {
-                        formData[control.name] = this.buildValue(control);
+                        let value = this.buildValue(control);
+                        if (control.transform) {
+                            value = this.transformValue(value, control.transform);
+                        }
+                        formData[control.name] = value;
                         return formData
                     }, {} as DynamicFormData);
                 this.$emit("submit", result);

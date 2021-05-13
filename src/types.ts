@@ -30,6 +30,7 @@ export type DynamicControl = {
     required: boolean
     helpText?: string
     value?: string | string[] | number | null
+    transform?: string
 }
 
 export type SelectControl = DynamicControl & {
@@ -53,4 +54,6 @@ export type DynamicFormMeta = {
     controlSections: DynamicControlSection[]
 }
 
-export type DynamicFormData = Dict<string | string[] | number | null>
+export type ControlValue = string | string[] | number | null
+
+export type DynamicFormData = Dict<ControlValue>
