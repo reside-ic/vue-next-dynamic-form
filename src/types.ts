@@ -30,6 +30,7 @@ export type DynamicControl = {
     required: boolean
     helpText?: string
     value?: string | string[] | number | null
+    transform?: string
 }
 
 export type SelectControl = DynamicControl & {

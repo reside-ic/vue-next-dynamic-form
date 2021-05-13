@@ -57,6 +57,51 @@ describe('Dynamic form component', function () {
         ]
     };
 
+    const validFormMetaWithTransforms: DynamicFormMeta = {
+        controlSections: [
+            {
+                label: "Test 1",
+                controlGroups: []
+            },
+            {
+                label: "Test 2",
+                controlGroups: [{
+                    label: "Group 1",
+                    controls: [
+                        {
+                            name: "id_1",
+                            type: "number",
+                            required: false
+                        } as NumberControl,
+                        {
+                            name: "id_2",
+                            type: "number",
+                            required: true,
+                            value: 10,
+                            transform: "$/100"
+                        } as NumberControl,
+                        {
+                            name: "id_3",
+                            type: "multiselect",
+                            options: [{id: "opt1", label: "option 1"}],
+                            required: false,
+                            value: ["opt1", "opt2"],
+                            transform: "{\"customValue\": $}"
+                        } as MultiSelectControl,
+                        {
+                            name: "id_4",
+                            type: "select",
+                            options: [{id: "opt2", label: "option 2"}],
+                            required: true,
+                            value: "opt1",
+                            transform: "\"value is \" & $"
+                        } as SelectControl
+                    ]
+                }]
+            }
+        ]
+    };
+
     const invalidFormMeta: DynamicFormMeta = {
         controlSections: [
             {
@@ -159,6 +204,16 @@ describe('Dynamic form component', function () {
         });
     });
 
+    it("emits serialised form data with transforms applied", async () => {
+        const rendered = getWrapper(validFormMetaWithTransforms, {}, mount);
+        rendered.find("button").trigger("click");
+        expect(rendered.emitted("submit")[0][0]).toStrictEqual({
+            "id_1": null, //no transform
+            "id_2": 0.1,
+            "id_3": { customValue: ["opt1", "opt2"] },
+            "id_4": "value is opt1"
+        });
+    });
 
     it("emits confirmEditing event when event is emitted ", async() => {
         const rendered = getWrapper(validFormMeta, {}, mount);
