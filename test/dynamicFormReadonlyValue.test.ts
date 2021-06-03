@@ -12,6 +12,16 @@ describe("dynamicFormReadyonlyValue", () => {
         expect(rendered.find("div").text()).toBe("7");
     });
 
+    it("renders number control value with separator", () => {
+        const propsData = {
+            formControl: {
+                value: 7_654_321.99
+            }
+        };
+        const rendered = mount(DynamicFormReadonlyValue, { propsData });
+        expect(rendered.find("div").text()).toBe("7,654,321.99");
+    });
+
     it("renders select control value", () => {
         const propsData = {
             formControl: {

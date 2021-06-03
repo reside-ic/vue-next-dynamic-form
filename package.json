@@ -1,6 +1,6 @@
 {
   "name": "@reside-ic/vue-dynamic-form",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "A metadata driven form component",
   "scripts": {
     "test": "jest -c jest.config.js",
