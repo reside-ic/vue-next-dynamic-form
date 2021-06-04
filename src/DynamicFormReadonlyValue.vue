@@ -59,9 +59,13 @@
                         return matchedOption ? matchedOption.label : id;
                     });
                     return readableValues.join(", ");
-                } else {
-                    return String(this.formControl.value);
                 }
+
+                if (typeof this.formControl.value === "number") {
+                    return new Intl.NumberFormat().format(this.formControl.value);
+                }
+
+                return this.formControl.value as string;
             }
         }
     });
