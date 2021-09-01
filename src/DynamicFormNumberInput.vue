@@ -1,5 +1,6 @@
 <template>
     <b-form-input :name="formControl.name"
+                  :id="uniqueId"
                   type="number"
                   :number="true"
                   v-model="value"
@@ -14,6 +15,7 @@
     import {NumberControl} from "./types";
 
     interface Props {
+        uniqueId: string,
         formControl: NumberControl
     }
 
@@ -28,6 +30,7 @@
             event: "change"
         },
         props: {
+            uniqueId: String,
             formControl: {
                 type: Object
             }

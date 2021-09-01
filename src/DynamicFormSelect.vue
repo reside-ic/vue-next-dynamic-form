@@ -1,5 +1,6 @@
 <template>
     <select class="form-control"
+            :id="uniqueId"
             v-model="value"
             :name="formControl.name"
             :required="formControl.required">
@@ -18,6 +19,7 @@
     import {SelectControl} from "./types";
 
     interface Props {
+        uniqueId: string,
         formControl: SelectControl
         selectText?: string
     }
@@ -29,6 +31,7 @@
     export default Vue.extend<{}, {}, Computed, Props>({
         name: "DynamicFormSelect",
         props: {
+            uniqueId: String,
             formControl: {
                 type: Object
             },

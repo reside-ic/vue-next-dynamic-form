@@ -1,6 +1,7 @@
 <template>
     <div>
         <tree-select :multiple="true"
+                     :id="uniqueId"
                      :clearable="false"
                      v-model="value"
                      :options="formControl.options" 
@@ -15,6 +16,7 @@
     import TreeSelect from '@riophae/vue-treeselect';
 
     interface Props {
+        uniqueId: string,
         formControl: MultiSelectControl
         selectText?: string
     }
@@ -30,6 +32,7 @@
             event: "change"
         },
         props: {
+        uniqueId: String,
             formControl: {
                 type: Object
             },
@@ -53,6 +56,9 @@
         },
         components: {
             TreeSelect
+        },
+        mounted(){
+            console.log("this.uniqueId", this.uniqueId)
         }
     })
 </script>
