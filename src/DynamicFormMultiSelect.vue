@@ -1,12 +1,11 @@
 <template>
     <div>
         <tree-select :multiple="true"
-                     :id="uniqueId"
                      :clearable="false"
                      v-model="value"
                      :options="formControl.options" 
                      :placeholder="selectText"></tree-select>
-        <input type="hidden" :value="formControl.value" :name="formControl.name"/>
+        <input type="hidden" :value="formControl.value" :name="formControl.name" :id="uniqueId"/>
     </div>
 </template>
 

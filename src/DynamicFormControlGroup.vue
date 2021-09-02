@@ -1,6 +1,6 @@
 <template>
     <b-row class="my-2">
-        <label v-if="controlGroup.label" class="col-form-label col-md-5">{{controlGroup.label}}
+        <label v-if="controlGroup.label" class="col-form-label col-md-5" :for="controlGroup.label">{{controlGroup.label}}
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
                     <help-circle-icon></help-circle-icon>
                 </span>
@@ -8,7 +8,7 @@
         </label>
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
-                              :unique-id="control.name + index"
+                              :unique-id="controlGroup.label"
                               :form-control="control"
                               :readonly="readonly"
                               @mousedown.native="confirm"
@@ -97,6 +97,9 @@
                 return this.controlGroup.controls.length == 1 ?
                     this.controlGroup.controls[0].helpText : ""
             }
+        },
+        mounted(){
+            console.log("for", this.controlGroup.label)
         }
     });
 
