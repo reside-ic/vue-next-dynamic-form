@@ -1,22 +1,26 @@
 <template>
     <b-row class="my-2">
-        <label v-if="controlGroup.label" class="col-form-label col-md-5" :for="controlGroup.label">{{controlGroup.label}}
-            <span v-if="helpText" class="icon-small" v-tooltip="helpText">
-                    <help-circle-icon></help-circle-icon>
-                </span>
-            <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
+        <label v-if="controlGroup.label">
+            <div class="col-form-label col-md-5">
+                {{controlGroup.label}}
+                <span v-if="helpText" class="icon-small" v-tooltip="helpText">
+                        <help-circle-icon></help-circle-icon>
+                    </span>
+                <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
+            </div>
+        <!-- </label> -->
+            <dynamic-form-control v-for="(control, index) in controlGroup.controls"
+                                :key="control.name"
+                                :unique-id="controlGroup.label"
+                                :form-control="control"
+                                :readonly="readonly"
+                                @mousedown.native="confirm"
+                                @click.native="confirm"
+                                :required-text="requiredText"
+                                :select-text="selectText"
+                                @change="change($event, index)"
+                                :col-width="colWidth"></dynamic-form-control>
         </label>
-        <dynamic-form-control v-for="(control, index) in controlGroup.controls"
-                              :key="control.name"
-                              :unique-id="controlGroup.label"
-                              :form-control="control"
-                              :readonly="readonly"
-                              @mousedown.native="confirm"
-                              @click.native="confirm"
-                              :required-text="requiredText"
-                              :select-text="selectText"
-                              @change="change($event, index)"
-                              :col-width="colWidth"></dynamic-form-control>
     </b-row>
 </template>
 <script lang="ts">
