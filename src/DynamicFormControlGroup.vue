@@ -1,6 +1,6 @@
 <template>
-    <b-row class="my-2">
-        <label class="row">
+    <!-- <b-row> -->
+        <label class="row my-2">
             <div v-if="controlGroup.label" class="col-form-label col-md-5">
                 {{controlGroup.label}}
                 <span v-if="helpText" class="icon-small" v-tooltip="helpText">
@@ -9,7 +9,7 @@
                 <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
             </div>
         <!-- </label> -->
-            <div class="col-md-5">
+            <!-- <div class="col-md-5"> -->
                 <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                                     :key="control.name"
                                     :unique-id="controlGroup.label"
@@ -21,9 +21,9 @@
                                     :select-text="selectText"
                                     @change="change($event, index)"
                                     :col-width="colWidth"></dynamic-form-control>
-            </div>
+            <!-- </div> -->
         </label>
-    </b-row>
+    <!-- </b-row> -->
 </template>
 <script lang="ts">
     import {BCol, BRow} from "bootstrap-vue";
