@@ -53,9 +53,6 @@
         },
         components: {
             TreeSelect
-        },
-        mounted(){
-            console.log("this.uniqueId", this.uniqueId)
         }
     })
 </script>

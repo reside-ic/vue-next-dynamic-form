@@ -59,8 +59,6 @@
             event: "change"
         },
         components: {
-            BRow,
-            BCol,
             DynamicFormControl,
             HelpCircleIcon
         },
