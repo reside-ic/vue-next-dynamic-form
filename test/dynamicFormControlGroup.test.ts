@@ -60,26 +60,26 @@ describe('Dynamic form control group component', function () {
         });
     };
 
-    it("renders label if it exists", () => {
+    it("renders psuedo label if it exists", () => {
         const rendered = shallowMount(DynamicFormControlGroup, {
             propsData: {
                 controlGroup: fakeFormGroup
             }
         });
 
-        const labelCol = rendered.find("label");
+        const labelCol = rendered.find(".col-form-label");
         expect(labelCol.text()).toBe("Test 1");
         expect(labelCol.classes()).toStrictEqual(["col-form-label", "col-md-5"]);
     });
 
-    it("does not render label col if there is no label", () => {
+    it("does not render psuedo label if null", () => {
         const rendered = shallowMount(DynamicFormControlGroup, {
             propsData: {
                 controlGroup: {...fakeFormGroup, label: null}
             }
         });
 
-        expect(rendered.findAll(BCol).length).toBe(0);
+        expect(rendered.findAll(".col-form-label").length).toBe(0);
     });
 
     it("renders required indicator if input is required and sets text-danger class if no value given", () => {
