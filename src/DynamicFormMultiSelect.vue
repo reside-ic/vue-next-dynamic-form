@@ -5,7 +5,7 @@
                      v-model="value"
                      :options="formControl.options" 
                      :placeholder="selectText"></tree-select>
-        <input type="hidden" :value="formControl.value" :name="formControl.name" :id="uniqueId"/>
+        <input type="hidden" :value="formControl.value" :name="formControl.name"/>
     </div>
 </template>
 
@@ -15,7 +15,6 @@
     import TreeSelect from '@riophae/vue-treeselect';
 
     interface Props {
-        uniqueId: string,
         formControl: MultiSelectControl
         selectText?: string
     }
@@ -31,7 +30,6 @@
             event: "change"
         },
         props: {
-        uniqueId: String,
             formControl: {
                 type: Object
             },

@@ -9,7 +9,6 @@
             <span v-if="formControl.required && !readonly" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">({{requiredText}})</span>
         </label>
         <component :is="dynamicComponent"
-                   :unique-id="uniqueId"
                    v-model="formControlLocal"
                    :select-text="selectText"></component>
     </b-col>
@@ -32,7 +31,6 @@
     }
 
     interface Props {
-        uniqueId: string,
         formControl: DynamicControl,
         colWidth: string
         requiredText?: string
@@ -47,7 +45,6 @@
             event: "change"
         },
         props: {
-            uniqueId: String,
             formControl: Object,
             colWidth: String,
             requiredText: String,

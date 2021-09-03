@@ -1,32 +1,26 @@
 <template>
-    <!-- <b-row> -->
-        <label class="row my-2">
-            <div v-if="controlGroup.label" class="col-form-label col-md-5">
-                {{controlGroup.label}}
-                <span v-if="helpText" class="icon-small" v-tooltip="helpText">
-                        <help-circle-icon></help-circle-icon>
-                    </span>
-                <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
-            </div>
-        <!-- </label> -->
-            <!-- <div class="col-md-5"> -->
-                <dynamic-form-control v-for="(control, index) in controlGroup.controls"
-                                    :key="control.name"
-                                    :unique-id="controlGroup.label"
-                                    :form-control="control"
-                                    :readonly="readonly"
-                                    @mousedown.native="confirm"
-                                    @click.native="confirm"
-                                    :required-text="requiredText"
-                                    :select-text="selectText"
-                                    @change="change($event, index)"
-                                    :col-width="colWidth"></dynamic-form-control>
-            <!-- </div> -->
-        </label>
-    <!-- </b-row> -->
+    <label class="row my-2">
+        <div v-if="controlGroup.label" class="col-form-label col-md-5">
+            {{controlGroup.label}}
+            <span v-if="helpText" class="icon-small" v-tooltip="helpText">
+                    <help-circle-icon></help-circle-icon>
+                </span>
+            <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
+        </div>
+        <dynamic-form-control v-for="(control, index) in controlGroup.controls"
+                            :key="control.name"
+                            :unique-id="controlGroup.label"
+                            :form-control="control"
+                            :readonly="readonly"
+                            @mousedown.native="confirm"
+                            @click.native="confirm"
+                            :required-text="requiredText"
+                            :select-text="selectText"
+                            @change="change($event, index)"
+                            :col-width="colWidth"></dynamic-form-control>
+    </label>
 </template>
 <script lang="ts">
-    import {BCol, BRow} from "bootstrap-vue";
     import {Control, DynamicControlGroup} from "./types";
     import DynamicFormControl from "./DynamicFormControl.vue";
     import {VTooltip} from 'v-tooltip';
@@ -103,9 +97,6 @@
                 return this.controlGroup.controls.length == 1 ?
                     this.controlGroup.controls[0].helpText : ""
             }
-        },
-        mounted(){
-            console.log("for", this.controlGroup.label)
         }
     });
 
