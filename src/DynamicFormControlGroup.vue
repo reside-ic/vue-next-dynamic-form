@@ -1,6 +1,9 @@
 <template>
-    <label class="row my-2">
-        <div v-if="controlGroup.label" class="col-form-label col-md-5">
+    <conditional-label
+        :readonly="readonly"
+        :control-group="controlGroup"
+    >
+        <div class="col-form-label col-md-5">
             {{controlGroup.label}}
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
                     <help-circle-icon></help-circle-icon>
@@ -17,7 +20,7 @@
                             :select-text="selectText"
                             @change="change($event, index)"
                             :col-width="colWidth"></dynamic-form-control>
-    </label>
+    </conditional-label>
 </template>
 <script lang="ts">
     import {Control, DynamicControlGroup} from "./types";
@@ -25,6 +28,7 @@
     import {VTooltip} from 'v-tooltip';
     import {HelpCircleIcon} from "vue-feather-icons";
     import FormsMixin from "./FormsMixin";
+    import ConditionalLabel from "./ConditionalLabel.vue";
 
     interface Methods {
         anyValueEmpty: (controlGroup: DynamicControlGroup) => boolean
@@ -58,6 +62,7 @@
             event: "change"
         },
         components: {
+            ConditionalLabel,
             DynamicFormControl,
             HelpCircleIcon
         },
