@@ -60,43 +60,36 @@ describe('Dynamic form control group component', function () {
         });
     };
 
-    it("renders psuedo label if it exists", () => {
+    it("renders conditional label and its contents", () => {
         const rendered = shallowMount(DynamicFormControlGroup, {
             propsData: {
-                controlGroup: fakeFormGroup
+                controlGroup: fakeFormGroup,
+                readonly: true
             }
         });
-
+        const conditionalLabel = rendered.find("conditional-label-stub")
+        expect(conditionalLabel.exists()).toBe(true)
+        expect(conditionalLabel.attributes()).toStrictEqual({"controlgroup": "[object Object]", "readonly": "true"})
         const labelCol = rendered.find(".col-form-label");
         expect(labelCol.text()).toBe("Test 1");
         expect(labelCol.classes()).toStrictEqual(["col-form-label", "col-md-5"]);
     });
 
-    it("does not render psuedo label if null", () => {
-        const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
-                controlGroup: {...fakeFormGroup, label: null}
-            }
-        });
-
-        expect(rendered.findAll(".col-form-label").length).toBe(0);
-    });
-
     it("renders required indicator if input is required and sets text-danger class if no value given", () => {
         const rendered = getWrapper({...fakeFormGroup2}, shallowMount);
-        expect(rendered.find("label").find("span").text()).toBe("(compulsory)");
-        expect(rendered.find("label").find("span").attributes("class")).toBe("small text-danger");
+        expect(rendered.find("span").text()).toBe("(compulsory)");
+        expect(rendered.find("span").attributes("class")).toBe("small text-danger");
     });
 
     it("renders required indicator if input is required and removes set text-danger class if value given", () => {
         const rendered = getWrapper({...fakeFormGroup3}, shallowMount);
-        expect(rendered.find("label").find("span").text()).toBe("(compulsory)");
-        expect(rendered.find("label").find("span").attributes("class")).toBe("small");
+        expect(rendered.find("span").text()).toBe("(compulsory)");
+        expect(rendered.find("span").attributes("class")).toBe("small");
     });
 
     it("does not render required indicator if readonly", () => {
         const rendered = getWrapper({...fakeFormGroup3}, shallowMount, true);
-        expect(rendered.find("label").find("span").exists()).toBe(false);
+        expect(rendered.find("span").exists()).toBe(false);
     });
 
     it("renders tooltip with help text if only one control exists", () => {
@@ -108,7 +101,7 @@ describe('Dynamic form control group component', function () {
             }
         });
 
-        expect(rendered.find("label").find("span").classes()).toContain("has-tooltip");
+        expect(rendered.find("span").classes()).toContain("has-tooltip");
         expect(tooltipSpy).toHaveBeenCalled();
         expect((tooltipSpy.mock.calls[0][1] as any).value).toBe("Some help text")
     });
