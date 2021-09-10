@@ -1,4 +1,4 @@
-import {shallowMount, mount, Wrapper} from "@vue/test-utils";
+import {shallowMount} from "@vue/test-utils";
 import ConditionalLabel from "../src/ConditionalLabel.vue";
 import {DynamicControlGroup, NumberControl, SelectControl} from "../src/types";
 import Vue from "vue";
@@ -21,44 +21,57 @@ describe('Conditional label component', function () {
         ]
     };
 
-    it("renders label if not readonly", () => {
-        const rendered = shallowMount(ConditionalLabel, {
+    const getWrapper = (readonly = false, controlGroup = fakeFormGroup) => {
+        return shallowMount(ConditionalLabel, {
             propsData: {
-                controlGroup: fakeFormGroup,
-                readonly: false
+                controlGroup,
+                readonly
+            },
+            slots: {
+                label: "<label-slot />",
+                control: "<control-slot />"
             }
         });
+    };
+
+    it("renders label if not readonly and renders label slot", () => {
+        const rendered = getWrapper()
         const label = rendered.find("label");
-        expect(label.classes()).toStrictEqual(["row", "my-2"]);
+        expect(label.exists()).toBe(true);
         const span = rendered.find("span");
         expect(span.exists()).toBe(false);
+        expect(rendered.find("label-slot").exists()).toBe(true)
+        expect(rendered.find("control-slot").exists()).toBe(true)
     });
 
-    it("renders span if readonly", () => {
-        const rendered = shallowMount(ConditionalLabel, {
-            propsData: {
-                controlGroup: fakeFormGroup,
-                readonly: true
-            }
-        });
+    it("renders span if readonly and renders label slot", () => {
+        const rendered = getWrapper(true)
         const span = rendered.find("span");
-        expect(span.classes()).toStrictEqual(["row", "my-2"]);
+        expect(span.exists()).toBe(true);
         const label = rendered.find("label");
         expect(label.exists()).toBe(false);
+        expect(rendered.find("label-slot").exists()).toBe(true)
+        expect(rendered.find("control-slot").exists()).toBe(true)
     });
 
-
-    it("renders nothing if no control group label", () => {
-        const rendered = shallowMount(ConditionalLabel, {
-            propsData: {
-                controlGroup: {...fakeFormGroup, label: ""},
-                readonly: true
-            }
-        });
+    it("renders label if not readonly and does not render label slot", () => {
+        const rendered = getWrapper(false, {...fakeFormGroup, label: ""})
+        const label = rendered.find("label");
+        expect(label.exists()).toBe(true);
         const span = rendered.find("span");
         expect(span.exists()).toBe(false);
+        expect(rendered.find("label-slot").exists()).toBe(false)
+        expect(rendered.find("control-slot").exists()).toBe(true)
+    });
+
+    it("renders span if readonly and does not render label slot", () => {
+        const rendered = getWrapper(true, {...fakeFormGroup, label: ""})
+        const span = rendered.find("span");
+        expect(span.exists()).toBe(true);
         const label = rendered.find("label");
         expect(label.exists()).toBe(false);
+        expect(rendered.find("label-slot").exists()).toBe(false)
+        expect(rendered.find("control-slot").exists()).toBe(true)
     });
 
 });

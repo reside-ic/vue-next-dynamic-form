@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <div v-if="controlGroup.label"> -->
         <label v-if="!readonly" class="row my-2">
             <slot name="label" v-if="controlGroup.label"></slot>
             <slot name="control"></slot>
@@ -9,8 +8,6 @@
             <slot name="label" v-if="controlGroup.label"></slot>
             <slot name="control"></slot>
         </span>
-        <!-- </div>
-      <slot v-else name="control"></slot> -->
     </div>
 </template>
 
