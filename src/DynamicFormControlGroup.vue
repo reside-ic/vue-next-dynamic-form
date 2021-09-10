@@ -3,23 +3,27 @@
         :readonly="readonly"
         :control-group="controlGroup"
     >
-        <div class="col-form-label col-md-5">
-            {{controlGroup.label}}
-            <span v-if="helpText" class="icon-small" v-tooltip="helpText">
-                    <help-circle-icon></help-circle-icon>
-                </span>
-            <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
-        </div>
-        <dynamic-form-control v-for="(control, index) in controlGroup.controls"
-                            :key="control.name"
-                            :form-control="control"
-                            :readonly="readonly"
-                            @mousedown.native="confirm"
-                            @click.native="confirm"
-                            :required-text="requiredText"
-                            :select-text="selectText"
-                            @change="change($event, index)"
-                            :col-width="colWidth"></dynamic-form-control>
+        <template v-slot:label>
+            <span class="col-form-label col-md-5">
+                {{controlGroup.label}}
+                <span v-if="helpText" class="icon-small" v-tooltip="helpText">
+                        <help-circle-icon></help-circle-icon>
+                    </span>
+                <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
+            </span>
+        </template>
+        <template v-slot:control>
+            <dynamic-form-control v-for="(control, index) in controlGroup.controls"
+                                :key="control.name"
+                                :form-control="control"
+                                :readonly="readonly"
+                                @mousedown.native="confirm"
+                                @click.native="confirm"
+                                :required-text="requiredText"
+                                :select-text="selectText"
+                                @change="change($event, index)"
+                                :col-width="colWidth"></dynamic-form-control>
+        </template>
     </conditional-label>
 </template>
 <script lang="ts">
