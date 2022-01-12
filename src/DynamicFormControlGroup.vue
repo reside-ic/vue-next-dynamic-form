@@ -1,38 +1,30 @@
 <template>
-    <conditional-label
-        :readonly="readonly"
-        :control-group="controlGroup"
-    >
-        <template v-slot:label>
-            <span class="col-form-label col-md-5">
-                {{controlGroup.label}}
-                <span v-if="helpText" class="icon-small" v-tooltip="helpText">
-                        <help-circle-icon></help-circle-icon>
-                    </span>
-                <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
-            </span>
-        </template>
-        <template v-slot:control>
-            <dynamic-form-control v-for="(control, index) in controlGroup.controls"
-                                :key="control.name"
-                                :form-control="control"
-                                :readonly="readonly"
-                                @mousedown.native="confirm"
-                                @click.native="confirm"
-                                :required-text="requiredText"
-                                :select-text="selectText"
-                                @change="change($event, index)"
-                                :col-width="colWidth"></dynamic-form-control>
-        </template>
-    </conditional-label>
+    <b-row class="my-2">
+        <label v-if="controlGroup.label" class="col-form-label col-md-5">{{controlGroup.label}}
+            <span v-if="helpText" class="icon-small" v-tooltip="helpText">
+                    <help-circle-icon></help-circle-icon>
+                </span>
+            <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
+        </label>
+        <dynamic-form-control v-for="(control, index) in controlGroup.controls"
+                              :key="control.name"
+                              :form-control="control"
+                              :readonly="readonly"
+                              @mousedown.native="confirm"
+                              @click.native="confirm"
+                              :required-text="requiredText"
+                              :select-text="selectText"
+                              @change="change($event, index)"
+                              :col-width="colWidth"></dynamic-form-control>
+    </b-row>
 </template>
 <script lang="ts">
+    import {BCol, BRow} from "bootstrap-vue";
     import {Control, DynamicControlGroup} from "./types";
     import DynamicFormControl from "./DynamicFormControl.vue";
     import {VTooltip} from 'v-tooltip';
     import {HelpCircleIcon} from "vue-feather-icons";
     import FormsMixin from "./FormsMixin";
-    import ConditionalLabel from "./ConditionalLabel.vue";
 
     interface Methods {
         anyValueEmpty: (controlGroup: DynamicControlGroup) => boolean
@@ -66,7 +58,8 @@
             event: "change"
         },
         components: {
-            ConditionalLabel,
+            BRow,
+            BCol,
             DynamicFormControl,
             HelpCircleIcon
         },
