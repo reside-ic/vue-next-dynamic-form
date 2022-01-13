@@ -63,4 +63,24 @@ describe('Dynamic form multi-select component', function () {
         expect((rendered.find("[name=id_1]").element as HTMLInputElement).value).toBe("opt2");
     });
 
+    it("renders aria-label as groupLabel if no label given", () => {
+        const rendered = shallowMount(DynamicFormMultiSelect, {
+            propsData: {
+                formControl: fakeSelect,
+                groupLabel: "groupLabel"
+            }
+        });
+        expect(rendered.find("div").attributes("aria-label")).toBe("groupLabel");
+    });
+
+    it("renders aria-label as control label if label given", () => {
+        const rendered = shallowMount(DynamicFormMultiSelect, {
+            propsData: {
+                formControl: {...fakeSelect, label: "controlLabel"},
+                groupLabel: "groupLabel"
+            }
+        });
+        expect(rendered.find("div").attributes("aria-label")).toBe("controlLabel");
+    });
+
 });
