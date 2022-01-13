@@ -1,6 +1,6 @@
 <template>
     <b-form-input :name="formControl.name"
-                  :aria-label="formControl.label ? formControl.label :formControl.name.replaceAll('_', ' ')"
+                  :aria-label="formControl.label ? formControl.label : formControl.name.replaceAll('_', ' ')"
                   type="number"
                   :number="true"
                   v-model="value"
