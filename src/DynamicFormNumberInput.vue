@@ -1,6 +1,6 @@
 <template>
     <b-form-input :name="formControl.name"
-                  :aria-labelledby="formControl.name"
+                  :aria-label="formControl.label ? formControl.label : groupLabel"
                   type="number"
                   :number="true"
                   v-model="value"
@@ -16,6 +16,7 @@
 
     interface Props {
         formControl: NumberControl
+        groupLabel: string
     }
 
     interface Computed {
@@ -31,7 +32,8 @@
         props: {
             formControl: {
                 type: Object
-            }
+            },
+            groupLabel: String
         },
         computed: {
             value: {

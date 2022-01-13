@@ -1,6 +1,6 @@
 <template>
     <b-row class="my-2">
-        <label v-if="controlGroup.label" class="col-form-label col-md-5" :id="controlGroup.controls.length && controlGroup.controls[0].name">{{controlGroup.label}}
+        <label v-if="controlGroup.label" class="col-form-label col-md-5">{{controlGroup.label}}
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
                     <help-circle-icon></help-circle-icon>
                 </span>
@@ -8,6 +8,7 @@
         </label>
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
+                              :group-label="controlGroup.label"
                               :form-control="control"
                               :readonly="readonly"
                               @mousedown.native="confirm"

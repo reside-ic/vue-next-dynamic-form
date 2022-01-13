@@ -1,5 +1,5 @@
 <template>
-    <div :aria-labelledby="formControl.name">
+    <div :aria-label="formControl.label ? formControl.label : groupLabel">
         <tree-select :multiple="true"
                      :clearable="false"
                      v-model="value"
@@ -17,6 +17,7 @@
     interface Props {
         formControl: MultiSelectControl
         selectText?: string
+        groupLabel: string
     }
 
     interface Computed {
@@ -33,7 +34,8 @@
             formControl: {
                 type: Object
             },
-            selectText: String
+            selectText: String,
+            groupLabel: String
         },
         computed: {
             value: {
@@ -49,7 +51,7 @@
                 set(newVal: string[]) {
                     this.$emit("change", {...this.formControl, value: newVal});
                 }
-            },
+            }
         },
         components: {
             TreeSelect

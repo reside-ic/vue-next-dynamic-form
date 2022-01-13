@@ -1,6 +1,6 @@
 <template>
     <select class="form-control"
-            :aria-labelledby="formControl.name"
+            :aria-label="formControl.label ? formControl.label : groupLabel"
             v-model="value"
             :name="formControl.name"
             :required="formControl.required">
@@ -21,6 +21,7 @@
     interface Props {
         formControl: SelectControl
         selectText?: string
+        groupLabel: string
     }
 
     interface Computed {
@@ -33,7 +34,8 @@
             formControl: {
                 type: Object
             },
-            selectText: String
+            selectText: String,
+            groupLabel: String
         },
         model: {
             prop: "formControl",
