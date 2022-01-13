@@ -1,6 +1,6 @@
 <template>
     <select class="form-control"
-            :aria-label="formControl.label ? formControl.label : formControl.name.replaceAll('_', ' ')"
+            :aria-labelledby="formControl.name"
             v-model="value"
             :name="formControl.name"
             :required="formControl.required">

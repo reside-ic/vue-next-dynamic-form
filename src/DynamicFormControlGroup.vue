@@ -1,6 +1,6 @@
 <template>
     <b-row class="my-2">
-        <label v-if="controlGroup.label" class="col-form-label col-md-5">{{controlGroup.label}}
+        <label v-if="controlGroup.label" class="col-form-label col-md-5" :id="controlGroup.controls.length && controlGroup.controls[0].name">{{controlGroup.label}}
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
                     <help-circle-icon></help-circle-icon>
                 </span>

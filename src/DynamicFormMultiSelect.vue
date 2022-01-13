@@ -1,5 +1,5 @@
 <template>
-    <div :aria-label="formControl.label ? formControl.label : formControl.name.replaceAll('_', ' ')">
+    <div :aria-labelledby="formControl.name">
         <tree-select :multiple="true"
                      :clearable="false"
                      v-model="value"

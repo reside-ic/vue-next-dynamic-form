@@ -1,6 +1,6 @@
 <template>
     <b-col :md="colWidth">
-        <label v-if="formControl.label">{{formControl.label}}
+        <label v-if="formControl.label" :id="formControl.name">{{formControl.label}}
             <span v-if="formControl.helpText"
                   class="icon-small"
                   v-tooltip="formControl.helpText">
