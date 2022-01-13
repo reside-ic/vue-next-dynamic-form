@@ -51,7 +51,7 @@
                 set(newVal: string[]) {
                     this.$emit("change", {...this.formControl, value: newVal});
                 }
-            }
+            },
         },
         components: {
             TreeSelect
