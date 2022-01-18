@@ -1,7 +1,8 @@
 <template>
-    <div :aria-label="formControl.label ? formControl.label : groupLabel">
+    <div>
         <tree-select :multiple="true"
                      :clearable="false"
+                     :aria-label="formControl.label ? formControl.label : groupLabel"
                      v-model="value"
                      :options="formControl.options" 
                      :placeholder="selectText"></tree-select>
