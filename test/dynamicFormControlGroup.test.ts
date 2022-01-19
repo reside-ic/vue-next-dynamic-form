@@ -130,6 +130,7 @@ describe('Dynamic form control group component', function () {
         expect(rendered.findAll(DynamicFormControl).at(0).props("selectText")).toBe("Select");
         expect(rendered.findAll(DynamicFormControl).at(0).props("requiredText")).toBe("compulsory");
         expect(rendered.findAll(DynamicFormControl).at(0).props("readonly")).toBe(true);
+        expect(rendered.findAll(DynamicFormControl).at(0).props("groupLabel")).toBe("Test 1");
     });
 
     it("emits change event when a control changes", () => {

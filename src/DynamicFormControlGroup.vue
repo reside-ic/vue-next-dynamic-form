@@ -8,6 +8,7 @@
         </label>
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
+                              :group-label="controlGroup.label"
                               :form-control="control"
                               :readonly="readonly"
                               @mousedown.native="confirm"

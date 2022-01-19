@@ -99,4 +99,24 @@ describe('Dynamic form select component', function () {
         expect((select.element as HTMLSelectElement).required).toBe(false);
     });
 
+    it("renders aria-label as groupLabel if no label given", () => {
+        const rendered = mount(DynamicFormSelect, {
+            propsData: {
+                formControl: fakeSelect,
+                groupLabel: "groupLabel"
+            }
+        });
+        expect(rendered.find("select").attributes("aria-label")).toBe("groupLabel");
+    });
+
+    it("renders aria-label as control label if label given", () => {
+        const rendered = mount(DynamicFormSelect, {
+            propsData: {
+                formControl: {...fakeSelect, label: "controlLabel"},
+                groupLabel: "groupLabel"
+            }
+        });
+        expect(rendered.find("select").attributes("aria-label")).toBe("controlLabel");
+    });
+
 });
