@@ -20,6 +20,7 @@ module.exports = {
     },
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
+    "coverageProvider": "v8",
     "coveragePathIgnorePatterns": [
         "/node_modules/"
     ]
