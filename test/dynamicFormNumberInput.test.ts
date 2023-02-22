@@ -125,7 +125,7 @@ describe('Dynamic form number input component', function () {
         });
 
         rendered.find("input").setValue(123);
-        expect(rendered.emitted("change")[0][0]).toStrictEqual({...control, value: 123})
+        expect(rendered.emitted("change")![0][0]).toStrictEqual({...control, value: 123})
     });
 
 });

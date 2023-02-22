@@ -45,7 +45,7 @@ describe('Dynamic form select component', function () {
         });
 
         rendered.find("select").trigger("change");
-        expect(rendered.emitted("change")[0][0]).toStrictEqual({...fakeSelect, value: ""});
+        expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeSelect, value: ""});
     });
 
     it("default message is selected if no value present", () => {
@@ -74,7 +74,7 @@ describe('Dynamic form select component', function () {
         const select = rendered.find("select");
 
         await Vue.nextTick();
-        expect(rendered.emitted("change")[0][0]).toEqual({...formControl, value: "opt1"});
+        expect(rendered.emitted("change")![0][0]).toEqual({...formControl, value: "opt1"});
     });
 
     it("is required if formControl.required is true", () => {
