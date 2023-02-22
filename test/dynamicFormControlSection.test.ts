@@ -199,8 +199,8 @@ describe('Dynamic form control section component', function () {
 
         rendered.findAll(DynamicFormControlGroup).at(0)
             .vm.$emit("confirm","Param");
-        expect(rendered.emitted()!.confirm.length).toBe(1);
-        expect(rendered.emitted()!.confirm[0][0]).toBe("Param");
+        expect(rendered.emitted().confirm!.length).toBe(1);
+        expect(rendered.emitted().confirm![0][0]).toBe("Param");
     });
 
 });

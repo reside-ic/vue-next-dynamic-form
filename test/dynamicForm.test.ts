@@ -274,16 +274,16 @@ describe('Dynamic form component', function () {
         const rendered = getWrapper(invalidFormMeta, {}, shallowMount);
 
         await Vue.nextTick();
-        expect(rendered.emitted()!.validate.length).toBe(1);
-        expect(rendered.emitted()!.validate[0][0]).toBe(false);
+        expect(rendered.emitted().validate!.length).toBe(1);
+        expect(rendered.emitted().validate![0][0]).toBe(false);
     });
 
     it("initial validate event is emitted with true  value when when required values are present", async () => {
         const rendered = getWrapper(validFormMeta, {}, mount);
 
         await Vue.nextTick();
-        expect(rendered.emitted()!.validate.length).toBe(1);
-        expect(rendered.emitted()!.validate[0][0]).toBe(true);
+        expect(rendered.emitted().validate!.length).toBe(1);
+        expect(rendered.emitted().validate![0][0]).toBe(true);
     });
 
     it("validate event is emitted with false value when form becomes invalid", async () => {
@@ -311,8 +311,8 @@ describe('Dynamic form component', function () {
 
         await Vue.nextTick();
 
-        expect(rendered.emitted()!.validate.length).toBe(2);
-        expect(rendered.emitted()!.validate[1][0]).toBe(false);
+        expect(rendered.emitted().validate!.length).toBe(2);
+        expect(rendered.emitted().validate![1][0]).toBe(false);
     });
 
     it("validate event is emitted with true value when form becomes valid", async () => {
@@ -340,7 +340,7 @@ describe('Dynamic form component', function () {
 
         await Vue.nextTick();
 
-        expect(rendered.emitted()!.validate.length).toBe(2);
-        expect(rendered.emitted()!.validate[1][0]).toBe(true);
+        expect(rendered.emitted().validate!.length).toBe(2);
+        expect(rendered.emitted().validate![1][0]).toBe(true);
     });
 });
