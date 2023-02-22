@@ -103,6 +103,17 @@ describe('Dynamic form number input component', function () {
         const inputElement = rendered.find("input").element as HTMLInputElement;
         expect(inputElement.min).toBe("1");
         expect(inputElement.max).toBe("5");
+    })
+
+    it("renders number input with step", () => {
+        const rendered = mount(DynamicFormNumberInput, {
+            propsData: {
+                formControl: {...fakeNumber, step: 0.01}
+            }
+        });
+
+        const inputElement = rendered.find("input").element as HTMLInputElement;
+        expect(inputElement.step).toBe("0.01");
     });
 
     it("emits change to formControl when underlying input is updated", () => {

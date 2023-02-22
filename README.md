@@ -137,6 +137,15 @@ const myFormMeta = {
                         required: true,
                         transform: "$/100"
                     }]
+                },
+                {
+                    label: "Decimal parameter",
+                    controls: [{
+                        name: "dec_param",
+                        type: "number",
+                        required: true,
+                        step: 0.1
+                    }]
                 }
             ]
         }
