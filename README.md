@@ -1,6 +1,6 @@
 # vue-dynamic-form 
 
-[![Build Status](https://travis-ci.com/reside-ic/vue-dynamic-form.svg?branch=master)](https://travis-ci.com/reside-ic/vue-dynamic-form)
+![Build Status](https://github.com/reside-ic/vue-dynamic-form/actions/workflows/test.yml/badge.svg?branch=mrc-4011)
 
 Vue component for generating a form dynamically from metadata.
 
