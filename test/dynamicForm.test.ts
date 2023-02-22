@@ -195,7 +195,7 @@ describe('Dynamic form component', function () {
     it("emits event with serialised form data on button submit", async () => {
         const rendered = getWrapper(validFormMeta, {}, mount);
         rendered.find("button").trigger("click");
-        expect(rendered.emitted("submit")[0][0]).toStrictEqual({
+        expect(rendered.emitted("submit")![0][0]).toStrictEqual({
             "id_1": null,
             "id_2": 10,
             "id_3": ["opt1", "opt2"],
@@ -207,7 +207,7 @@ describe('Dynamic form component', function () {
     it("emits serialised form data with transforms applied", async () => {
         const rendered = getWrapper(validFormMetaWithTransforms, {}, mount);
         rendered.find("button").trigger("click");
-        expect(rendered.emitted("submit")[0][0]).toStrictEqual({
+        expect(rendered.emitted("submit")![0][0]).toStrictEqual({
             "id_1": null, //no transform
             "id_2": 0.1,
             "id_3": { customValue: ["opt1", "opt2"] },
@@ -221,8 +221,8 @@ describe('Dynamic form component', function () {
             .vm.$emit("confirm", "Param")
 
         await Vue.nextTick();
-        expect(rendered.emitted().confirm.length).toBe(1);
-        expect(rendered.emitted().confirm[0][0]).toBe("Param");
+        expect(rendered.emitted().confirm!.length).toBe(1);
+        expect(rendered.emitted().confirm![0][0]).toBe("Param");
     });
 
     it("emits event and returns serialised form data on programmatic submit", () => {
