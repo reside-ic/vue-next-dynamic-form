@@ -6,6 +6,7 @@
                   v-model="value"
                   :min="formControl.min"
                   :max="formControl.max"
+                  :step="formControl.step"
                   :required="formControl.required"></b-form-input>
 </template>
 
