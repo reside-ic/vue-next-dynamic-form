@@ -155,6 +155,10 @@ const myFormMeta = {
 </script>
 ```
 
+Note that the `step` value on number controls may be any valid value for HTML `input` elements of type `number`. However,
+in read-only mode the form displays numbers according to the default local `Intl.NumberFormat`, typically to three decimal places
+so will round any values with greater precision.  
+
 On user submission the form emits a `submit` event with a payload that contains the form data as JSON. In this example,
 the payload would be of the form:
 ```

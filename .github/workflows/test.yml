@@ -1,5 +1,10 @@
 name: test
-on: [push]
+on:
+  push:
+    branches:
+      - 'main'
+    pull_request:
+      -
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,7 +14,7 @@ jobs:
         with:
           node-version: 12.x
       - run: npm install -g codecov
-      - run: npm install
+      - run: npm ci
       - run: npm run-script build
       - run: npm test
       - run: codecov -f coverage/*.json
