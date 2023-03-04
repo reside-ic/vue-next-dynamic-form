@@ -130,6 +130,7 @@ describe('Dynamic form control group component', function () {
         expect(rendered.findAll(DynamicFormControl).at(0).props("selectText")).toBe("Select");
         expect(rendered.findAll(DynamicFormControl).at(0).props("requiredText")).toBe("compulsory");
         expect(rendered.findAll(DynamicFormControl).at(0).props("readonly")).toBe(true);
+        expect(rendered.findAll(DynamicFormControl).at(0).props("groupLabel")).toBe("Test 1");
     });
 
     it("emits change event when a control changes", () => {
@@ -143,7 +144,7 @@ describe('Dynamic form control group component', function () {
         rendered.findAll(DynamicFormControl).at(0)
             .vm.$emit("change", {...controlGroup.controls[0], value: 123});
 
-        expect((rendered.emitted().change[0][0] as DynamicControlGroup)
+        expect((rendered.emitted().change![0][0] as DynamicControlGroup)
             .controls[0].value).toBe(123);
     });
 
@@ -181,7 +182,7 @@ describe('Dynamic form control group component', function () {
         rendered.findAll(DynamicFormControl).at(0).trigger("click")
         await Vue.nextTick();
 
-        expect(rendered.emitted().confirm.length).toBe(1);
+        expect(rendered.emitted().confirm!.length).toBe(1);
     });
 
     it("emits confirmEditing event when mousedown event triggered", async() => {
@@ -195,7 +196,7 @@ describe('Dynamic form control group component', function () {
         rendered.findAll(DynamicFormControl).at(0).trigger("mousedown")
         await Vue.nextTick();
 
-        expect(rendered.emitted().confirm.length).toBe(1);
+        expect(rendered.emitted().confirm!.length).toBe(1);
     });
 
 });

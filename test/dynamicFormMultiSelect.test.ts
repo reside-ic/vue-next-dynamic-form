@@ -1,4 +1,4 @@
-import {shallowMount} from "@vue/test-utils";
+import {shallowMount, mount} from "@vue/test-utils";
 import {SelectControl} from "../src/types";
 import TreeSelect from "@riophae/vue-treeselect";
 import DynamicFormMultiSelect from "../src/DynamicFormMultiSelect.vue";
@@ -61,6 +61,26 @@ describe('Dynamic form multi-select component', function () {
         });
 
         expect((rendered.find("[name=id_1]").element as HTMLInputElement).value).toBe("opt2");
+    });
+
+    it("renders aria-label as groupLabel if no label given", () => {
+        const rendered = mount(DynamicFormMultiSelect, {
+            propsData: {
+                formControl: fakeSelect,
+                groupLabel: "groupLabel"
+            }
+        });
+        expect(rendered.find(".vue-treeselect").attributes("aria-label")).toBe("groupLabel");
+    });
+
+    it("renders aria-label as control label if label given", () => {
+        const rendered = mount(DynamicFormMultiSelect, {
+            propsData: {
+                formControl: {...fakeSelect, label: "controlLabel"},
+                groupLabel: "groupLabel"
+            }
+        });
+        expect(rendered.find(".vue-treeselect").attributes("aria-label")).toBe("controlLabel");
     });
 
 });
