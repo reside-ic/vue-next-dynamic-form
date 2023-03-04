@@ -2,6 +2,7 @@
     <div>
         <tree-select :multiple="true"
                      :clearable="false"
+                     :aria-label="formControl.label ? formControl.label : groupLabel"
                      v-model="value"
                      :options="formControl.options" 
                      :placeholder="selectText"></tree-select>
@@ -17,6 +18,7 @@
     interface Props {
         formControl: MultiSelectControl
         selectText?: string
+        groupLabel: string
     }
 
     interface Computed {
@@ -33,7 +35,8 @@
             formControl: {
                 type: Object
             },
-            selectText: String
+            selectText: String,
+            groupLabel: String
         },
         computed: {
             value: {

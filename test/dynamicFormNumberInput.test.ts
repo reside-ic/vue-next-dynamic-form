@@ -50,6 +50,26 @@ describe('Dynamic form number input component', function () {
         expect(inputElement.value).toBe("");
     });
 
+    it("renders aria-label as groupLabel if no label given", () => {
+        const rendered = mount(DynamicFormNumberInput, {
+            propsData: {
+                formControl: fakeNumber,
+                groupLabel: "groupLabel"
+            }
+        });
+        expect(rendered.find("input").attributes("aria-label")).toBe("groupLabel");
+    });
+
+    it("renders aria-label as control label if label given", () => {
+        const rendered = mount(DynamicFormNumberInput, {
+            propsData: {
+                formControl: {...fakeNumber, label: "controlLabel"},
+                groupLabel: "groupLabel"
+            }
+        });
+        expect(rendered.find("input").attributes("aria-label")).toBe("controlLabel");
+    });
+
     it("is required if formControl.required is true", () => {
         const rendered = mount(DynamicFormNumberInput, {
             propsData: {
@@ -83,6 +103,17 @@ describe('Dynamic form number input component', function () {
         const inputElement = rendered.find("input").element as HTMLInputElement;
         expect(inputElement.min).toBe("1");
         expect(inputElement.max).toBe("5");
+    })
+
+    it("renders number input with step", () => {
+        const rendered = mount(DynamicFormNumberInput, {
+            propsData: {
+                formControl: {...fakeNumber, step: 0.01}
+            }
+        });
+
+        const inputElement = rendered.find("input").element as HTMLInputElement;
+        expect(inputElement.step).toBe("0.01");
     });
 
     it("emits change to formControl when underlying input is updated", () => {
@@ -94,7 +125,7 @@ describe('Dynamic form number input component', function () {
         });
 
         rendered.find("input").setValue(123);
-        expect(rendered.emitted("change")[0][0]).toStrictEqual({...control, value: 123})
+        expect(rendered.emitted("change")![0][0]).toStrictEqual({...control, value: 123})
     });
 
 });

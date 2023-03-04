@@ -9,6 +9,7 @@
             <span v-if="formControl.required && !readonly" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">({{requiredText}})</span>
         </label>
         <component :is="dynamicComponent"
+                   :group-label="groupLabel" 
                    v-model="formControlLocal"
                    :select-text="selectText"></component>
     </b-col>
@@ -36,6 +37,7 @@
         requiredText?: string
         selectText?: string,
         readonly?: boolean
+        groupLabel: string
     }
 
     export default FormsMixin.extend<{}, unknown, Computed, Props>({
@@ -49,7 +51,8 @@
             colWidth: String,
             requiredText: String,
             selectText: String,
-            readonly: Boolean
+            readonly: Boolean,
+            groupLabel: String
         },
         computed: {
             formControlLocal: {

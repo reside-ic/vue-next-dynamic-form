@@ -1,6 +1,6 @@
 # vue-dynamic-form 
 
-[![Build Status](https://travis-ci.com/reside-ic/vue-dynamic-form.svg?branch=master)](https://travis-ci.com/reside-ic/vue-dynamic-form)
+![Build Status](https://github.com/reside-ic/vue-dynamic-form/actions/workflows/test.yml/badge.svg?branch=mrc-4011)
 
 Vue component for generating a form dynamically from metadata.
 
@@ -137,6 +137,15 @@ const myFormMeta = {
                         required: true,
                         transform: "$/100"
                     }]
+                },
+                {
+                    label: "Decimal parameter",
+                    controls: [{
+                        name: "dec_param",
+                        type: "number",
+                        required: true,
+                        step: 0.1
+                    }]
                 }
             ]
         }
@@ -145,6 +154,10 @@ const myFormMeta = {
 
 </script>
 ```
+
+Note that the `step` value on number controls may be any valid value for HTML `input` elements of type `number`. However,
+in read-only mode the form displays numbers according to the default local `Intl.NumberFormat`, typically to three decimal places
+so will round any values with greater precision.  
 
 On user submission the form emits a `submit` event with a payload that contains the form data as JSON. In this example,
 the payload would be of the form:

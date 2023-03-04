@@ -40,7 +40,8 @@ describe('Dynamic form control component', function () {
                 formControl: formControl,
                 requiredText: 'compulsory',
                 selectText: 'Select',
-                readonly
+                readonly,
+                groupLabel: 'test'
             }
         });
     };
@@ -95,8 +96,9 @@ describe('Dynamic form control component', function () {
         const control = {...fakeNumber};
         const rendered = getWrapper(control, mount);
         expect(rendered.findAll(DynamicFormNumberInput).length).toBe(1);
+        expect(rendered.findAll(DynamicFormNumberInput).at(0).props("groupLabel")).toBe("test");
         rendered.find("input").setValue(123);
-        expect(rendered.emitted("change")[0][0]).toStrictEqual({...control, value: 123})
+        expect(rendered.emitted("change")![0][0]).toStrictEqual({...control, value: 123})
     });
 
     it("renders select when formControl type is select", () => {
@@ -104,16 +106,18 @@ describe('Dynamic form control component', function () {
         const rendered = getWrapper(control, mount);
         expect(rendered.findAll(DynamicFormSelect).length).toBe(1);
         expect(rendered.findAll(DynamicFormSelect).at(0).props("selectText")).toBe("Select");
+        expect(rendered.findAll(DynamicFormSelect).at(0).props("groupLabel")).toBe("test");
         rendered.find("select").trigger("change");
-        expect(rendered.emitted("change")[0][0]).toStrictEqual({...fakeSelect, value: ""});
+        expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeSelect, value: ""});
     });
 
     it("renders multi-select when formControl type is multiselect", () => {
         const rendered = getWrapper(fakeMultiSelect, mount);
         expect(rendered.findAll(DynamicFormMultiSelect).length).toBe(1);
         expect(rendered.findAll(DynamicFormMultiSelect).at(0).props("selectText")).toBe("Select");
+        expect(rendered.findAll(DynamicFormMultiSelect).at(0).props("groupLabel")).toBe("test");
         rendered.find(DynamicFormMultiSelect).find(TreeSelect).vm.$emit("input", "opt1");
-        expect(rendered.emitted("change")[0][0]).toStrictEqual({...fakeMultiSelect, value: "opt1"})
+        expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeMultiSelect, value: "opt1"})
     });
 
     it("renders readonly value when readonly is true", () => {
