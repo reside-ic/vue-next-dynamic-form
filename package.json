@@ -42,7 +42,7 @@
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
     "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^5.1.0",
     "jest": "^25.1.0",
     "jsonata": "^1.8.4",
     "node-sass": "^8.0.0",
