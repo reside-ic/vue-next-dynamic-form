@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-    import Vue from "vue";
+import Vue, {computed, defineComponent, onMounted, PropType, reactive, watch, watchEffect} from "vue";
     import {BForm} from "bootstrap-vue";
     import jsonata from "jsonata";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
@@ -70,7 +70,7 @@
             default: true
         },
         formMeta: {
-            type: Object
+            type: Object as PropType<DynamicFormMeta>,
         },
         requiredText: {
             type: String,
@@ -86,7 +86,7 @@
         }
     };
 
-    export default Vue.extend<{}, Methods, Computed, Props>({
+    export default defineComponent({
         name: "DynamicForm",
         props: props,
         model: {
@@ -98,19 +98,27 @@
             DynamicFormControlGroup,
             DynamicFormControlSection
         },
-        created() {
-            this.formMeta.controlSections.map(s => {
-                s.controlGroups.map(g => {
-                    g.controls.map(c => {
-                        c.value = this.buildValue(c)
+        emits: ["validate", "change", "submit", "confirm"],
+        setup(props, {emit}) {
+
+            const controlSections = reactive(props.formMeta?.controlSections ?? [])
+
+            /*
+            This is meant to be onCreated hook
+            computed(() => {
+                props.formMeta?.controlSections.map(s => {
+                    s.controlGroups.map(g => {
+                        g.controls.map(c => {
+                            c.value = buildValue(c)
+                        })
                     })
-                })
-            });
-        },
-        computed: {
-            controls() {
+                });
+            })
+             */
+
+            const controls = computed(() =>  {
                 const controls: Control[] = [];
-                this.formMeta.controlSections.map(s => {
+                controlSections.map(s => {
                     s.controlGroups.map(g => {
                         g.controls.map(c => {
                             controls.push(c);
@@ -118,54 +126,59 @@
                     })
                 });
                 return controls;
-            },
-            disabled() {
-                return this.controls
+            })
+            const disabled = computed(() => {
+                return controls.value
                     .filter(c => c.required && (c.value == null || c.value == ""))
                     .length > 0
-            }
-        },
-        methods: {
-            change(newVal: DynamicControlSection, index: number) {
-                const controlSections = [...this.formMeta.controlSections];
+            })
+
+            function change(newVal: DynamicControlSection, index: number) {
+                const innerControlSections = [...controlSections];
                 controlSections[index] = newVal;
-                this.$emit("change", {...this.formMeta, controlSections})
-            },
-            buildValue(control: DynamicControl) {
+                emit("change", {...props.formMeta, innerControlSections})
+            }
+            function buildValue(control: DynamicControl) {
                 if (control.type == "multiselect" && !control.value) {
                     return []
                 } else return control.value == undefined ? null : control.value;
-            },
-            transformValue(value: ControlValue, transform: string) {
+            }
+            function transformValue(value: ControlValue, transform: string) {
                 return jsonata(transform).evaluate(value);
-            },
-            submit(e: Event) {
+            }
+            function submit(e: Event) {
                 if (e) {
                     e.preventDefault();
                 }
-                const result = this.controls
+                const result = controls.value
                     .reduce((formData, control) => {
-                        let value = this.buildValue(control);
+                        let value = buildValue(control);
                         if (control.transform) {
-                            value = this.transformValue(value, control.transform);
+                            value = transformValue(value, control.transform);
                         }
                         formData[control.name] = value;
                         return formData
                     }, {} as DynamicFormData);
-                this.$emit("submit", result);
+                emit("submit", result);
                 return result;
-            },
-          confirm(e: Event) {
-            this.$emit("confirm", e)
-          }
-        },
-        watch: {
-            disabled: function(value: Boolean) {
-                this.$emit("validate", !value);
             }
-        },
-        mounted() {
-            this.$emit("validate", !this.disabled);
+            function confirm(e: Event) {
+                emit("confirm", e)
+            }
+
+            onMounted(() =>  emit("validate", !disabled.value))
+
+            watch(disabled, (value: Boolean) => {
+                emit("validate", !value);
+            })
+
+            return {
+                confirm,
+                change,
+                submit,
+                disabled,
+                controls
+            }
         }
     })
 </script>

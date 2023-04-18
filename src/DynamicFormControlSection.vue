@@ -35,7 +35,7 @@
 
 <script lang="ts">
 
-    import Vue from "vue";
+import Vue, {computed, defineComponent, onMounted, PropType, reactive, ref} from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import {DynamicControlGroup, DynamicControlSection} from "./types";
     import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather-icons";
@@ -60,59 +60,8 @@
         showDocumentation: boolean
     }
 
-    export default Vue.extend<Data, Methods, {}, Props>({
+    export default defineComponent({
         name: "DynamicFormControlSection",
-        data() {
-            return {
-                showDocumentation: false,
-                open: true
-            }
-        },
-        props: {
-            controlSection: {
-                type: Object
-            },
-            requiredText: String,
-            selectText: String,
-            readonly: Boolean
-        },
-        model: {
-            prop: "controlSection",
-            event: "change"
-        },
-        computed: {
-            chevronComponent() {
-                if (this.open) {
-                    return "chevron-up-icon"
-                }
-                return "chevron-down-icon"
-            },
-            documentationChevronComponent() {
-                if (this.showDocumentation) {
-                    return "chevron-up-icon"
-                }
-                return "chevron-down-icon"
-            }
-        },
-        methods: {
-            change(newVal: DynamicControlGroup, index: number) {
-                const controlGroups = [...this.controlSection.controlGroups];
-                controlGroups[index] = newVal;
-                this.$emit("change", {...this.controlSection, controlGroups})
-            },
-            toggleDocumentation(e: Event) {
-                e.preventDefault();
-                this.showDocumentation = !this.showDocumentation
-            },
-            toggleSection() {
-                if (this.controlSection.collapsible) {
-                    this.open = !this.open;
-                }
-            },
-          confirm(e: Event) {
-            this.$emit("confirm", e)
-          }
-        },
         components: {
             DynamicFormControlGroup,
             InfoIcon,
@@ -122,9 +71,73 @@
             BRow,
             BCol
         },
-        beforeMount() {
-            if (this.controlSection.collapsible && this.controlSection.collapsed) {
-                this.open = false
+        props: {
+            controlSection: {
+                type: Object as PropType<DynamicControlSection>,
+            },
+            requiredText: String,
+            selectText: String,
+            readonly: Boolean
+        },
+        model: {
+            prop: "controlSection",
+            event: "change"
+        },
+        emits: ["change", "confirm"],
+        setup(props, {emit}) {
+
+            const showDocumentation = ref(false)
+            const open = ref(true)
+
+            const controlGroups = reactive(props.controlSection?.controlGroups ?? [])
+
+            onMounted(() => {
+                if (props.controlSection?.collapsible && props.controlSection.collapsed) {
+                    open.value = false
+                }
+            })
+
+            function change(newVal: DynamicControlGroup, index: number) {
+                const innerControlGroups = [...controlGroups];
+                controlGroups[index] = newVal;
+                emit("change", {...props.controlSection, innerControlGroups})
+            }
+            function toggleDocumentation(e: Event) {
+                e.preventDefault();
+                showDocumentation.value = !showDocumentation.value
+            }
+            function toggleSection() {
+                if (props.controlSection?.collapsible) {
+                    open.value = !open.value;
+                }
+            }
+            function confirm(e: Event) {
+                emit("confirm", e)
+            }
+
+            const chevronComponent = computed(() => {
+                if (open.value) {
+                    return "chevron-up-icon"
+                }
+                return "chevron-down-icon"
+            })
+
+            const documentationChevronComponent = computed(() => {
+                if (showDocumentation.value) {
+                    return "chevron-up-icon"
+                }
+                return "chevron-down-icon"
+            })
+
+            return {
+                chevronComponent,
+                documentationChevronComponent,
+                change,
+                toggleDocumentation,
+                toggleSection,
+                confirm,
+                showDocumentation,
+                open
             }
         }
     })

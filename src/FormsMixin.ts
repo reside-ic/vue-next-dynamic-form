@@ -1,18 +1,22 @@
-import Vue from "vue";
+import {defineComponent} from "vue";
 
 
 interface Methods {
-    valueIsEmpty:  (value: any) => boolean
+    valueIsEmpty: (value: any) => boolean
 }
 
-export default Vue.extend<unknown, Methods, unknown, unknown>({
-    methods: {
-        valueIsEmpty(value: any) { 
-            if (value && value.constructor === Array){
+export default defineComponent({
+    setup() {
+        function valueIsEmpty(value: any) {
+            if (value && value.constructor === Array) {
                 return value.length === 0
-            } else if (typeof(value) === 'boolean' || value === 0) {
+            } else if (typeof (value) === 'boolean' || value === 0) {
                 return false
             } else return !value
+        }
+
+        return {
+            valueIsEmpty
         }
     }
 });

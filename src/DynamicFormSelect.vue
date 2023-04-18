@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+import Vue, {computed, defineComponent, onMounted, PropType} from "vue";
     import {BFormSelect} from "bootstrap-vue";
     import {SelectControl} from "./types";
 
@@ -28,35 +28,38 @@
         value: string
     }
 
-    export default Vue.extend<{}, {}, Computed, Props>({
+    export default defineComponent({
         name: "DynamicFormSelect",
+        components: {
+            BFormSelect
+        },
         props: {
-            formControl: {
-                type: Object
-            },
+            formControl: Object as PropType<SelectControl>,
             selectText: String,
             groupLabel: String
         },
+        emits: ["change"],
         model: {
             prop: "formControl",
             event: "change"
         },
-        computed: {
-            value: {
+        setup(props, {emit}) {
+            onMounted(() => {
+                if (props.formControl?.excludeNullOption && !props.formControl.value) {
+                    value.value = props.formControl.options[0].id;
+                }
+            })
+            const value = computed({
                 get() {
-                    return this.formControl.value || ""
+                    return props.formControl?.value || ""
                 },
                 set(newVal: string) {
-                    this.$emit("change", {...this.formControl, value: newVal});
+                    emit("change", {...props.formControl, value: newVal});
                 }
-            }
-        },
-        components: {
-            BFormSelect
-        },
-        mounted() {
-            if (this.formControl.excludeNullOption && !this.formControl.value) {
-                this.value = this.formControl.options[0].id;
+            })
+
+            return {
+                value
             }
         }
     })

@@ -21,11 +21,12 @@
 </template>
 <script lang="ts">
     import {BCol, BRow} from "bootstrap-vue";
-    import {Control, DynamicControlGroup} from "./types";
+    import {Control, DynamicControl, DynamicControlGroup} from "./types";
     import DynamicFormControl from "./DynamicFormControl.vue";
     import {VTooltip} from 'v-tooltip';
     import {HelpCircleIcon} from "vue-feather-icons";
     import FormsMixin from "./FormsMixin";
+    import {computed, defineComponent, PropType, reactive, ref} from "vue";
 
     interface Methods {
         anyValueEmpty: (controlGroup: DynamicControlGroup) => boolean
@@ -46,10 +47,10 @@
         readonly?: boolean
     }
 
-    export default FormsMixin.extend<{}, Methods, Computed, Props>({
+    export default defineComponent({
         name: "DynamicFormControlGroup",
         props: {
-            controlGroup: Object,
+            controlGroup: Object as PropType<DynamicControlGroup>,
             requiredText: String,
             selectText: String,
             readonly: Boolean
@@ -67,35 +68,49 @@
         directives: {
             tooltip: VTooltip
         },
-        methods: {
-            anyValueEmpty(controlGroup: DynamicControlGroup){
-                return !!controlGroup.controls.find(c => this.valueIsEmpty(c.value))
-            },
-            change(newVal: Control, index: number) {
-                const controls = [...this.controlGroup.controls];
-                controls[index] = newVal;
-                this.$emit("change", {...this.controlGroup, controls})
-            },
-          confirm(e: Event) {
-              this.$emit("confirm", e)
-          }
-        },
-        computed: {
-            colWidth() {
-                const numCols = this.controlGroup.controls.length;
+        emits: ["change", "confirm"],
+        setup(props, {emit}){
+
+            const {valueIsEmpty} = FormsMixin
+
+            const controls = reactive(props.controlGroup?.controls ?? [])
+
+            const colWidth = computed(() => {
+                const numCols = controls.length;
                 if (numCols == 1) {
                     return "6"
                 } else {
                     return "3"
                 }
-            },
-            required() {
-                return this.controlGroup.controls.length == 1
-                    && this.controlGroup.controls[0].required
-            },
-            helpText() {
-                return this.controlGroup.controls.length == 1 ?
-                    this.controlGroup.controls[0].helpText : ""
+            })
+
+            const required = computed(() => {
+                return controls.length == 1 && controls[0].required
+            })
+
+            const helpText = computed(() => {
+                return controls.length == 1 ? controls[0].helpText : ""
+            })
+
+            function anyValueEmpty(controlGroup: DynamicControlGroup) {
+                return !!controlGroup.controls.find(c => valueIsEmpty(c.value))
+            }
+            function change(newVal: Control, index: number) {
+                const control = [...controls];
+                controls[index] = newVal;
+                emit("change", {...props.controlGroup, control})
+            }
+            function confirm(e: Event) {
+                emit("confirm", e)
+            }
+
+            return{
+                anyValueEmpty,
+                change,
+                confirm,
+                colWidth,
+                required,
+                helpText
             }
         }
     });

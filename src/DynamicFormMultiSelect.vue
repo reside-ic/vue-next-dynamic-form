@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
-    import {MultiSelectControl} from "./types";
+import {computed, defineComponent, PropType} from "vue";
+import {MultiSelectControl, SelectControl} from "./types";
     import TreeSelect from '@riophae/vue-treeselect';
 
     interface Props {
@@ -25,37 +25,43 @@
         value: string[]
     }
 
-    export default Vue.extend<{}, {}, Computed, Props>({
+    export default defineComponent({
         name: "DynamicFormMultiSelect",
+        components: {
+            TreeSelect
+        },
         model: {
             prop: "formControl",
             event: "change"
         },
         props: {
             formControl: {
-                type: Object
+                type: Object as PropType<SelectControl>,
+                required: false
             },
             selectText: String,
             groupLabel: String
         },
-        computed: {
-            value: {
+        emits: ["change"],
+        setup(props, {emit}) {
+            const value = computed({
                 get() {
-                    if (Array.isArray(this.formControl.value)) {
-                        return this.formControl.value
+                    const formControlValue = props.formControl?.value
+                    if (Array.isArray(formControlValue)) {
+                        return formControlValue
                     }
-                    if (typeof this.formControl.value == "string") {
-                        return [this.formControl.value]
+                    if (typeof formControlValue == "string") {
+                        return [formControlValue]
                     }
                     return []
                 },
                 set(newVal: string[]) {
-                    this.$emit("change", {...this.formControl, value: newVal});
+                    emit("change", {...props.formControl, value: newVal});
                 }
-            },
-        },
-        components: {
-            TreeSelect
+            })
+            return {
+                value
+            }
         }
     })
 </script>

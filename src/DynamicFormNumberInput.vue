@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+import Vue, {computed, defineComponent, PropType} from "vue";
     import {BFormInput} from "bootstrap-vue";
-    import {NumberControl} from "./types";
+import {NumberControl} from "./types";
 
     interface Props {
         formControl: NumberControl
@@ -24,30 +24,33 @@
         value: number | null | undefined
     }
 
-    export default Vue.extend<{}, {}, Computed, Props>({
+    export default defineComponent({
         name: "DynamicFormNumberInput",
+        components: {
+            BFormInput
+        },
         model: {
             prop: "formControl",
             event: "change"
         },
         props: {
-            formControl: {
-                type: Object
-            },
+            formControl: Object as PropType<NumberControl>,
             groupLabel: String
         },
-        computed: {
-            value: {
+        emits: ["change"],
+        setup(props, {emit}) {
+
+            const value = computed({
                 get() {
-                    return this.formControl.value;
+                    return props.formControl?.value;
                 },
-                set(newVal: number) {
-                    this.$emit("change", {...this.formControl, value: newVal});
+                set(newVal: number | null | undefined) {
+                    emit("change", {...props.formControl, value: newVal});
                 }
-            },
-        },
-        components: {
-            BFormInput
+            })
+            return {
+                value
+            }
         }
     })
 </script>

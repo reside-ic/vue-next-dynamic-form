@@ -1,4 +1,4 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 const merge = require('webpack-merge');
 

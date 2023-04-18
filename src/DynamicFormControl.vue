@@ -25,6 +25,7 @@
     import {VTooltip} from 'v-tooltip'
     import {HelpCircleIcon} from "vue-feather-icons";
     import FormsMixin from "./FormsMixin";
+    import {computed, defineComponent, PropType} from "vue";
 
     interface Computed {
         dynamicComponent: string,
@@ -40,44 +41,9 @@
         groupLabel: string
     }
 
-    export default FormsMixin.extend<{}, unknown, Computed, Props>({
+    export default defineComponent({
         name: "DynamicFormControl",
-        model: {
-            prop: "formControl",
-            event: "change"
-        },
-        props: {
-            formControl: Object,
-            colWidth: String,
-            requiredText: String,
-            selectText: String,
-            readonly: Boolean,
-            groupLabel: String
-        },
-        computed: {
-            formControlLocal: {
-                get() {
-                    return this.formControl
-                },
-                set(newVal: DynamicControl) {
-                    this.$emit("change", newVal);
-                }
-            },
-            dynamicComponent() {
-                if (this.readonly) {
-                    return "dynamic-form-readonly-value";
-                } else {
-                    switch (this.formControl.type) {
-                        case "select":
-                            return "dynamic-form-select";
-                        case "multiselect":
-                            return "dynamic-form-multi-select";
-                        case "number":
-                            return "dynamic-form-number-input";
-                    }
-                }
-            }
-        },
+        mixins: [FormsMixin],
         components: {
             BCol,
             DynamicFormNumberInput,
@@ -88,6 +54,51 @@
         },
         directives: {
             tooltip: VTooltip
+        },
+        model: {
+            prop: "formControl",
+            event: "change"
+        },
+        props: {
+            formControl: Object as PropType<DynamicControl>,
+            colWidth: String,
+            requiredText: String,
+            selectText: String,
+            readonly: Boolean,
+            groupLabel: String
+        },
+        emits: ["change"],
+        setup(props, {emit}) {
+
+            const formControlLocal = computed<DynamicControl | undefined>({
+                get() {
+                    return props.formControl
+                },
+                set(newVal) {
+                    emit("change", newVal);
+                }
+            })
+
+            const dynamicComponent = computed(() => {
+                if (props.readonly) {
+                    return "dynamic-form-readonly-value";
+                } else {
+                    switch (props.formControl?.type) {
+                        case "select":
+                            return "dynamic-form-select";
+                        case "multiselect":
+                            return "dynamic-form-multi-select";
+                        case "number":
+                            return "dynamic-form-number-input";
+                        default:
+                            return ""
+                    }
+                }
+            })
+            return {
+                formControlLocal,
+                dynamicComponent
+            }
         }
     });
 </script>
