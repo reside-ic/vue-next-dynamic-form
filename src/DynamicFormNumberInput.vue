@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import Vue, {computed, defineComponent, PropType} from "vue";
-    import {BFormInput} from "bootstrap-vue";
-import {NumberControl} from "./types";
+    import {computed, defineComponent, PropType} from "vue";
+    import {BFormInput} from "bootstrap-vue-next";
+    import {NumberControl} from "./types";
 
     interface Props {
         formControl: NumberControl

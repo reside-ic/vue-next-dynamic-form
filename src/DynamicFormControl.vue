@@ -16,14 +16,14 @@
 </template>
 
 <script lang="ts">
-    import {BCol} from "bootstrap-vue";
+    import {BCol} from "bootstrap-vue-next";
     import DynamicFormMultiSelect from "./DynamicFormMultiSelect.vue";
     import DynamicFormSelect from "./DynamicFormSelect.vue";
     import {DynamicControl} from "./types";
     import DynamicFormNumberInput from "./DynamicFormNumberInput.vue";
     import DynamicFormReadonlyValue from "./DynamicFormReadonlyValue.vue";
-    import {VTooltip} from 'v-tooltip'
-    import {HelpCircleIcon} from "vue-feather-icons";
+    import {VTooltip} from 'floating-vue'
+    import {HelpCircleIcon} from "vue-feather";
     import FormsMixin from "./FormsMixin";
     import {computed, defineComponent, PropType} from "vue";
 

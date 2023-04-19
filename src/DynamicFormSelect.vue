@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts">
-import Vue, {computed, defineComponent, onMounted, PropType} from "vue";
-    import {BFormSelect} from "bootstrap-vue";
+import Vue, {computed, defineComponent, onMounted, PropType, reactive, toRefs} from "vue";
+    import {BFormSelect} from "bootstrap-vue-next";
     import {SelectControl} from "./types";
 
     interface Props {
@@ -44,17 +44,20 @@ import Vue, {computed, defineComponent, onMounted, PropType} from "vue";
             event: "change"
         },
         setup(props, {emit}) {
+
+            const {formControl} = reactive(props)
+
             onMounted(() => {
-                if (props.formControl?.excludeNullOption && !props.formControl.value) {
-                    value.value = props.formControl.options[0].id;
+                if (formControl?.excludeNullOption && !formControl.value) {
+                    value.value = formControl.options[0].id;
                 }
             })
             const value = computed({
                 get() {
-                    return props.formControl?.value || ""
+                    return formControl?.value || ""
                 },
                 set(newVal: string) {
-                    emit("change", {...props.formControl, value: newVal});
+                    emit("change", {...formControl, value: newVal});
                 }
             })
 

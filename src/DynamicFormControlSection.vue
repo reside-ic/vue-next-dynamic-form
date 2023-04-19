@@ -35,30 +35,11 @@
 
 <script lang="ts">
 
-import Vue, {computed, defineComponent, onMounted, PropType, reactive, ref} from "vue";
+import {computed, defineComponent, onMounted, PropType, reactive, ref} from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import {DynamicControlGroup, DynamicControlSection} from "./types";
-    import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather-icons";
-    import {BCollapse, BRow, BCol} from "bootstrap-vue";
-
-    interface Methods {
-        change: (newVal: DynamicControlGroup, index: number) => void
-        toggleDocumentation: (e: Event) => void
-        toggleSection: () => void
-        confirm: (e: Event) => void
-    }
-
-    interface Props {
-        controlSection: DynamicControlSection
-        requiredText?: string
-        selectText?: string
-        readonly: boolean
-    }
-
-    interface Data {
-        open: boolean
-        showDocumentation: boolean
-    }
+    import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather";
+    import {BCollapse, BRow, BCol} from "bootstrap-vue-next";
 
     export default defineComponent({
         name: "DynamicFormControlSection",
@@ -73,7 +54,7 @@ import Vue, {computed, defineComponent, onMounted, PropType, reactive, ref} from
         },
         props: {
             controlSection: {
-                type: Object as PropType<DynamicControlSection>,
+                type: Object as PropType<DynamicControlSection>
             },
             requiredText: String,
             selectText: String,
@@ -85,21 +66,23 @@ import Vue, {computed, defineComponent, onMounted, PropType, reactive, ref} from
         },
         emits: ["change", "confirm"],
         setup(props, {emit}) {
-
             const showDocumentation = ref(false)
+
             const open = ref(true)
 
-            const controlGroups = reactive(props.controlSection?.controlGroups ?? [])
+            const {controlSection} = reactive(props)
+
+            const controlGroups = controlSection?.controlGroups ?? [];
 
             onMounted(() => {
-                if (props.controlSection?.collapsible && props.controlSection.collapsed) {
+                if (controlSection?.collapsible && controlSection.collapsed) {
                     open.value = false
                 }
             })
 
             function change(newVal: DynamicControlGroup, index: number) {
                 const innerControlGroups = [...controlGroups];
-                controlGroups[index] = newVal;
+                innerControlGroups[index] = newVal;
                 emit("change", {...props.controlSection, innerControlGroups})
             }
             function toggleDocumentation(e: Event) {

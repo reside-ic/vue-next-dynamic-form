@@ -20,8 +20,8 @@
 
 <script lang="ts">
 
-import Vue, {computed, defineComponent, onMounted, PropType, reactive, watch, watchEffect} from "vue";
-    import {BForm} from "bootstrap-vue";
+import {computed, defineComponent, onMounted, PropType, reactive, watch} from "vue";
+    import {BForm} from "bootstrap-vue-next";
     import jsonata from "jsonata";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import DynamicFormControlSection from "./DynamicFormControlSection.vue";
@@ -32,29 +32,6 @@ import Vue, {computed, defineComponent, onMounted, PropType, reactive, watch, wa
         DynamicFormData,
         DynamicFormMeta
     } from "./types";
-
-    interface Methods {
-        buildValue: (control: DynamicControl) => ControlValue
-        transformValue(value: ControlValue, transform: string): any
-        submit: (e: Event) => DynamicFormData
-        change: (newVal: DynamicControlSection, index: number) => void;
-        confirm: (e: Event) => void
-    }
-
-    interface Computed {
-        controls: Control[]
-        disabled: boolean
-    }
-
-    interface Props {
-        formMeta: DynamicFormMeta,
-        includeSubmitButton?: boolean
-        submitText?: string
-        id?: string
-        requiredText?: string
-        selectText?: string
-        readonly?: boolean
-    }
 
     const props = {
         id: {
@@ -99,22 +76,12 @@ import Vue, {computed, defineComponent, onMounted, PropType, reactive, watch, wa
             DynamicFormControlSection
         },
         emits: ["validate", "change", "submit", "confirm"],
+
         setup(props, {emit}) {
 
-            const controlSections = reactive(props.formMeta?.controlSections ?? [])
+            const {formMeta} = reactive(props)
 
-            /*
-            This is meant to be onCreated hook
-            computed(() => {
-                props.formMeta?.controlSections.map(s => {
-                    s.controlGroups.map(g => {
-                        g.controls.map(c => {
-                            c.value = buildValue(c)
-                        })
-                    })
-                });
-            })
-             */
+            const controlSections = formMeta?.controlSections ?? [];
 
             const controls = computed(() =>  {
                 const controls: Control[] = [];
@@ -127,6 +94,7 @@ import Vue, {computed, defineComponent, onMounted, PropType, reactive, watch, wa
                 });
                 return controls;
             })
+
             const disabled = computed(() => {
                 return controls.value
                     .filter(c => c.required && (c.value == null || c.value == ""))
@@ -135,8 +103,8 @@ import Vue, {computed, defineComponent, onMounted, PropType, reactive, watch, wa
 
             function change(newVal: DynamicControlSection, index: number) {
                 const innerControlSections = [...controlSections];
-                controlSections[index] = newVal;
-                emit("change", {...props.formMeta, innerControlSections})
+                innerControlSections[index] = newVal;
+                emit("change", {...formMeta, innerControlSections})
             }
             function buildValue(control: DynamicControl) {
                 if (control.type == "multiselect" && !control.value) {
@@ -165,6 +133,16 @@ import Vue, {computed, defineComponent, onMounted, PropType, reactive, watch, wa
             function confirm(e: Event) {
                 emit("confirm", e)
             }
+
+            onMounted(() => {
+                controlSections.map(s => {
+                    s.controlGroups.map(g => {
+                        g.controls.map(c => {
+                            c.value = buildValue(c)
+                        })
+                    })
+                });
+            })
 
             onMounted(() =>  emit("validate", !disabled.value))
 

@@ -20,11 +20,11 @@
     </b-row>
 </template>
 <script lang="ts">
-    import {BCol, BRow} from "bootstrap-vue";
+    import {BCol, BRow} from "bootstrap-vue-next";
     import {Control, DynamicControl, DynamicControlGroup} from "./types";
     import DynamicFormControl from "./DynamicFormControl.vue";
-    import {VTooltip} from 'v-tooltip';
-    import {HelpCircleIcon} from "vue-feather-icons";
+    import {VTooltip} from 'floating-vue';
+    import {HelpCircleIcon} from "vue-feather";
     import FormsMixin from "./FormsMixin";
     import {computed, defineComponent, PropType, reactive, ref} from "vue";
 
@@ -73,7 +73,7 @@
 
             const {valueIsEmpty} = FormsMixin
 
-            const controls = reactive(props.controlGroup?.controls ?? [])
+            const controls = props.controlGroup?.controls ?? [];
 
             const colWidth = computed(() => {
                 const numCols = controls.length;

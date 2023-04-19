@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType} from "vue";
-import {MultiSelectControl, SelectControl} from "./types";
-    import TreeSelect from '@riophae/vue-treeselect';
+    import {computed, defineComponent, PropType} from "vue";
+    import {MultiSelectControl, SelectControl} from "./types";
+    import TreeSelect from 'vue3-treeselect';
 
     interface Props {
         formControl: MultiSelectControl
