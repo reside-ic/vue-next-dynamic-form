@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts">
-    import {computed, defineComponent, PropType} from "vue";
-    import {MultiSelectControl, SelectControl} from "./types";
+import {computed, defineComponent, PropType, reactive, toRefs} from "vue";
+    import {MultiSelectControl} from "./types";
     import TreeSelect from 'vue3-treeselect';
 
     interface Props {
@@ -36,7 +36,7 @@
         },
         props: {
             formControl: {
-                type: Object as PropType<SelectControl>,
+                type: Object as PropType<MultiSelectControl>,
                 required: false
             },
             selectText: String,

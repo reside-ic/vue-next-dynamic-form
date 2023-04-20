@@ -14,21 +14,21 @@ describe('Dynamic form select component', function () {
 
     it("renders options", () => {
         const rendered = mount(DynamicFormSelect, {
-            propsData: {
+            props: {
                 formControl: fakeSelect,
                 selectText: 'Select...'
             }
         });
         const options = rendered.findAll("option");
         expect(options.length).toBe(3);
-        expect((options.at(1).element as HTMLSelectElement).value).toBe("opt1");
-        expect(options.at(0).text()).toBe("Select...");
-        expect(options.at(1).text()).toBe("option 1");
+        expect((options.at(1)?.element as HTMLSelectElement).value).toBe("opt1");
+        expect(options.at(0)?.text()).toBe("Select...");
+        expect(options.at(1)?.text()).toBe("option 1");
     });
 
     it("value is selected if present", () => {
         const rendered = mount(DynamicFormSelect, {
-            propsData: {
+            props: {
                 formControl: {...fakeSelect, value: "opt2"}
             }
         });
@@ -39,7 +39,7 @@ describe('Dynamic form select component', function () {
 
     it("emits change event with updated formControl when underlying select is changed", () => {
         const rendered = mount(DynamicFormSelect, {
-            propsData: {
+            props: {
                 formControl: {...fakeSelect}
             }
         });
@@ -50,7 +50,7 @@ describe('Dynamic form select component', function () {
 
     it("default message is selected if no value present", () => {
         const rendered = mount(DynamicFormSelect, {
-            propsData: {
+            props: {
                 formControl: fakeSelect
             }
         });
@@ -62,14 +62,14 @@ describe('Dynamic form select component', function () {
     it("first value is selected if excludeNullOption", async () => {
         const formControl = {...fakeSelect, excludeNullOption: true};
         const rendered = mount(DynamicFormSelect, {
-            propsData: {
+            props: {
                 formControl
             }
         });
         const options = rendered.findAll("option");
         expect(options.length).toBe(2);
-        expect((options.at(0).element as HTMLSelectElement).value).toBe("opt1");
-        expect(options.at(0).text()).toBe("option 1");
+        expect((options.at(0)?.element as HTMLSelectElement).value).toBe("opt1");
+        expect(options.at(0)?.text()).toBe("option 1");
 
         const select = rendered.find("select");
 
@@ -79,7 +79,7 @@ describe('Dynamic form select component', function () {
 
     it("is required if formControl.required is true", () => {
         const rendered = mount(DynamicFormSelect, {
-            propsData: {
+            props: {
                 formControl: {...fakeSelect, required: true}
             }
         });
@@ -90,7 +90,7 @@ describe('Dynamic form select component', function () {
 
     it("is not required if formControl.required is false", () => {
         const rendered = mount(DynamicFormSelect, {
-            propsData: {
+            props: {
                 formControl: {...fakeSelect, required: false}
             }
         });
@@ -101,7 +101,7 @@ describe('Dynamic form select component', function () {
 
     it("renders aria-label as groupLabel if no label given", () => {
         const rendered = mount(DynamicFormSelect, {
-            propsData: {
+            props: {
                 formControl: fakeSelect,
                 groupLabel: "groupLabel"
             }
@@ -111,7 +111,7 @@ describe('Dynamic form select component', function () {
 
     it("renders aria-label as control label if label given", () => {
         const rendered = mount(DynamicFormSelect, {
-            propsData: {
+            props: {
                 formControl: {...fakeSelect, label: "controlLabel"},
                 groupLabel: "groupLabel"
             }

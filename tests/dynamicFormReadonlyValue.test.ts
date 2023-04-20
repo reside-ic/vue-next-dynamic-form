@@ -3,27 +3,27 @@ import DynamicFormReadonlyValue from "../src/DynamicFormReadonlyValue.vue";
 
 describe("dynamicFormReadyonlyValue", () => {
     it("renders number control value", () => {
-        const propsData = {
+        const props = {
             formControl: {
                 value: 7
             }
         };
-        const rendered = mount(DynamicFormReadonlyValue, { propsData });
+        const rendered = mount(DynamicFormReadonlyValue, { props });
         expect(rendered.find("div").text()).toBe("7");
     });
 
     it("renders number control value with separator", () => {
-        const propsData = {
+        const props = {
             formControl: {
                 value: 7_654_321.99
             }
         };
-        const rendered = mount(DynamicFormReadonlyValue, { propsData });
+        const rendered = mount(DynamicFormReadonlyValue, { props });
         expect(rendered.find("div").text()).toBe("7,654,321.99");
     });
 
     it("renders select control value", () => {
-        const propsData = {
+        const props = {
             formControl: {
                 value: "2",
                 options: [
@@ -32,12 +32,12 @@ describe("dynamicFormReadyonlyValue", () => {
                 ]
             }
         };
-        const rendered = mount(DynamicFormReadonlyValue, { propsData });
+        const rendered = mount(DynamicFormReadonlyValue, { props });
         expect(rendered.find("div").text()).toBe("two");
     });
 
     it("renders multi-select control value", () => {
-        const propsData = {
+        const props = {
             formControl: {
                 value: ["2", "1.2"],
                 options: [
@@ -49,22 +49,22 @@ describe("dynamicFormReadyonlyValue", () => {
                 ]
             }
         };
-        const rendered = mount(DynamicFormReadonlyValue, { propsData });
+        const rendered = mount(DynamicFormReadonlyValue, { props });
         expect(rendered.find("div").text()).toBe("two, child two");
     });
 
     it("renders null value", () => {
-        const propsData = {
+        const props = {
             formControl: {
                 value: null
             }
         };
-        const rendered = mount(DynamicFormReadonlyValue, { propsData });
+        const rendered = mount(DynamicFormReadonlyValue, { props });
         expect(rendered.find("div").text()).toBe("");
     });
 
     it("renders empty array value", () => {
-        const propsData = {
+        const props = {
             formControl: {
                 value: [],
                 options: [
@@ -73,7 +73,7 @@ describe("dynamicFormReadyonlyValue", () => {
                 ]
             }
         };
-        const rendered = mount(DynamicFormReadonlyValue, { propsData });
+        const rendered = mount(DynamicFormReadonlyValue, { props });
         expect(rendered.find("div").text()).toBe("");
     });
 });

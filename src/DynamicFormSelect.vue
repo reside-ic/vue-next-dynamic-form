@@ -14,19 +14,9 @@
 </template>
 
 <script lang="ts">
-import Vue, {computed, defineComponent, onMounted, PropType, reactive, toRefs} from "vue";
+    import {computed, defineComponent, onMounted, PropType, reactive} from "vue";
     import {BFormSelect} from "bootstrap-vue-next";
     import {SelectControl} from "./types";
-
-    interface Props {
-        formControl: SelectControl
-        selectText?: string
-        groupLabel: string
-    }
-
-    interface Computed {
-        value: string
-    }
 
     export default defineComponent({
         name: "DynamicFormSelect",

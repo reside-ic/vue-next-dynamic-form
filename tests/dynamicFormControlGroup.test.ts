@@ -1,12 +1,14 @@
-import {shallowMount, mount, Wrapper} from "@vue/test-utils";
-import {BCol} from "bootstrap-vue";
+import {shallowMount} from "@vue/test-utils";
+import {BCol} from "bootstrap-vue-next";
 import DynamicFormControlGroup from "../src/DynamicFormControlGroup.vue";
 import DynamicFormControl from "../src/DynamicFormControl.vue";
-import {VTooltip} from 'v-tooltip';
+import {VTooltip} from "floating-vue";
 import {DynamicControlGroup, NumberControl, SelectControl} from "../src/types";
 import Vue from "vue";
 
-const tooltipSpy = jest.spyOn(VTooltip, "bind");
+//const tooltipSpy = jest.spyOn(VTooltip, "bind");
+
+const tooltipSpy = jest.fn()
 
 describe('Dynamic form control group component', function () {
 
@@ -49,9 +51,9 @@ describe('Dynamic form control group component', function () {
         ]
     };
 
-    const getWrapper = (controlGroup: any, mount: (component: any, options: any) => Wrapper<Vue>, readonly: Boolean = false) => {
+    const getWrapper = (controlGroup: any, mount: (component: any, options: any) => any, readonly: Boolean = false) => {
         return mount(DynamicFormControlGroup, {
-            propsData: {
+            props: {
                 controlGroup: controlGroup,
                 requiredText: 'compulsory',
                 selectText: 'Select',
@@ -62,7 +64,7 @@ describe('Dynamic form control group component', function () {
 
     it("renders label if it exists", () => {
         const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
+            props: {
                 controlGroup: fakeFormGroup
             }
         });
@@ -74,12 +76,12 @@ describe('Dynamic form control group component', function () {
 
     it("does not render label col if there is no label", () => {
         const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
+            props: {
                 controlGroup: {...fakeFormGroup, label: null}
             }
         });
 
-        expect(rendered.findAll(BCol).length).toBe(0);
+        expect(rendered.findAllComponents(BCol).length).toBe(0);
     });
 
     it("renders required indicator if input is required and sets text-danger class if no value given", () => {
@@ -103,7 +105,7 @@ describe('Dynamic form control group component', function () {
         const fakeGroup = {...fakeFormGroup, controls: [{...fakeFormGroup.controls[0]}]};
         fakeGroup.controls[0].helpText = "Some help text";
         const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
+            props: {
                 controlGroup: fakeGroup
             }
         });
@@ -116,7 +118,7 @@ describe('Dynamic form control group component', function () {
     it("renders controls", () => {
         const controlGroup = {...fakeFormGroup};
         const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
+            props: {
                 controlGroup: controlGroup,
                 selectText: "Select",
                 requiredText: "compulsory",
@@ -124,62 +126,62 @@ describe('Dynamic form control group component', function () {
             }
         });
 
-        expect(rendered.findAll(DynamicFormControl).length).toBe(2);
-        expect(rendered.findAll(DynamicFormControl).at(0).props("formControl"))
+        expect(rendered.findAllComponents(DynamicFormControl).length).toBe(2);
+        expect(rendered.findAllComponents(DynamicFormControl).at(0)?.props("formControl"))
             .toStrictEqual(controlGroup.controls[0]);
-        expect(rendered.findAll(DynamicFormControl).at(0).props("selectText")).toBe("Select");
-        expect(rendered.findAll(DynamicFormControl).at(0).props("requiredText")).toBe("compulsory");
-        expect(rendered.findAll(DynamicFormControl).at(0).props("readonly")).toBe(true);
-        expect(rendered.findAll(DynamicFormControl).at(0).props("groupLabel")).toBe("Test 1");
+        expect(rendered.findAllComponents(DynamicFormControl).at(0)?.props("selectText")).toBe("Select");
+        expect(rendered.findAllComponents(DynamicFormControl).at(0)?.props("requiredText")).toBe("compulsory");
+        expect(rendered.findAllComponents(DynamicFormControl).at(0)?.props("readonly")).toBe(true);
+        expect(rendered.findAllComponents(DynamicFormControl).at(0)?.props("groupLabel")).toBe("Test 1");
     });
 
     it("emits change event when a control changes", () => {
         const controlGroup = {...fakeFormGroup};
-        const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
+        const wrapper = shallowMount(DynamicFormControlGroup, {
+            props: {
                 controlGroup: controlGroup
             }
         });
 
-        rendered.findAll(DynamicFormControl).at(0)
-            .vm.$emit("change", {...controlGroup.controls[0], value: 123});
+        wrapper.findAllComponents(DynamicFormControl).at(0)
+            ?.trigger("change", {...controlGroup.controls[0], value: 123});
 
-        expect((rendered.emitted().change![0][0] as DynamicControlGroup)
+        expect((wrapper.emitted().change![0][0] as DynamicControlGroup)
             .controls[0].value).toBe(123);
     });
 
 
     it("double controls are 3 cols", () => {
         const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
+            props: {
                 controlGroup: fakeFormGroup
             }
         });
 
-        expect(rendered.findAll(DynamicFormControl).length).toBe(2);
-        expect(rendered.findAll(DynamicFormControl).at(0).props("colWidth")).toBe("3");
+        expect(rendered.findAllComponents(DynamicFormControl).length).toBe(2);
+        expect(rendered.findAllComponents(DynamicFormControl).at(0)?.props("colWidth")).toBe("3");
     });
 
     it("single controls are 6 cols", () => {
         const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
+            props: {
                 controlGroup: {...fakeFormGroup, controls: fakeFormGroup.controls.slice(0, 1)}
             }
         });
 
-        expect(rendered.findAll(DynamicFormControl).length).toBe(1);
-        expect(rendered.findAll(DynamicFormControl).at(0).props("colWidth")).toBe("6");
+        expect(rendered.findAllComponents(DynamicFormControl).length).toBe(1);
+        expect(rendered.findAllComponents(DynamicFormControl).at(0)?.props("colWidth")).toBe("6");
     });
 
     it("emits confirmEditing event when click event triggered", async() => {
         const controlGroup = {...fakeFormGroup};
         const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
+            props: {
                 controlGroup: controlGroup
             }
         });
 
-        rendered.findAll(DynamicFormControl).at(0).trigger("click")
+        rendered.findAllComponents(DynamicFormControl).at(0)?.trigger("click")
         await Vue.nextTick();
 
         expect(rendered.emitted().confirm!.length).toBe(1);
@@ -188,12 +190,12 @@ describe('Dynamic form control group component', function () {
     it("emits confirmEditing event when mousedown event triggered", async() => {
         const controlGroup = {...fakeFormGroup};
         const rendered = shallowMount(DynamicFormControlGroup, {
-            propsData: {
+            props: {
                 controlGroup: controlGroup
             }
         });
 
-        rendered.findAll(DynamicFormControl).at(0).trigger("mousedown")
+        rendered.findAllComponents(DynamicFormControl).at(0)?.trigger("mousedown")
         await Vue.nextTick();
 
         expect(rendered.emitted().confirm!.length).toBe(1);

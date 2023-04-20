@@ -1,5 +1,5 @@
-import Vue from "vue";
-import {mount, shallowMount, Wrapper} from "@vue/test-utils";
+import Vue, {defineAsyncComponent, defineComponent, reactive} from "vue";
+import {mount, shallowMount} from "@vue/test-utils";
 import DynamicFormComponent from "../src/DynamicForm.vue";
 import DynamicForm from "../src/DynamicForm.vue";
 import DynamicFormControlSection from "../src/DynamicFormControlSection.vue";
@@ -119,12 +119,12 @@ describe('Dynamic form component', function () {
     };
 
     const getWrapper = (formMeta: DynamicFormMeta,
-                        propsData: any = {},
-                        mount: (component: any, options: any) => Wrapper<Vue>) => {
+                        props: any = {},
+                        mount: (component: any, options: any) => any) => {
         return mount(DynamicFormComponent, {
-            propsData: {
+            props: {
                 formMeta: {...formMeta},
-                ...propsData
+                ...props
             }
         });
     };
@@ -242,13 +242,11 @@ describe('Dynamic form component', function () {
 
     it("updates v-model when change event is emitted", async () => {
 
-        const vm = {...validFormMeta};
-        const parent = Vue.component('parent', {
+        const vm = reactive(validFormMeta);
+        const parent = ( {
             template: `<div><span>{{form.controlSections[1].label}}</span><dynamic-form v-model="form" /></div>`,
-            data() {
-                return {
-                    form: vm
-                }
+            setup() {
+                return {form: vm}
             },
             components: {
                 DynamicForm
@@ -261,10 +259,10 @@ describe('Dynamic form component', function () {
         };
 
         const rendered = mount(parent);
-        rendered.find(DynamicForm)
-            .findAll(DynamicFormControlSection)
+        rendered.findComponent(DynamicForm)
+            .findAllComponents(DynamicFormControlSection)
             .at(1)
-            .vm.$emit("change", newControlSection);
+            ?.vm.$emit("change", newControlSection);
 
         await Vue.nextTick();
         expect(rendered.find("span").text()).toBe("TEST");

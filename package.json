@@ -2,10 +2,12 @@
   "name": "@reside-ic/vue-next-dynamic-form",
   "version": "0.9.1",
   "description": "A metadata driven form component",
+  "author": "reside-ic",
   "scripts": {
-    "test": "jest -c jest.config.js",
+    "build": "webpack & gulp sass",
+    "test:unit": "vue-cli-service test:unit",
     "sass": "gulp sass",
-    "build": "webpack & gulp sass"
+    "test": "jest -c jest.config.js"
   },
   "main": "./dist/js/index.js",
   "files": [
@@ -13,20 +15,6 @@
     "/src",
     "index.d.ts"
   ],
-  "types": "./index.d.ts",
-  "directories": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/reside-ic/vue-next-dynamic-form.git"
-  },
-  "author": "reside-ic",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/reside-ic/vue-next-dynamic-form/issues"
-  },
-  "homepage": "https://github.com/reside-ic/vue-next-dynamic-form#readme",
   "dependencies": {
     "@popperjs/core": "^2.11.7"
   },
@@ -34,9 +22,10 @@
     "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
     "@types/jest": "^27.5.0",
+    "@vue/cli-plugin-unit-jest": "^5.0.8",
     "@vue/compiler-sfc": "^3.2.47",
-    "@vue/test-utils": "^2.3.2",
-    "@vue/vue3-jest": "^27.0.0-alpha.1",
+    "@vue/test-utils": "^2.0.0-rc.18",
+    "vue-jest": "^5.0.0-alpha.10",
     "babel-jest": "^27.5.0",
     "bootstrap": "^5.2.3",
     "bootstrap-vue-next": "^0.8.4",
@@ -62,5 +51,18 @@
     "webpack": "^5.79.0",
     "webpack-cli": "^5.0.1",
     "webpack-merge": "^5.8.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/reside-ic/vue-next-dynamic-form/issues"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "homepage": "https://github.com/reside-ic/vue-next-dynamic-form#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reside-ic/vue-next-dynamic-form.git"
+  },
+  "types": "./index.d.ts"
 }

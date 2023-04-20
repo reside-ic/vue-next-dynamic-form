@@ -38,8 +38,9 @@
 import {computed, defineComponent, onMounted, PropType, reactive, ref} from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import {DynamicControlGroup, DynamicControlSection} from "./types";
-    import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather";
+    //import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather";
     import {BCollapse, BRow, BCol} from "bootstrap-vue-next";
+    import { chevronDown as ChevronDownIcon, chevronUp as ChevronUpIcon, info as InfoIcon } from 'vue-feather';
 
     export default defineComponent({
         name: "DynamicFormControlSection",
@@ -60,10 +61,13 @@ import {computed, defineComponent, onMounted, PropType, reactive, ref} from "vue
             selectText: String,
             readonly: Boolean
         },
+        /*
         model: {
             prop: "controlSection",
             event: "change"
         },
+
+         */
         emits: ["change", "confirm"],
         setup(props, {emit}) {
             const showDocumentation = ref(false)

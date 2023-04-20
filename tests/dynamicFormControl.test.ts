@@ -1,13 +1,15 @@
-import {mount, shallowMount, Wrapper} from "@vue/test-utils";
+import {mount, shallowMount} from "@vue/test-utils";
 import DynamicFormControl from "../src/DynamicFormControl.vue";
 import DynamicFormNumberInput from "../src/DynamicFormNumberInput.vue";
 import DynamicFormSelect from "../src/DynamicFormSelect.vue";
 import DynamicFormMultiSelect from "../src/DynamicFormMultiSelect.vue";
-import TreeSelect from '@riophae/vue-treeselect';
-import {VTooltip} from 'v-tooltip';
+import TreeSelect from 'vue3-treeselect';
+import {VTooltip} from 'floating-vue';
 import {NumberControl, SelectControl} from "../src/types";
 import Vue from "vue";
 import DynamicFormReadonlyValue from "../src/DynamicFormReadonlyValue.vue";
+
+//const tooltipSpy = jest.spyOn(VTooltip, "bind");
 
 const tooltipSpy = jest.spyOn(VTooltip, "bind");
 
@@ -34,9 +36,9 @@ describe('Dynamic form control component', function () {
         options: [{id: "opt1", label: "option 1"}, {id: "opt2", label: "option2"}]
     };
 
-    const getWrapper = (formControl: any, mount: (component: any, options: any) => Wrapper<Vue>, readonly: Boolean = false) => {
+    const getWrapper = (formControl: any, mount: (component: any, options: any) => any, readonly: Boolean = false) => {
         return mount(DynamicFormControl, {
-            propsData: {
+            props: {
                 formControl: formControl,
                 requiredText: 'compulsory',
                 selectText: 'Select',
@@ -57,7 +59,8 @@ describe('Dynamic form control component', function () {
 
         expect(rendered.find("label").find("span").classes()).toContain("has-tooltip");
         expect(tooltipSpy).toHaveBeenCalled();
-        expect((tooltipSpy.mock.calls[0][1] as any).value).toBe("Some help text")
+        expect(tooltipSpy).toHaveBeenCalledWith("Some help text");
+        //expect((tooltipSpy.mock.calls[0][1] as any).value).toBe("Some help text")
     });
 
     it("renders required indicator if input is required and sets text-danger class if no value given", () => {
@@ -84,7 +87,7 @@ describe('Dynamic form control component', function () {
 
     it("col has given width", () => {
         const rendered = mount(DynamicFormControl, {
-            propsData: {
+            props: {
                 formControl: fakeNumber,
                 colWidth: "3"
             }

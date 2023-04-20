@@ -1,4 +1,5 @@
 module.exports = {
+    //testEnvironment: 'jsdom',
     "globals": {
         "ts-jest": {
             tsConfig: 'tsconfig.json',
@@ -21,7 +22,9 @@ module.exports = {
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
     "coverageProvider": "v8",
+
     "coveragePathIgnorePatterns": [
         "/node_modules/"
-    ]
+    ],
+    preset: '@vue/cli-plugin-unit-jest/presets/no-babel'
 };
