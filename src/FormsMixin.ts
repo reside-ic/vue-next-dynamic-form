@@ -5,7 +5,7 @@ interface Methods {
     valueIsEmpty: (value: any) => boolean
 }
 
-export default defineComponent({
+export default ({
     setup() {
         const valueIsEmpty = (value: any) => {
             if (value && value.constructor === Array) {

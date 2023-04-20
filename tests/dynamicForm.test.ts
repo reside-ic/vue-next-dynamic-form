@@ -143,17 +143,17 @@ describe('Dynamic form component', function () {
 
     it("renders control sections", () => {
         const rendered = getWrapper(validFormMeta, {}, shallowMount);
-        expect(rendered.findAll(DynamicFormControlSection).length).toBe(2);
+        expect(rendered.findAllComponents(DynamicFormControlSection).length).toBe(2);
     });
 
     it("sends default props to control sections", () => {
         const rendered = getWrapper(validFormMeta, {}, shallowMount);
-        expect(rendered.findAll(DynamicFormControlSection).at(0).props("requiredText")).toBe("required");
-        expect(rendered.findAll(DynamicFormControlSection).at(0).props("selectText")).toBe("Select...");
-        expect(rendered.findAll(DynamicFormControlSection).at(0).props("readonly")).toBe(false);
-        expect(rendered.findAll(DynamicFormControlSection).at(1).props("requiredText")).toBe("required");
-        expect(rendered.findAll(DynamicFormControlSection).at(1).props("selectText")).toBe("Select...");
-        expect(rendered.findAll(DynamicFormControlSection).at(1).props("readonly")).toBe(false);
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(0)?.props("requiredText")).toBe("required");
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(0)?.props("selectText")).toBe("Select...");
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(0)?.props("readonly")).toBe(false);
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(1)?.props("requiredText")).toBe("required");
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(1)?.props("selectText")).toBe("Select...");
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(1)?.props("readonly")).toBe(false);
     });
 
     it("sends custom props to control sections", () => {
@@ -162,12 +162,12 @@ describe('Dynamic form component', function () {
             selectText: 'Select',
             readonly: true
         }, shallowMount);
-        expect(rendered.findAll(DynamicFormControlSection).at(0).props("requiredText")).toBe("compulsory");
-        expect(rendered.findAll(DynamicFormControlSection).at(0).props("selectText")).toBe("Select");
-        expect(rendered.findAll(DynamicFormControlSection).at(0).props("readonly")).toBe(true);
-        expect(rendered.findAll(DynamicFormControlSection).at(1).props("requiredText")).toBe("compulsory");
-        expect(rendered.findAll(DynamicFormControlSection).at(1).props("selectText")).toBe("Select");
-        expect(rendered.findAll(DynamicFormControlSection).at(1).props("readonly")).toBe(true);
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(0)?.props("requiredText")).toBe("compulsory");
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(0)?.props("selectText")).toBe("Select");
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(0)?.props("readonly")).toBe(true);
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(1)?.props("requiredText")).toBe("compulsory");
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(1)?.props("selectText")).toBe("Select");
+        expect(rendered.findAllComponents(DynamicFormControlSection).at(1)?.props("readonly")).toBe(true);
     });
 
     it("does not render button if includeSubmitButton is false", () => {
@@ -217,7 +217,7 @@ describe('Dynamic form component', function () {
 
     it("emits confirmEditing event when event is emitted ", async() => {
         const rendered = getWrapper(validFormMeta, {}, mount);
-        rendered.findAll(DynamicFormControlSection).at(0)
+        rendered.findAllComponents(DynamicFormControlSection).at(0)
             .vm.$emit("confirm", "Param")
 
         await Vue.nextTick();

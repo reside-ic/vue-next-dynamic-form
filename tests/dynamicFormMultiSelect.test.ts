@@ -13,15 +13,20 @@ describe('Dynamic form multi-select component', function () {
     };
 
     it("renders treeselect with no value", () => {
-        const rendered = shallowMount(DynamicFormMultiSelect, {
-            propsData: {
+        const rendered = mount(DynamicFormMultiSelect, {
+            props: {
                 formControl: fakeSelect,
                 selectText: "Select..."
+            },
+            global: {
+                components: {
+                    TreeSelect
+                }
             }
         });
 
-        const treeSelect = rendered.find(TreeSelect);
-        expect(treeSelect.props("value")).toStrictEqual([]);
+        const treeSelect = rendered.findComponent(TreeSelect);
+        expect(treeSelect.props("modelValue")).toStrictEqual([]);
         expect(treeSelect.props("options")).toStrictEqual(fakeSelect.options);
         expect(treeSelect.props("multiple")).toBe(true);
         expect(treeSelect.props("clearable")).toBe(false);
@@ -29,26 +34,26 @@ describe('Dynamic form multi-select component', function () {
     });
 
     it("renders treeselect with starting array value", () => {
-        const rendered = shallowMount(DynamicFormMultiSelect, {
+        const rendered = mount(DynamicFormMultiSelect, {
             props: {
                 formControl: {...fakeSelect, value: ["opt2"]}
             }
         });
 
-        const treeSelect = rendered.find(TreeSelect);
-        expect(treeSelect.props("value")).toStrictEqual(["opt2"]);
+        const treeSelect = rendered.findComponent(TreeSelect);
+        expect(treeSelect.props("modelValue")).toStrictEqual(["opt2"]);
         expect(treeSelect.props("options")).toStrictEqual(fakeSelect.options);
     });
 
     it("renders treeselect with string starting value", () => {
-        const rendered = shallowMount(DynamicFormMultiSelect, {
+        const rendered = mount(DynamicFormMultiSelect, {
             props: {
                 formControl: {...fakeSelect, value: "opt2"}
             }
         });
 
-        const treeSelect = rendered.find(TreeSelect);
-        expect(treeSelect.props("value")).toStrictEqual(["opt2"]);
+        const treeSelect = rendered.findComponent(TreeSelect);
+        expect(treeSelect.props("modelValue")).toStrictEqual(["opt2"]);
         expect(treeSelect.props("options")).toStrictEqual(fakeSelect.options);
     });
 

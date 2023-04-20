@@ -1,5 +1,4 @@
 import {mount} from "@vue/test-utils";
-import Vue from "vue";
 import DynamicFormSelect from "../src/DynamicFormSelect.vue";
 import {SelectControl} from "../src/types";
 
@@ -21,9 +20,9 @@ describe('Dynamic form select component', function () {
         });
         const options = rendered.findAll("option");
         expect(options.length).toBe(3);
-        expect((options.at(1)?.element as HTMLSelectElement).value).toBe("opt1");
-        expect(options.at(0)?.text()).toBe("Select...");
-        expect(options.at(1)?.text()).toBe("option 1");
+        expect((options[1].element as HTMLOptionElement).value).toBe("opt1");
+        expect(options[0].text()).toBe("Select...");
+        expect(options[1].text()).toBe("option 1");
     });
 
     it("value is selected if present", () => {
@@ -68,12 +67,10 @@ describe('Dynamic form select component', function () {
         });
         const options = rendered.findAll("option");
         expect(options.length).toBe(2);
-        expect((options.at(0)?.element as HTMLSelectElement).value).toBe("opt1");
-        expect(options.at(0)?.text()).toBe("option 1");
+        expect((options[0].element as HTMLOptionElement).value).toBe("opt1");
+        expect(options[0].text()).toBe("option 1");
 
-        const select = rendered.find("select");
-
-        await Vue.nextTick();
+        expect(rendered.emitted("change")).toBeTruthy();
         expect(rendered.emitted("change")![0][0]).toEqual({...formControl, value: "opt1"});
     });
 

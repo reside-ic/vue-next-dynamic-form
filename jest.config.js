@@ -1,5 +1,5 @@
 module.exports = {
-    //testEnvironment: 'jsdom',
+    testEnvironment: 'jsdom',
     "globals": {
         "ts-jest": {
             tsConfig: 'tsconfig.json',
@@ -15,16 +15,14 @@ module.exports = {
         "ts"
     ],
     "transform": {
-        ".*\\.(vue)$": "vue-jest",
+        ".*\\.(vue)$": "vue3-jest",
         "^.+\\.ts?$": "ts-jest",
         "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     },
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
     "coverageProvider": "v8",
-
     "coveragePathIgnorePatterns": [
         "/node_modules/"
-    ],
-    preset: '@vue/cli-plugin-unit-jest/presets/no-babel'
+    ]
 };
