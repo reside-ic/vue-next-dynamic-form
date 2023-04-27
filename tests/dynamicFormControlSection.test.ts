@@ -205,10 +205,13 @@ describe('Dynamic form control section component', function () {
         rendered.findAllComponents(DynamicFormControlGroup).at(0)
             ?.vm.$emit("confirm","Param");
 
-        const emittedConfirm = rendered.emitted().confirm;
-
-        expect(emittedConfirm.length).toBe(1);
-        expect(emittedConfirm[0][0]).toBe("Param");
+        const emittedConfirm = rendered.emitted("confirm");
+        if (emittedConfirm) {
+            expect(emittedConfirm).toHaveLength(1);
+            expect(emittedConfirm[0][0]).toBe("Param");
+        } else {
+            fail("No confirm event emitted");
+        }
     });
 
 });

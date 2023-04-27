@@ -1,18 +1,16 @@
-import {mount, shallowMount} from "@vue/test-utils";
+import {mount} from "@vue/test-utils";
 import DynamicFormControl from "../src/DynamicFormControl.vue";
 import DynamicFormNumberInput from "../src/DynamicFormNumberInput.vue";
 import DynamicFormSelect from "../src/DynamicFormSelect.vue";
 import DynamicFormMultiSelect from "../src/DynamicFormMultiSelect.vue";
-import TreeSelect from 'vue3-treeselect';
+import TreeSelect from "vue3-treeselect";
 import {VTooltip} from 'floating-vue';
 import {NumberControl, SelectControl} from "../src/types";
 import DynamicFormReadonlyValue from "../src/DynamicFormReadonlyValue.vue";
 
-//const tooltipSpy = jest.spyOn(VTooltip, "bind");
+const tooltipSpy = jest.spyOn(VTooltip, "beforeMount");
 
 describe('Dynamic form control component', function () {
-
-    const tooltipSpy = jest.fn()
 
     const fakeNumber: NumberControl = {
         label: "Number label",
@@ -35,7 +33,7 @@ describe('Dynamic form control component', function () {
         options: [{id: "opt1", label: "option 1"}, {id: "opt2", label: "option2"}]
     };
 
-    const getWrapper = (formControl: any, mount: (component: any, options: any) => any, readonly: Boolean = false) => {
+    const getWrapper = (formControl: any, mount_remove: (component: any, options: any) => any, readonly: Boolean = false) => {
         return mount(DynamicFormControl, {
             props: {
                 formControl: formControl,
@@ -43,20 +41,12 @@ describe('Dynamic form control component', function () {
                 selectText: 'Select',
                 readonly,
                 groupLabel: 'test'
-            },
-            global: {
-                directives: {
-                    TreeSelect: tooltipSpy
-                },
-                components: {
-                    HelpCircleIcon: jest.fn()
-                }
             }
         });
     };
 
     it("renders label if it exists", () => {
-        const rendered = getWrapper(fakeNumber, shallowMount);
+        const rendered = getWrapper(fakeNumber, mount);
         expect(rendered.find("label").text()).toBe("Number label");
     });
 
@@ -64,10 +54,9 @@ describe('Dynamic form control component', function () {
         const rendered = getWrapper({...fakeNumber, helpText: "Some help text"}, mount);
         expect(rendered.find("label").text()).toBe("Number label");
 
-        expect(rendered.find("label").find("span").classes()).toContain("has-tooltip");
+        expect(rendered.find("label").find("span").classes()).toContain("v-popper--has-tooltip");
         expect(tooltipSpy).toHaveBeenCalled();
-        //expect(tooltipSpy).toHaveBeenCalledWith("Some help text");
-        //expect((tooltipSpy.mock.calls[0][1] as any).value).toBe("Some help text")
+        expect((tooltipSpy.mock.calls[0][1] as any).value).toBe("Some help text")
     });
 
     it("renders required indicator if input is required and sets text-danger class if no value given", () => {
@@ -102,21 +91,21 @@ describe('Dynamic form control component', function () {
         expect(rendered.element.classList).toContain("col-md-3");
     });
 
-    it("renders number input when formControl type is number", () => {
+    it("renders number input when formControl type is number",  () => {
         const control = {...fakeNumber};
         const rendered = getWrapper(control, mount);
         expect(rendered.findAllComponents(DynamicFormNumberInput).length).toBe(1);
-        expect(rendered.findAllComponents(DynamicFormNumberInput).at(0).props("groupLabel")).toBe("test");
+        expect(rendered.findComponent(DynamicFormNumberInput).props("groupLabel")).toBe("test");
         rendered.find("input").setValue(123);
         expect(rendered.emitted("change")![0][0]).toStrictEqual({...control, value: 123})
     });
 
-    it("renders select when formControl type is select", () => {
+    it("renders select when formControl type is select",  () => {
         const control = {...fakeSelect};
         const rendered = getWrapper(control, mount);
         expect(rendered.findAllComponents(DynamicFormSelect).length).toBe(1);
-        expect(rendered.findAllComponents(DynamicFormSelect).at(0).props("selectText")).toBe("Select");
-        expect(rendered.findAllComponents(DynamicFormSelect).at(0).props("groupLabel")).toBe("test");
+        expect(rendered.findComponent(DynamicFormSelect).props("selectText")).toBe("Select");
+        expect(rendered.findComponent(DynamicFormSelect).props("groupLabel")).toBe("test");
         rendered.find("select").trigger("change");
         expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeSelect, value: ""});
     });
@@ -124,8 +113,8 @@ describe('Dynamic form control component', function () {
     it("renders multi-select when formControl type is multiselect", () => {
         const rendered = getWrapper(fakeMultiSelect, mount);
         expect(rendered.findAllComponents(DynamicFormMultiSelect).length).toBe(1);
-        expect(rendered.findAllComponents(DynamicFormMultiSelect).at(0).props("selectText")).toBe("Select");
-        expect(rendered.findAllComponents(DynamicFormMultiSelect).at(0).props("groupLabel")).toBe("test");
+        expect(rendered.findComponent(DynamicFormMultiSelect).props("selectText")).toBe("Select");
+        expect(rendered.findComponent(DynamicFormMultiSelect).props("groupLabel")).toBe("test");
         rendered.findComponent(DynamicFormMultiSelect).findComponent(TreeSelect).vm.$emit("input", "opt1");
         expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeMultiSelect, value: "opt1"})
     });

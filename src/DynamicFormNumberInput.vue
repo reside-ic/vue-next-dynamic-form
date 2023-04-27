@@ -1,5 +1,5 @@
 <template>
-    <b-form-input :name="formControl.name"
+    <b-form-input v-if="formControl" :name="formControl.name"
                   :aria-label="formControl.label ? formControl.label : groupLabel"
                   type="number"
                   :number="true"
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-    import {computed, defineComponent, PropType} from "vue";
+import {computed, defineComponent, PropType, reactive} from "vue";
     import {BFormInput} from "bootstrap-vue-next";
     import {NumberControl} from "./types";
 
@@ -29,10 +29,6 @@
         components: {
             BFormInput
         },
-        model: {
-            prop: "formControl",
-            event: "change"
-        },
         props: {
             formControl: Object as PropType<NumberControl>,
             groupLabel: String
@@ -40,12 +36,16 @@
         emits: ["change"],
         setup(props, {emit}) {
 
+            const {formControl} = reactive(props);
+
             const value = computed({
                 get() {
-                    return props.formControl?.value;
+                    console.log(formControl);
+                    return formControl?.value;
                 },
                 set(newVal: number | null | undefined) {
-                    emit("change", {...props.formControl, value: newVal});
+                    console.log({...formControl, value: newVal})
+                    emit("change", {...formControl, value: newVal});
                 }
             })
             return {

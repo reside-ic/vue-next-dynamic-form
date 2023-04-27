@@ -1,10 +1,10 @@
 <template>
     <b-col :md="colWidth">
-        <label v-if="formControl.label">{{formControl.label}}
+        <label v-if="formControl">{{formControl.label}}
             <span v-if="formControl.helpText"
                   class="icon-small"
                   v-tooltip="formControl.helpText">
-                <help-circle-icon></help-circle-icon>
+               <help-circle-icon></help-circle-icon>
             </span>
             <span v-if="formControl.required && !readonly" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">({{requiredText}})</span>
         </label>
@@ -24,8 +24,8 @@
     import DynamicFormReadonlyValue from "./DynamicFormReadonlyValue.vue";
     import {VTooltip} from 'floating-vue'
     import {HelpCircleIcon} from "vue-feather";
-    import FormsMixin from "./FormsMixin";
     import {computed, defineComponent, PropType} from "vue";
+    import FormsMixin from "./FormsMixin";
 
     interface Computed {
         dynamicComponent: string,
@@ -43,6 +43,7 @@
 
     export default defineComponent({
         name: "DynamicFormControl",
+        mixins: [FormsMixin],
         components: {
             BCol,
             DynamicFormNumberInput,
@@ -69,22 +70,14 @@
         emits: ["change"],
         setup(props, {emit}) {
 
-            const formControlLocal = computed<DynamicControl | undefined>({
+            const formControlLocal = computed({
                 get() {
                     return props.formControl
                 },
-                set(newVal) {
+                set(newVal: DynamicControl | undefined) {
                     emit("change", newVal);
                 }
             })
-
-            const valueIsEmpty = (value: any) => {
-                if (value && value.constructor === Array) {
-                    return value.length === 0
-                } else if (typeof (value) === 'boolean' || value === 0) {
-                    return false
-                } else return !value
-            }
 
             const dynamicComponent = computed(() => {
                 if (props.readonly) {
@@ -98,14 +91,14 @@
                         case "number":
                             return "dynamic-form-number-input";
                         default:
-                            return ""
+                            return null
                     }
                 }
             })
+
             return {
                 formControlLocal,
-                dynamicComponent,
-                valueIsEmpty
+                dynamicComponent
             }
         }
     });

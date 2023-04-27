@@ -61,13 +61,10 @@ import {computed, defineComponent, onMounted, PropType, reactive, ref} from "vue
             selectText: String,
             readonly: Boolean
         },
-        /*
         model: {
             prop: "controlSection",
             event: "change"
         },
-
-         */
         emits: ["change", "confirm"],
         setup(props, {emit}) {
             const showDocumentation = ref(false)

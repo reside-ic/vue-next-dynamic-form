@@ -69,8 +69,6 @@ describe('Dynamic form control group component', function () {
             }
         });
 
-        expect(rendered.html()).toBe("")
-
         const labelCol = rendered.find("label");
         expect(labelCol.text()).toBe("Test 1");
         expect(labelCol.classes()).toStrictEqual(["col-form-label", "col-md-5"]);

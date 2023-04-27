@@ -1,5 +1,5 @@
 <template>
-    <select class="form-control"
+    <select v-if="formControl" class="form-control"
             :aria-label="formControl.label ? formControl.label : groupLabel"
             v-model="value"
             :name="formControl.name"

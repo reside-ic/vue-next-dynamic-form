@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="formControl">
         <tree-select :multiple="true"
                      :clearable="false"
                      :aria-label="formControl.label ? formControl.label : groupLabel"
@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, reactive, toRefs} from "vue";
+import {computed, defineComponent, PropType} from "vue";
     import {MultiSelectControl} from "./types";
-    import TreeSelect from 'vue3-treeselect';
+    import TreeSelect from "vue3-treeselect";
 
     interface Props {
         formControl: MultiSelectControl
