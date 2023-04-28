@@ -29,12 +29,7 @@
             groupLabel: String
         },
         emits: ["change"],
-        model: {
-            prop: "formControl",
-            event: "change"
-        },
         setup(props, {emit}) {
-
             const {formControl} = reactive(props)
 
             onMounted(() => {

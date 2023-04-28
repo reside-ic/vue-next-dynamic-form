@@ -25,25 +25,10 @@
     import {VTooltip} from 'floating-vue'
     import {HelpCircleIcon} from "vue-feather";
     import {computed, defineComponent, PropType} from "vue";
-    import FormsMixin from "./FormsMixin";
-
-    interface Computed {
-        dynamicComponent: string,
-        formControlLocal: DynamicControl
-    }
-
-    interface Props {
-        formControl: DynamicControl,
-        colWidth: string
-        requiredText?: string
-        selectText?: string,
-        readonly?: boolean
-        groupLabel: string
-    }
+    import {useFormMixin} from "./FormsMixin";
 
     export default defineComponent({
         name: "DynamicFormControl",
-        mixins: [FormsMixin],
         components: {
             BCol,
             DynamicFormNumberInput,
@@ -69,6 +54,8 @@
         },
         emits: ["change"],
         setup(props, {emit}) {
+
+            const {valueIsEmpty} = useFormMixin()
 
             const formControlLocal = computed({
                 get() {
@@ -98,7 +85,8 @@
 
             return {
                 formControlLocal,
-                dynamicComponent
+                dynamicComponent,
+                valueIsEmpty
             }
         }
     });

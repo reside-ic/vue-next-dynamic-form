@@ -15,15 +15,6 @@ import {computed, defineComponent, PropType, reactive} from "vue";
     import {BFormInput} from "bootstrap-vue-next";
     import {NumberControl} from "./types";
 
-    interface Props {
-        formControl: NumberControl
-        groupLabel: string
-    }
-
-    interface Computed {
-        value: number | null | undefined
-    }
-
     export default defineComponent({
         name: "DynamicFormNumberInput",
         components: {
@@ -40,11 +31,9 @@ import {computed, defineComponent, PropType, reactive} from "vue";
 
             const value = computed({
                 get() {
-                    console.log(formControl);
                     return formControl?.value;
                 },
                 set(newVal: number | null | undefined) {
-                    console.log({...formControl, value: newVal})
                     emit("change", {...formControl, value: newVal});
                 }
             })

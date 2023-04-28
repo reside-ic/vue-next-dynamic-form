@@ -1,6 +1,6 @@
 <template>
-    <b-row class="my-2">
-        <label v-if="controlGroup.label" class="col-form-label col-md-5">{{controlGroup.label}}
+    <b-row v-if="controlGroup" class="my-2">
+        <label class="col-form-label col-md-5">{{controlGroup.label}}
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
                     <help-circle-icon></help-circle-icon>
                 </span>
@@ -21,31 +21,12 @@
 </template>
 <script lang="ts">
     import {BCol, BRow} from "bootstrap-vue-next";
-    import {Control, DynamicControl, DynamicControlGroup} from "./types";
+    import {Control, DynamicControlGroup} from "./types";
     import DynamicFormControl from "./DynamicFormControl.vue";
     import {VTooltip} from 'floating-vue';
     import {HelpCircleIcon} from "vue-feather";
-    import FormsMixin from "./FormsMixin";
+    import {useFormMixin} from "./FormsMixin";
     import {computed, defineComponent, PropType, reactive, ref} from "vue";
-
-    interface Methods {
-        anyValueEmpty: (controlGroup: DynamicControlGroup) => boolean
-        change: (newVal: Control, index: number) => void
-        confirm:(e: Event) => void
-    }
-
-    interface Computed {
-        colWidth: string,
-        required: boolean
-        helpText: string | undefined
-    }
-
-    interface Props {
-        controlGroup: DynamicControlGroup
-        requiredText?: string
-        selectText?: string
-        readonly?: boolean
-    }
 
     export default defineComponent({
         name: "DynamicFormControlGroup",
@@ -54,10 +35,6 @@
             requiredText: String,
             selectText: String,
             readonly: Boolean
-        },
-        model: {
-            prop: "controlGroup",
-            event: "change"
         },
         components: {
             BRow,
@@ -71,12 +48,12 @@
         emits: ["change", "confirm"],
         setup(props, {emit}){
 
-            const {valueIsEmpty} = FormsMixin
+            const {valueIsEmpty} = useFormMixin()
 
-            const controls = props.controlGroup?.controls ?? [];
+            const {controlGroup} = reactive(props);
 
             const colWidth = computed(() => {
-                const numCols = controls.length;
+                const numCols = controlGroup?.controls.length;
                 if (numCols == 1) {
                     return "6"
                 } else {
@@ -85,21 +62,23 @@
             })
 
             const required = computed(() => {
-                return controls.length == 1 && controls[0].required
+                return controlGroup?.controls.length == 1 && controlGroup?.controls[0].required
             })
 
             const helpText = computed(() => {
-                return controls.length == 1 ? controls[0].helpText : ""
+                return controlGroup?.controls.length == 1 ? controlGroup?.controls[0].helpText : ""
             })
 
             function anyValueEmpty(controlGroup: DynamicControlGroup) {
                 return !!controlGroup.controls.find(c => valueIsEmpty(c.value))
             }
+
             function change(newVal: Control, index: number) {
-                const control = [...controls];
-                controls[index] = newVal;
+                const control = [...controlGroup?.controls || []];
+                control[index] = newVal;
                 emit("change", {...props.controlGroup, control})
             }
+
             function confirm(e: Event) {
                 emit("confirm", e)
             }

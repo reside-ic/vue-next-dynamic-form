@@ -15,16 +15,6 @@ import {computed, defineComponent, PropType} from "vue";
     import {MultiSelectControl} from "./types";
     import TreeSelect from "vue3-treeselect";
 
-    interface Props {
-        formControl: MultiSelectControl
-        selectText?: string
-        groupLabel: string
-    }
-
-    interface Computed {
-        value: string[]
-    }
-
     export default defineComponent({
         name: "DynamicFormMultiSelect",
         components: {

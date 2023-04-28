@@ -1,6 +1,6 @@
 <template>
     <b-form :ref="id" :id="id" class="dynamic-form" novalidate>
-        <dynamic-form-control-section v-for="(section, index) in formMeta.controlSections"
+        <dynamic-form-control-section v-if="formMeta" v-for="(section, index) in formMeta.controlSections"
                                       :key="index"
                                       :control-section="section"
                                       :readonly="readonly"
@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-import {computed, defineComponent, onMounted, PropType, reactive, watch} from "vue";
+import {computed, defineComponent, onMounted, PropType, reactive, watch, watchEffect} from "vue";
     import {BForm} from "bootstrap-vue-next";
     import jsonata from "jsonata";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
@@ -66,10 +66,6 @@ import {computed, defineComponent, onMounted, PropType, reactive, watch} from "v
     export default defineComponent({
         name: "DynamicForm",
         props: props,
-        model: {
-            prop: "formMeta",
-            event: "change"
-        },
         components: {
             BForm,
             DynamicFormControlGroup,
@@ -79,9 +75,19 @@ import {computed, defineComponent, onMounted, PropType, reactive, watch} from "v
 
         setup(props, {emit}) {
 
-            const {formMeta} = reactive(props)
+            onMounted(() =>  emit("validate", !disabled.value))
 
-            const controlSections = formMeta?.controlSections ?? [];
+            const controlSections = reactive(props.formMeta?.controlSections || []);
+
+            computed(() => {
+                controlSections.map(s => {
+                    s.controlGroups.map(g => {
+                        g.controls.map(c => {
+                            c.value = buildValue(c)
+                        })
+                    })
+                });
+            })
 
             const controls = computed(() =>  {
                 const controls: Control[] = [];
@@ -104,7 +110,7 @@ import {computed, defineComponent, onMounted, PropType, reactive, watch} from "v
             function change(newVal: DynamicControlSection, index: number) {
                 const innerControlSections = [...controlSections];
                 innerControlSections[index] = newVal;
-                emit("change", {...formMeta, innerControlSections})
+                emit("change", {...props.formMeta, innerControlSections})
             }
             function buildValue(control: DynamicControl) {
                 if (control.type == "multiselect" && !control.value) {
@@ -133,22 +139,6 @@ import {computed, defineComponent, onMounted, PropType, reactive, watch} from "v
             function confirm(e: Event) {
                 emit("confirm", e)
             }
-
-            onMounted(() => {
-                controlSections.map(s => {
-                    s.controlGroups.map(g => {
-                        g.controls.map(c => {
-                            c.value = buildValue(c)
-                        })
-                    })
-                });
-            })
-
-            onMounted(() =>  emit("validate", !disabled.value))
-
-            watch(disabled, (value: Boolean) => {
-                emit("validate", !value);
-            })
 
             return {
                 confirm,

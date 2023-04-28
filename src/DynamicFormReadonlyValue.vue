@@ -3,17 +3,8 @@
 </template>
 
 <script lang="ts">
-import Vue, {computed, defineComponent, PropType} from "vue";
-import {DynamicControl, Option, SelectControl} from "./types";
-
-    interface Props {
-        formControl: DynamicControl
-    }
-
-    interface Computed {
-        value: string;
-        flattenedOptions: Option[] | null;
-    }
+import {computed, defineComponent, PropType} from "vue";
+import {Option, SelectControl} from "./types";
 
     export default defineComponent({
         name: "DynamicFormReadonlyValue",
