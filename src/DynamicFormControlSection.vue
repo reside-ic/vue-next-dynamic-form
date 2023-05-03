@@ -2,9 +2,10 @@
     <div>
         <h3 @click="toggleSection" :class="{'cursor-pointer': controlSection.collapsible}">
             {{controlSection.label}}
-            <component v-if="controlSection.collapsible"
-                       style="vertical-align: initial"
-                       :is="chevronComponent"></component>
+            <vue-feather v-if="controlSection.collapsible"
+                         style="vertical-align: initial"
+                         :type="chevronComponent">
+            </vue-feather>
         </h3>
         <b-collapse v-model="open">
             <p v-if="controlSection.description" class="text-muted">{{controlSection.description}}</p>
@@ -19,10 +20,11 @@
             <b-row v-if="controlSection.documentation" class="documentation mb-4">
                 <b-col>
                     <a href="#" @click="toggleDocumentation">
-                        <info-icon></info-icon>
+                        <vue-feather type="info"></vue-feather>
                         How to use these settings
-                        <component style="vertical-align: top"
-                                   :is="documentationChevronComponent"></component>
+                        <vue-feather style="vertical-align:top"
+                                     :type="documentationChevronComponent">
+                        </vue-feather>
                     </a>
                     <b-collapse v-model="showDocumentation">
                         <div class="my-1" v-html="controlSection.documentation"></div>
@@ -38,16 +40,14 @@
 import {computed, defineComponent, onBeforeMount, PropType, reactive, ref} from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import {DynamicControlGroup, DynamicControlSection} from "./types";
-    import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather";
+    import VueFeather from "vue-feather";
     import {BCollapse, BRow, BCol} from "bootstrap-vue-next";
 
     export default defineComponent({
         name: "DynamicFormControlSection",
         components: {
             DynamicFormControlGroup,
-            InfoIcon,
-            ChevronDownIcon,
-            ChevronUpIcon,
+            VueFeather,
             BCollapse,
             BRow,
             BCol
@@ -63,12 +63,11 @@ import {computed, defineComponent, onBeforeMount, PropType, reactive, ref} from 
         emits: ["change", "confirm"],
         setup(props, {emit}) {
             const showDocumentation = ref(false)
-
             const open = ref(true)
 
             const {controlSection} = reactive(props)
 
-            const controlGroups = controlSection?.controlGroups ?? [];
+            const controlGroups = controlSection?.controlGroups || [];
 
             onBeforeMount(() => {
                 if (controlSection?.collapsible && controlSection.collapsed) {
@@ -96,16 +95,16 @@ import {computed, defineComponent, onBeforeMount, PropType, reactive, ref} from 
 
             const chevronComponent = computed(() => {
                 if (open.value) {
-                    return "chevron-up-icon"
+                    return "chevron-up"
                 }
-                return "chevron-down-icon"
+                return "chevron-down"
             })
 
             const documentationChevronComponent = computed(() => {
                 if (showDocumentation.value) {
-                    return "chevron-up-icon"
+                    return "chevron-up"
                 }
-                return "chevron-down-icon"
+                return "chevron-down"
             })
 
             return {

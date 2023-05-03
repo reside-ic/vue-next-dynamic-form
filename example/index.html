@@ -1,8 +1,8 @@
 <html>
 <head>
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../dist/css/style.min.css"/>
-    <title>Vue dynamic form demo</title>
+    <title>Vue next dynamic form demo</title>
 </head>
 <body>
 <div id="app" class="container mt-5">
@@ -25,9 +25,11 @@
                           :readonly="true"></vue-dynamic-form>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
-<script src="../dist/js/vue-next-dynamic-form.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="../dist/js/vue-dynamic-form.min.js"></script>
 <script>
+    const {createApp} = Vue
+
     const demoFormMeta = {
         controlSections: [
             {
@@ -114,25 +116,22 @@
         ]
     };
 
-    const app = Vue.createApp({
+    createApp({
         data() {
             return {
                 demoFormMeta,
                 valid: true
-            };
+            }
         },
         methods: {
             handleSubmit(formData) {
-                alert("Form data: " + JSON.stringify(formData));
+                alert("Form data: " + JSON.stringify(formData))
             },
             handleValidate(valid) {
                 this.valid = valid;
             }
         }
-    });
-
-    app.mount('#app');
-
+    }).mount('#app')
 </script>
 </body>
 </html>

@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-import {computed, defineComponent, onMounted, PropType, reactive, watch, watchEffect} from "vue";
+import {computed, defineComponent, onMounted, PropType, reactive} from "vue";
     import {BForm} from "bootstrap-vue-next";
     import jsonata from "jsonata";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";

@@ -18,11 +18,10 @@ Vue component for generating a form dynamically from metadata.
   
   // or local
   createApp({
-    'app',
     components: {
       DynamicForm
     }
-  })
+  }).mount('#app')
   
   ```
 * Include the following css file in your app: 
@@ -37,11 +36,11 @@ Vue component for generating a form dynamically from metadata.
 ### Browser
 
 To use the dynamic form component directly in the browser, 
-just include `dist/js/vue-next-dynamic-form.min.js` on the page, after Vue:
+just include `dist/js/vue-dynamic-form.min.js` on the page, after Vue:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script type="text/javascript" src="node_modules/@reside-ic/vue-dynamic-form/dist/vue-next-dynamic-form.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script type="text/javascript" src="node_modules/@reside-ic/vue-next-dynamic-form/dist/vue-dynamic-form.min.js"></script>
 ```
 
 In this case the component will be automatically registered. 

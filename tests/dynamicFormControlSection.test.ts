@@ -41,20 +41,23 @@ describe('Dynamic form control section component', function () {
         });
 
         expect(rendered.find("h3").classes()).toContain("cursor-pointer");
-        expect(rendered.findAll("chevron-down-icon").length).toBe(0);
-        expect(rendered.findAll("chevron-up-icon").length).toBe(1);
+        const vueFeatherIcons = rendered.findAll("svg");
+        expect(vueFeatherIcons).toHaveLength(1);
+        expect(rendered.find("svg").classes()).toContain("feather-chevron-up");
         await expect(rendered.findComponent(BCollapse).props("modelValue")).toBe(true);
 
         await rendered.find("h3").trigger("click");
 
-        expect(rendered.findAll("chevron-down-icon").length).toBe(1);
-        expect(rendered.findAll("chevron-up-icon").length).toBe(0);
+        const vueFeatherIcons2 = rendered.findAll("svg");
+        expect(vueFeatherIcons2).toHaveLength(1);
+        expect(rendered.find("svg").classes()).toContain("feather-chevron-down");
         expect(rendered.findComponent(BCollapse).props("modelValue")).toBe(false);
 
         await rendered.find("h3").trigger("click");
 
-        expect(rendered.findAll("chevron-down-icon").length).toBe(0);
-        expect(rendered.findAll("chevron-up-icon").length).toBe(1);
+        const vueFeatherIcons3 = rendered.findAll("svg");
+        expect(vueFeatherIcons3).toHaveLength(1);
+        expect(rendered.find("svg").classes()).toContain("feather-chevron-up");
         expect(rendered.findComponent(BCollapse).props("modelValue")).toBe(true);
     });
 
@@ -67,14 +70,16 @@ describe('Dynamic form control section component', function () {
         });
 
         expect(rendered.find("h3").classes()).toContain("cursor-pointer");
-        expect(rendered.findAll("chevron-down-icon").length).toBe(1);
-        expect(rendered.findAll("chevron-up-icon").length).toBe(0);
+        const vueFeatherIcons = rendered.findAll("svg");
+        expect(vueFeatherIcons).toHaveLength(1);
+        expect(rendered.find("svg").classes()).toContain("feather-chevron-down");
         expect(rendered.findComponent(BCollapse).props("modelValue")).toBe(false);
 
         await rendered.find("h3").trigger("click");
 
-        expect(rendered.findAll("chevron-down-icon").length).toBe(0);
-        expect(rendered.findAll("chevron-up-icon").length).toBe(1);
+        const vueFeatherIcons2 = rendered.findAll("svg");
+        expect(vueFeatherIcons2).toHaveLength(1);
+        expect(rendered.find("svg").classes()).toContain("feather-chevron-up");
         expect(rendered.findComponent(BCollapse).props("modelValue")).toBe(true);
     });
 
@@ -117,20 +122,24 @@ describe('Dynamic form control section component', function () {
             }
         });
 
-        await expect(rendered.findAll(".documentation").length).toBe(1);
+        expect(rendered.findAll(".documentation").length).toBe(1);
 
         let documentation = rendered.find(".documentation");
         expect(documentation.findComponent(BCollapse).props("modelValue")).toBe(false);
-        expect(documentation.findAll("chevron-down-icon").length).toBe(1);
-        expect(documentation.findAll("chevron-up-icon").length).toBe(0);
+
+        const vueFeatherIcons = documentation.findAll("svg");
+        expect(vueFeatherIcons).toHaveLength(2);
+        expect(vueFeatherIcons[0].classes()).toContain("feather-info");
+        expect(vueFeatherIcons[1].classes()).toContain("feather-chevron-down");
+
         //expect(documentation.find("ul").isVisible()).toBe(false);
 
         await documentation.find("a").trigger("click");
 
         documentation = rendered.find(".documentation");
         expect(documentation.findComponent(BCollapse).props("modelValue")).toBe(true);
-        expect(documentation.findAll("chevron-down-icon").length).toBe(0);
-        expect(documentation.findAll("chevron-up-icon").length).toBe(1);
+        expect(documentation.findAll("svg")[0].classes()).toContain("feather-info");
+        expect(documentation.findAll("svg")[1].classes()).toContain("feather-chevron-up");
         expect(documentation.find("ul").isVisible()).toBe(true);
     });
 

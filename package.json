@@ -28,7 +28,8 @@
   },
   "homepage": "https://github.com/reside-ic/vue-next-dynamic-form#readme",
   "dependencies": {
-    "@popperjs/core": "^2.11.7"
+    "@popperjs/core": "^2.11.7",
+    "html-webpack-plugin": "^5.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",

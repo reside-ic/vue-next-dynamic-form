@@ -4,7 +4,7 @@
             <span v-if="formControl.helpText"
                   class="icon-small"
                   v-tooltip="formControl.helpText">
-               <help-circle-icon></help-circle-icon>
+               <vue-feather type="help-circle"></vue-feather>
             </span>
             <span v-if="formControl.required && !readonly" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">({{requiredText}})</span>
         </label>
@@ -23,7 +23,7 @@
     import DynamicFormNumberInput from "./DynamicFormNumberInput.vue";
     import DynamicFormReadonlyValue from "./DynamicFormReadonlyValue.vue";
     import {VTooltip} from 'floating-vue'
-    import {HelpCircleIcon} from "vue-feather";
+    import VueFeather from "vue-feather";
     import {computed, defineComponent, PropType} from "vue";
     import {useFormMixin} from "./FormsMixin";
 
@@ -35,7 +35,7 @@
             DynamicFormSelect,
             DynamicFormMultiSelect,
             DynamicFormReadonlyValue,
-            HelpCircleIcon
+            VueFeather
         },
         directives: {
             tooltip: VTooltip

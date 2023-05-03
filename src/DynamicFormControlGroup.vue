@@ -1,10 +1,11 @@
 <template>
     <b-row v-if="controlGroup" class="my-2">
-        <label class="col-form-label col-md-5">{{controlGroup.label}}
+        <label class="col-form-label col-md-5">{{ controlGroup.label }}
             <span v-if="helpText" class="icon-small" v-tooltip="helpText">
-                    <help-circle-icon></help-circle-icon>
+                <vue-feather type="help-circle"></vue-feather>
                 </span>
-            <span v-if="required && !readonly" class="small" :class="{'text-danger': anyValueEmpty(controlGroup)}">({{requiredText}})</span>
+            <span v-if="required && !readonly" class="small"
+                  :class="{'text-danger': anyValueEmpty(controlGroup)}">({{ requiredText }})</span>
         </label>
         <dynamic-form-control v-for="(control, index) in controlGroup.controls"
                               :key="control.name"
@@ -24,7 +25,7 @@
     import {Control, DynamicControlGroup} from "./types";
     import DynamicFormControl from "./DynamicFormControl.vue";
     import {VTooltip} from 'floating-vue';
-    import {HelpCircleIcon} from "vue-feather";
+    import VueFeather from "vue-feather";
     import {useFormMixin} from "./FormsMixin";
     import {computed, defineComponent, PropType, reactive, ref} from "vue";
 
@@ -40,7 +41,7 @@
             BRow,
             BCol,
             DynamicFormControl,
-            HelpCircleIcon
+            VueFeather
         },
         directives: {
             tooltip: VTooltip
