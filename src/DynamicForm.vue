@@ -77,7 +77,6 @@ import {computed, defineComponent, onMounted, PropType, reactive, watch} from "v
 
             onMounted(() =>  emit("validate", !disabled.value))
 
-            //const controlSections = reactive(props.formMeta?.controlSections || []);
             const controlSections = computed(() => props.formMeta?.controlSections || []);
 
             computed(() => {
@@ -151,6 +150,8 @@ import {computed, defineComponent, onMounted, PropType, reactive, watch} from "v
                     }
                 });
             }
+
+            watch(disabled, (newValue) => emit("validate", !newValue));
 
             return {
                 confirm,
