@@ -37,7 +37,7 @@
 
 <script lang="ts">
 
-import {computed, defineComponent, onBeforeMount, PropType, reactive, ref} from "vue";
+import {computed, defineComponent, onBeforeMount, PropType, ref} from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import {DynamicControlGroup, DynamicControlSection} from "./types";
     import VueFeather from "vue-feather";
@@ -65,20 +65,18 @@ import {computed, defineComponent, onBeforeMount, PropType, reactive, ref} from 
             const showDocumentation = ref(false)
             const open = ref(true)
 
-            const {controlSection} = reactive(props)
-
-            const controlGroups = controlSection?.controlGroups || [];
+            const controlGroups = computed(() => props.controlSection?.controlGroups || []);
 
             onBeforeMount(() => {
-                if (controlSection?.collapsible && controlSection.collapsed) {
+                if (props.controlSection?.collapsible && props.controlSection.collapsed) {
                     open.value = false
                 }
             })
 
             function change(newVal: DynamicControlGroup, index: number) {
-                const innerControlGroups = [...controlGroups];
+                const innerControlGroups = [...controlGroups.value];
                 innerControlGroups[index] = newVal;
-                emit("change", {...controlSection, innerControlGroups})
+                emit("change", {...props.controlSection, controlGroups: innerControlGroups})
             }
             function toggleDocumentation(e: Event) {
                 e.preventDefault();

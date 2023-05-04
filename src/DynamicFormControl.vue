@@ -10,7 +10,7 @@
         </label>
         <component :is="dynamicComponent"
                    :group-label="groupLabel" 
-                   v-model="formControlLocal"
+                   v-model:formControl="formControlLocal"
                    :select-text="selectText"></component>
     </b-col>
 </template>
@@ -40,10 +40,6 @@
         directives: {
             tooltip: VTooltip
         },
-        model: {
-            prop: "formControl",
-            event: "change"
-        },
         props: {
             formControl: Object as PropType<DynamicControl>,
             colWidth: String,
@@ -62,6 +58,7 @@
                     return props.formControl
                 },
                 set(newVal: DynamicControl | undefined) {
+                    console.log("value has changed to" + JSON.stringify(newVal))
                     emit("change", newVal);
                 }
             })

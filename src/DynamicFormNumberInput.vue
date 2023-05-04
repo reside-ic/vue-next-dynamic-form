@@ -24,17 +24,14 @@ import {computed, defineComponent, PropType, reactive} from "vue";
             formControl: Object as PropType<NumberControl>,
             groupLabel: String
         },
-        emits: ["change"],
+        emits: ["update:formControl"],
         setup(props, {emit}) {
-
-            const {formControl} = reactive(props);
-
             const value = computed({
                 get() {
-                    return formControl?.value;
+                    return props.formControl?.value;
                 },
                 set(newVal: number | null | undefined) {
-                    emit("change", {...formControl, value: newVal});
+                    emit("update:formControl", {...props.formControl, value: newVal});
                 }
             })
             return {

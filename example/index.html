@@ -9,7 +9,7 @@
     <div class="row">
         <h2>Example form</h2>
         <vue-dynamic-form class="col-12"
-                          v-model="demoFormMeta"
+                          v-model:form-meta="demoFormMeta"
                           @submit="handleSubmit"
                           @validate="handleValidate"
                           required-text="required"
@@ -21,14 +21,14 @@
     <div class="row">
         <h2 class="mt-4">Read-only form</h2>
         <vue-dynamic-form class="col-12"
-                          v-model="demoFormMeta"
+                          v-model:form-meta="demoFormMeta"
                           :readonly="true"></vue-dynamic-form>
     </div>
 </div>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="../dist/js/vue-dynamic-form.min.js"></script>
 <script>
-    const {createApp} = Vue
+    const {createApp} = Vue;
 
     const demoFormMeta = {
         controlSections: [
@@ -99,7 +99,8 @@
                         controls: [{
                             name: "num_sim",
                             type: "number",
-                            required: true
+                            required: true,
+                            value: 4
                         }]
                     },
                     {
@@ -116,7 +117,7 @@
         ]
     };
 
-    createApp({
+    const app = createApp({
         data() {
             return {
                 demoFormMeta,
@@ -131,7 +132,9 @@
                 this.valid = valid;
             }
         }
-    }).mount('#app')
+    });
+    vueDynamicForm.default.install(app);
+    app.mount('#app');
 </script>
 </body>
 </html>

@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-import {computed, defineComponent, onMounted, PropType, reactive} from "vue";
+import {computed, defineComponent, onMounted, PropType, watch} from "vue";
     import {BForm} from "bootstrap-vue-next";
     import jsonata from "jsonata";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
@@ -71,16 +71,16 @@ import {computed, defineComponent, onMounted, PropType, reactive} from "vue";
             DynamicFormControlGroup,
             DynamicFormControlSection
         },
-        emits: ["validate", "change", "submit", "confirm"],
+        emits: ["validate", "update:formMeta", "submit", "confirm"],
 
         setup(props, {emit}) {
 
             onMounted(() =>  emit("validate", !disabled.value))
 
-            const controlSections = reactive(props.formMeta?.controlSections || []);
+            const controlSections = computed(() => props.formMeta?.controlSections || []);
 
             computed(() => {
-                controlSections.map(s => {
+                controlSections.value.map(s => {
                     s.controlGroups.map(g => {
                         g.controls.map(c => {
                             c.value = buildValue(c)
@@ -91,7 +91,7 @@ import {computed, defineComponent, onMounted, PropType, reactive} from "vue";
 
             const controls = computed(() =>  {
                 const controls: Control[] = [];
-                controlSections.map(s => {
+                controlSections.value.map(s => {
                     s.controlGroups.map(g => {
                         g.controls.map(c => {
                             controls.push(c);
@@ -108,9 +108,9 @@ import {computed, defineComponent, onMounted, PropType, reactive} from "vue";
             })
 
             function change(newVal: DynamicControlSection, index: number) {
-                const innerControlSections = [...controlSections];
+                const innerControlSections = [...controlSections.value];
                 innerControlSections[index] = newVal;
-                emit("change", {...props.formMeta, innerControlSections})
+                emit("update:formMeta", {...props.formMeta, controlSections: innerControlSections})
             }
             function buildValue(control: DynamicControl) {
                 if (control.type == "multiselect" && !control.value) {
@@ -139,6 +139,8 @@ import {computed, defineComponent, onMounted, PropType, reactive} from "vue";
             function confirm(e: Event) {
                 emit("confirm", e)
             }
+
+            watch(disabled, (newValue) => emit("validate", !newValue));
 
             return {
                 confirm,

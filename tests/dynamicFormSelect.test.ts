@@ -36,7 +36,7 @@ describe('Dynamic form select component', function () {
         expect((select.element as HTMLSelectElement).value).toBe("opt2");
     });
 
-    it("emits change event with updated formControl when underlying select is changed", () => {
+    it("emits update event with updated formControl when underlying select is changed", () => {
         const rendered = mount(DynamicFormSelect, {
             props: {
                 formControl: {...fakeSelect}
@@ -44,7 +44,7 @@ describe('Dynamic form select component', function () {
         });
 
         rendered.find("select").trigger("change");
-        expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeSelect, value: ""});
+        expect(rendered.emitted("update:formControl")![0][0]).toStrictEqual({...fakeSelect, value: ""});
     });
 
     it("default message is selected if no value present", () => {
@@ -70,8 +70,8 @@ describe('Dynamic form select component', function () {
         expect((options[0].element as HTMLOptionElement).value).toBe("opt1");
         expect(options[0].text()).toBe("option 1");
 
-        expect(rendered.emitted("change")).toBeTruthy();
-        expect(rendered.emitted("change")![0][0]).toEqual({...formControl, value: "opt1"});
+        expect(rendered.emitted("update:formControl")).toBeTruthy();
+        expect(rendered.emitted("update:formControl")![0][0]).toEqual({...formControl, value: "opt1"});
     });
 
     it("is required if formControl.required is true", () => {
