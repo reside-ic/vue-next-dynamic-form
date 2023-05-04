@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, watch} from "vue";
+import {computed, defineComponent, PropType} from "vue";
 import {Option, SelectControl} from "./types";
 
     export default defineComponent({
@@ -56,10 +56,6 @@ import {Option, SelectControl} from "./types";
                 }
 
                 return props.formControl?.value as string;
-            });
-
-            watch(() => props.formControl, () => {
-                console.log("formControl value has chnaged in readonly control")
             });
 
             return {

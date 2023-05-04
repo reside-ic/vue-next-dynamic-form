@@ -11,7 +11,6 @@
             {{opt.label}}
         </option>
     </select>
-    <div>{{value}}</div>
 </template>
 
 <script lang="ts">

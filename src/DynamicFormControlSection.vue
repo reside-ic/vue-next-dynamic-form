@@ -1,8 +1,5 @@
 <template>
     <div>
-        <div>
-            {{JSON.stringify((controlSection))}}
-        </div>
         <h3 @click="toggleSection" :class="{'cursor-pointer': controlSection.collapsible}">
             {{controlSection.label}}
             <vue-feather v-if="controlSection.collapsible"
@@ -40,7 +37,7 @@
 
 <script lang="ts">
 
-import {computed, defineComponent, onBeforeMount, PropType, reactive, ref, watch} from "vue";
+import {computed, defineComponent, onBeforeMount, PropType, ref} from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import {DynamicControlGroup, DynamicControlSection} from "./types";
     import VueFeather from "vue-feather";
@@ -107,10 +104,6 @@ import {computed, defineComponent, onBeforeMount, PropType, reactive, ref, watch
                 }
                 return "chevron-down"
             })
-
-            watch(() => props.controlSection, () => {
-                console.log("changed in control section")
-            });
 
             return {
                 chevronComponent,

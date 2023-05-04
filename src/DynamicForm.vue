@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-import {computed, defineComponent, onMounted, PropType, reactive, watch} from "vue";
+import {computed, defineComponent, onMounted, PropType, watch} from "vue";
     import {BForm} from "bootstrap-vue-next";
     import jsonata from "jsonata";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
@@ -108,8 +108,6 @@ import {computed, defineComponent, onMounted, PropType, reactive, watch} from "v
             })
 
             function change(newVal: DynamicControlSection, index: number) {
-                console.log("emitting change from DF with newVal: ")
-                console.log(JSON.stringify(newVal))
                 const innerControlSections = [...controlSections.value];
                 innerControlSections[index] = newVal;
                 emit("update:formMeta", {...props.formMeta, controlSections: innerControlSections})
@@ -140,15 +138,6 @@ import {computed, defineComponent, onMounted, PropType, reactive, watch} from "v
             }
             function confirm(e: Event) {
                 emit("confirm", e)
-            }
-
-            if (props.formMeta) {
-                watch(() => props.formMeta, (value) => {
-                    console.log("formMeta changed for form with readonly: " + props.readonly)
-                    if (props.readonly){
-                        console.log(JSON.stringify(value))
-                    }
-                });
             }
 
             watch(disabled, (newValue) => emit("validate", !newValue));

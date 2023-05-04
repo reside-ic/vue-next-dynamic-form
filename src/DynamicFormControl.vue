@@ -24,7 +24,7 @@
     import DynamicFormReadonlyValue from "./DynamicFormReadonlyValue.vue";
     import {VTooltip} from 'floating-vue'
     import VueFeather from "vue-feather";
-    import {computed, defineComponent, PropType, watch} from "vue";
+    import {computed, defineComponent, PropType} from "vue";
     import {useFormMixin} from "./FormsMixin";
 
     export default defineComponent({
@@ -79,10 +79,6 @@
                     }
                 }
             })
-
-            watch(() => props.formControl, () => {
-                console.log("changed in dynamic form control")
-            });
 
             return {
                 formControlLocal,

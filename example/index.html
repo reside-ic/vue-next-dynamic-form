@@ -131,12 +131,6 @@
             handleValidate(valid) {
                 this.valid = valid;
             }
-        },
-        watch: {
-            demoFormMeta(newValue) {
-                console.log("demoFormMeta has changed to:")
-                console.log(JSON.stringify(newValue))
-            }
         }
     });
     vueDynamicForm.default.install(app);
