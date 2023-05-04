@@ -49,12 +49,10 @@
         emits: ["change", "confirm"],
         setup(props, {emit}){
 
-            const {valueIsEmpty} = useFormMixin()
-
-            const {controlGroup} = reactive(props);
+            const {valueIsEmpty} = useFormMixin();
 
             const colWidth = computed(() => {
-                const numCols = controlGroup?.controls.length;
+                const numCols = props.controlGroup?.controls.length;
                 if (numCols == 1) {
                     return "6"
                 } else {
@@ -63,11 +61,11 @@
             })
 
             const required = computed(() => {
-                return controlGroup?.controls.length == 1 && controlGroup?.controls[0].required
+                return props.controlGroup?.controls.length == 1 && props.controlGroup?.controls[0].required
             })
 
             const helpText = computed(() => {
-                return controlGroup?.controls.length == 1 ? controlGroup?.controls[0].helpText : ""
+                return props.controlGroup?.controls.length == 1 ? props.controlGroup?.controls[0].helpText : ""
             })
 
             function anyValueEmpty(controlGroup: DynamicControlGroup) {
@@ -75,9 +73,9 @@
             }
 
             function change(newVal: Control, index: number) {
-                const control = [...controlGroup?.controls || []];
-                control[index] = newVal;
-                emit("change", {...props.controlGroup, control})
+                const controls = [...props.controlGroup?.controls || []];
+                controls[index] = newVal;
+                emit("change", {...props.controlGroup, controls})
             }
 
             function confirm(e: Event) {

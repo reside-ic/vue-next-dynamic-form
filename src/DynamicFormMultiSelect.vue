@@ -20,10 +20,6 @@ import {computed, defineComponent, PropType} from "vue";
         components: {
             TreeSelect
         },
-        model: {
-            prop: "formControl",
-            event: "change"
-        },
         props: {
             formControl: {
                 type: Object as PropType<MultiSelectControl>,
@@ -32,7 +28,7 @@ import {computed, defineComponent, PropType} from "vue";
             selectText: String,
             groupLabel: String
         },
-        emits: ["change"],
+        emits: ["update:formControl"],
         setup(props, {emit}) {
             const value = computed({
                 get() {
@@ -46,7 +42,7 @@ import {computed, defineComponent, PropType} from "vue";
                     return []
                 },
                 set(newVal: string[]) {
-                    emit("change", {...props.formControl, value: newVal});
+                    emit("update:formControl", {...props.formControl, value: newVal});
                 }
             })
             return {

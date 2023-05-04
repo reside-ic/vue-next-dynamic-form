@@ -48,6 +48,7 @@ export type NumberControl = DynamicControl & {
     min?: number
     max?: number
     value?: number | null
+    step?: number
 }
 
 export type DynamicFormMeta = {

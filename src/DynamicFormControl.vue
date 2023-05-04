@@ -10,7 +10,7 @@
         </label>
         <component :is="dynamicComponent"
                    :group-label="groupLabel" 
-                   v-model="formControlLocal"
+                   v-model:formControl="formControlLocal"
                    :select-text="selectText"></component>
     </b-col>
 </template>
@@ -24,7 +24,7 @@
     import DynamicFormReadonlyValue from "./DynamicFormReadonlyValue.vue";
     import {VTooltip} from 'floating-vue'
     import VueFeather from "vue-feather";
-    import {computed, defineComponent, PropType} from "vue";
+    import {computed, defineComponent, PropType, watch} from "vue";
     import {useFormMixin} from "./FormsMixin";
 
     export default defineComponent({
@@ -39,10 +39,6 @@
         },
         directives: {
             tooltip: VTooltip
-        },
-        model: {
-            prop: "formControl",
-            event: "change"
         },
         props: {
             formControl: Object as PropType<DynamicControl>,
@@ -62,6 +58,7 @@
                     return props.formControl
                 },
                 set(newVal: DynamicControl | undefined) {
+                    console.log("value has changed to" + JSON.stringify(newVal))
                     emit("change", newVal);
                 }
             })
@@ -82,6 +79,10 @@
                     }
                 }
             })
+
+            watch(() => props.formControl, () => {
+                console.log("changed in dynamic form control")
+            });
 
             return {
                 formControlLocal,

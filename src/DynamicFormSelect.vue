@@ -11,6 +11,7 @@
             {{opt.label}}
         </option>
     </select>
+    <div>{{value}}</div>
 </template>
 
 <script lang="ts">
@@ -28,21 +29,19 @@
             selectText: String,
             groupLabel: String
         },
-        emits: ["change"],
+        emits: ["update:formControl"],
         setup(props, {emit}) {
-            const {formControl} = reactive(props)
-
             onMounted(() => {
-                if (formControl?.excludeNullOption && !formControl.value) {
-                    value.value = formControl.options[0].id;
+                if (props.formControl?.excludeNullOption && !props.formControl.value) {
+                    value.value = props.formControl.options[0].id;
                 }
             })
             const value = computed({
                 get() {
-                    return formControl?.value || ""
+                    return props.formControl?.value || "";
                 },
                 set(newVal: string) {
-                    emit("change", {...formControl, value: newVal});
+                    emit("update:formControl", {...props.formControl, value: newVal});
                 }
             })
 
