@@ -116,7 +116,7 @@ describe('Dynamic form number input component', function () {
         expect(inputElement.step).toBe("0.01");
     });
 
-    it("emits change to formControl when underlying input is updated", () => {
+    it("emits update to formControl when underlying input is updated", () => {
         const control = {...fakeNumber};
         const rendered = mount(DynamicFormNumberInput, {
             props: {
@@ -125,7 +125,7 @@ describe('Dynamic form number input component', function () {
         });
 
         rendered.find("input").setValue(123);
-        expect(rendered.emitted("change")![0][0]).toStrictEqual({...control, value: 123})
+        expect(rendered.emitted("update:formControl")![0][0]).toStrictEqual({...control, value: 123})
     });
 
 });
