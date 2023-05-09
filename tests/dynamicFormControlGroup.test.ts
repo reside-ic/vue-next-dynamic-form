@@ -132,7 +132,7 @@ describe('Dynamic form control group component', function () {
         expect(rendered.findAllComponents(DynamicFormControl)[0].props("groupLabel")).toBe("Test 1");
     });
 
-    it("emits change event when a control changes", () => {
+    it("emits change event when a control changes", async () => {
         const controlGroup = {...fakeFormGroup};
         const wrapper = mount(DynamicFormControlGroup, {
             props: {
@@ -141,11 +141,16 @@ describe('Dynamic form control group component', function () {
         });
 
         expect(wrapper.findAllComponents(DynamicFormControl).length).toBe(2);
-        wrapper.findAllComponents(DynamicFormControl)[0].trigger("change",
+        await wrapper.findAllComponents(DynamicFormControl)[0].trigger("change",
             {...controlGroup.controls[0], value: 123});
 
-        //expect(wrapper.emitted().change!.length).toBe(1);
-        //expect((wrapper.emitted().change[0][0] as DynamicControlGroup).controls[0].value).toBe(123);
+/*
+        const changeEmitted = wrapper.emitted("change")
+        expect(changeEmitted).toHaveLength(1);
+        expect((changeEmitted![0][0] as DynamicControlGroup).controls[0].value)
+            .toStrictEqual(123);
+
+ */
     });
 
 

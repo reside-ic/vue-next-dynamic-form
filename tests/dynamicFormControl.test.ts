@@ -6,6 +6,7 @@ import DynamicFormMultiSelect from "../src/DynamicFormMultiSelect.vue";
 import {VTooltip} from 'floating-vue';
 import {NumberControl, SelectControl} from "../src/types";
 import DynamicFormReadonlyValue from "../src/DynamicFormReadonlyValue.vue";
+import TreeSelect from "vue3-treeselect";
 
 const tooltipSpy = jest.spyOn(VTooltip, "beforeMount");
 
@@ -109,8 +110,8 @@ describe('Dynamic form control component', function () {
         expect(rendered.findAllComponents(DynamicFormNumberInput).length).toBe(1);
         expect(rendered.findComponent(DynamicFormNumberInput).props("groupLabel")).toBe("test");
 
-        //rendered.find("input").setValue(123);
-        //expect(rendered.emitted("change")![0][0]).toStrictEqual({...control, value: 123})
+        rendered.find("input").setValue(123);
+        expect(rendered.emitted("change")![0][0]).toStrictEqual({...control, value: 123})
     });
 
     it("renders select when formControl type is select",  () => {
@@ -120,8 +121,8 @@ describe('Dynamic form control component', function () {
         expect(rendered.findComponent(DynamicFormSelect).props("selectText")).toBe("Select");
         expect(rendered.findComponent(DynamicFormSelect).props("groupLabel")).toBe("test");
 
-        //rendered.find("select").trigger("change");
-        //expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeSelect, value: ""});
+        rendered.find("select").trigger("change");
+        expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeSelect, value: ""});
     });
 
     it("renders multi-select when formControl type is multiselect",  () => {
@@ -130,7 +131,8 @@ describe('Dynamic form control component', function () {
         expect(rendered.findComponent(DynamicFormMultiSelect).props("selectText")).toBe("Select");
         expect(rendered.findComponent(DynamicFormMultiSelect).props("groupLabel")).toBe("test");
 
-        //rendered.findComponent(DynamicFormMultiSelect).findComponent(TreeSelect).vm.$emit("input", "opt1");
+        rendered.findComponent(DynamicFormMultiSelect).findComponent(TreeSelect).vm.$emit("input", "opt1");
+        //expect(rendered.emitted()).toHaveProperty("change")
         //expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeMultiSelect, value: "opt1"})
     });
 
@@ -139,18 +141,18 @@ describe('Dynamic form control component', function () {
         const renderedNumber = getWrapper(numberControl, true);
         expect(renderedNumber.findAllComponents(DynamicFormNumberInput).length).toBe(0);
         expect(renderedNumber.findAllComponents(DynamicFormReadonlyValue).length).toBe(1);
-        //expect((renderedNumber.findComponent(DynamicFormReadonlyValue).vm as any).formControl).toBe(numberControl);
+        expect((renderedNumber.findComponent(DynamicFormReadonlyValue).vm as any).formControl).toEqual(numberControl);
 
         const selectControl = {...fakeSelect};
         const renderedSelect = getWrapper(selectControl, true);
         expect(renderedSelect.findAllComponents(DynamicFormSelect).length).toBe(0);
         expect(renderedSelect.findAllComponents(DynamicFormReadonlyValue).length).toBe(1);
-        //expect((renderedSelect.findComponent(DynamicFormReadonlyValue).vm as any).formControl).toBe(selectControl);
+        expect((renderedSelect.findComponent(DynamicFormReadonlyValue).vm as any).formControl).toEqual(selectControl);
 
         const renderedMulti = getWrapper(fakeMultiSelect, true);
         expect(renderedMulti.findAllComponents(DynamicFormMultiSelect).length).toBe(0);
         expect(renderedMulti.findAllComponents(DynamicFormReadonlyValue).length).toBe(1);
-        //expect((renderedMulti.findComponent(DynamicFormReadonlyValue).vm as any).formControl).toBe(fakeMultiSelect);
+        expect((renderedMulti.findComponent(DynamicFormReadonlyValue).vm as any).formControl).toEqual(fakeMultiSelect);
     });
 
 });

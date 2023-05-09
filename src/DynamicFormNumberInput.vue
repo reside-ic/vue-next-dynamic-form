@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, PropType, reactive} from "vue";
+import {computed, defineComponent, PropType} from "vue";
     import {BFormInput} from "bootstrap-vue-next";
     import {NumberControl} from "./types";
 

@@ -58,7 +58,6 @@
                     return props.formControl
                 },
                 set(newVal: DynamicControl | undefined) {
-                    console.log("value has changed to" + JSON.stringify(newVal))
                     emit("change", newVal);
                 }
             })

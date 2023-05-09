@@ -3,7 +3,7 @@ import DynamicFormComponent from "../src/DynamicForm.vue";
 import DynamicForm from "../src/DynamicForm.vue";
 import DynamicFormControlSection from "../src/DynamicFormControlSection.vue";
 import {DynamicControlSection, DynamicFormMeta, MultiSelectControl, NumberControl, SelectControl} from "../src/types";
-import {createApp} from "vue";
+import Vue, {createApp, defineComponent} from "vue";
 
 const app = createApp({})
 
@@ -138,7 +138,7 @@ describe('Dynamic form component', function () {
 
     it("generates default id if not provided", () => {
         const rendered = getWrapper(validFormMeta);
-        //expect(rendered.vm.$props.id).toBe("d-form");
+        expect(rendered.attributes("id")).toBe("d-form");
     });
 
     it("renders control sections", () => {
@@ -238,26 +238,32 @@ describe('Dynamic form component', function () {
         expect(result).toStrictEqual(expected);
     });
 
-    it.skip("updates v-model when change event is emitted", async () => {
-       const vm = {...validFormMeta}
-        const parent = app.component( "testComponent", {
-            template: `<div><span>{{form.controlSections[1].label}}</span><dynamic-form v-model="form" /></div>`,
-            setup() {
+    it("updates v-model when change event is emitted", async () => {
+        const parental = defineComponent({
+            name: "parent",
+            template: `<div><span>{{form.controlSections[1].label}}</span><dynamic-form v-model:form-meta="form" /></div>`,
+            data() {
                 return {
-                    form: vm
+                    form: {...validFormMeta}
                 }
             },
             components: {
                 DynamicForm
             }
-        });
+        })
 
         const newControlSection: DynamicControlSection = {
             label: "TEST",
             controlGroups: []
         };
 
-        const rendered = await mount(parent);
+        const rendered = mount(parental, {
+            globals: {
+                stubs: {
+                    DynamicForm: true
+                }
+            }
+        });
 
         await rendered.findComponent(DynamicForm)
             .findAllComponents(DynamicFormControlSection)[1]
@@ -303,8 +309,8 @@ describe('Dynamic form component', function () {
         formMeta.controlSections[0].controlGroups[0].controls[0].value = "";
         await rendered.setProps({formMeta});
 
-        //expect(rendered.emitted().validate!.length).toBe(2);
-        //expect(rendered.emitted("validate")![1][0]).toBe(false);
+        expect(rendered.emitted().validate!.length).toBe(2);
+        expect(rendered.emitted("validate")![1][0]).toBe(false);
     });
 
     it("validate event is emitted with true value when form becomes valid", async () => {
@@ -332,7 +338,7 @@ describe('Dynamic form component', function () {
         formMeta.controlSections[0].controlGroups[0].controls[0].value = "opt2";
         await rendered.setProps({formMeta});
 
-        //expect(rendered.emitted().validate!.length).toBe(2);
-        //expect(rendered.emitted("validate")![1][0]).toBe(true);
+        expect(rendered.emitted().validate!.length).toBe(2);
+        expect(rendered.emitted("validate")![1][0]).toBe(true);
     });
 });
