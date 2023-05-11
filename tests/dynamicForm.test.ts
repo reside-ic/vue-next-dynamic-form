@@ -3,9 +3,7 @@ import DynamicFormComponent from "../src/DynamicForm.vue";
 import DynamicForm from "../src/DynamicForm.vue";
 import DynamicFormControlSection from "../src/DynamicFormControlSection.vue";
 import {DynamicControlSection, DynamicFormMeta, MultiSelectControl, NumberControl, SelectControl} from "../src/types";
-import Vue, {createApp, defineComponent} from "vue";
-
-const app = createApp({})
+import {defineComponent} from "vue";
 
 describe('Dynamic form component', function () {
 

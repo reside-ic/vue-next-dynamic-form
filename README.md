@@ -14,7 +14,8 @@ Vue component for generating a form dynamically from metadata.
   import {DynamicForm} from "@reside-ic/vue-next-dynamic-form"
   
   // global
-  Vue.createApp("dynamic-form", DynamicForm)
+  const app = Vue.createApp({})
+  app.use(DynamicForm);
   
   // or local
   createApp({
@@ -51,23 +52,25 @@ See [example/index.html](https://reside-ic.github.io/vue-next-dynamic-form/examp
 
 ```
 <template>
-    <dynamic-form v-model="myFormMeta" 
+    <dynamic-form v-model:form-meta="myFormMeta" 
                   @submit="handleSubmit"></dynamic-form>
 </template>
 <script>
 
-export default {
-    data() {
-        return {
-            myFormMeta: myFormMeta          
-        }
-    },
-    methods: {
-        submit(data) {
+const app = createApp({
+     data() {
+          return {
+             myFormMeta
+           }
+        },
+     methods: {
+         submit(data) {
             axios.post("/my-form", data)
         }
-    }
-}
+     }
+ });
+vueDynamicForm.default.install(app); 
+app.mount('#app');
 
 const myFormMeta = {   
     controlSections: [
