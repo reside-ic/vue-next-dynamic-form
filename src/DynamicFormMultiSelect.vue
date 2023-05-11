@@ -21,10 +21,7 @@ import {computed, defineComponent, PropType} from "vue";
             TreeSelect
         },
         props: {
-            formControl: {
-                type: Object as PropType<MultiSelectControl>,
-                required: false
-            },
+            formControl: Object as PropType<MultiSelectControl>,
             selectText: String,
             groupLabel: String
         },

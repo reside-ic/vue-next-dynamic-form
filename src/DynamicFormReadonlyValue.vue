@@ -9,10 +9,7 @@ import {Option, SelectControl} from "./types";
     export default defineComponent({
         name: "DynamicFormReadonlyValue",
         props: {
-            formControl: {
-                type: Object as PropType<SelectControl>,
-                required: false
-            }
+            formControl: Object as PropType<SelectControl>
         },
         setup(props) {
             const flattenedOptions = computed(() => {

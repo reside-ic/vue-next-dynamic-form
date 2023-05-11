@@ -36,7 +36,6 @@
 </template>
 
 <script lang="ts">
-
 import {computed, defineComponent, onBeforeMount, PropType, ref} from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import {DynamicControlGroup, DynamicControlSection} from "./types";
