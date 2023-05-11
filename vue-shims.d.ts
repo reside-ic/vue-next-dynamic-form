@@ -6,4 +6,3 @@ declare module "*.vue" {
 }
 
 declare module "vue3-treeselect";
-declare module "vue-feather";
