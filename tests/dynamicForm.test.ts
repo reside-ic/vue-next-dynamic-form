@@ -130,7 +130,8 @@ describe('Dynamic form component', function () {
         const rendered = getWrapper(validFormMeta, {id: "test-id"});
         const form = rendered.find("form");
 
-        //expect((form.vm.$refs["test-id"] as Element).tagName).toBe("FORM");
+        expect(form.element.tagName).toBe("FORM");
+        expect(form.attributes("id")).toBe("test-id");
         expect(form.classes()).toContain("dynamic-form")
     });
 
