@@ -141,16 +141,12 @@ describe('Dynamic form control group component', function () {
         });
 
         expect(wrapper.findAllComponents(DynamicFormControl).length).toBe(2);
-        await wrapper.findAllComponents(DynamicFormControl)[0].trigger("change",
+        await wrapper.findAllComponents(DynamicFormControl)[0].vm.$emit("change",
             {...controlGroup.controls[0], value: 123});
 
-/*
         const changeEmitted = wrapper.emitted("change")
         expect(changeEmitted).toHaveLength(1);
-        expect((changeEmitted![0][0] as DynamicControlGroup).controls[0].value)
-            .toStrictEqual(123);
-
- */
+        expect((changeEmitted![0][0] as DynamicControlGroup).controls[0].value).toStrictEqual(123);
     });
 
 

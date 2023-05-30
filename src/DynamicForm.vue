@@ -79,7 +79,7 @@ import {computed, defineComponent, onMounted, PropType, watch} from "vue";
 
             const controlSections = computed(() => props.formMeta?.controlSections || []);
 
-            computed(() => {
+            onMounted(() => {
                 controlSections.value.map(s => {
                     s.controlGroups.map(g => {
                         g.controls.map(c => {

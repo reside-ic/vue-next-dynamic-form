@@ -50,7 +50,7 @@ const mainConfig = {
     output: {
         filename: 'js/index.js',
         library: {
-            name: 'vueDynamicForm',
+            name: 'vueNextDynamicForm',
             type: 'umd'
         },
         umdNamedDefine: true
@@ -63,9 +63,9 @@ const pluginConfig = {
     },
     entry: path.resolve(__dirname, 'src/plugin.js'),
     output: {
-        filename: 'js/vue-dynamic-form.min.js',
+        filename: 'js/vue-next-dynamic-form.min.js',
         library: {
-            name: 'vueDynamicForm',
+            name: 'vueNextDynamicForm',
             type: 'window'
         }
     }

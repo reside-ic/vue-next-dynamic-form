@@ -1,4 +1,4 @@
-export function useFormMixin() {
+export function useForm() {
     function valueIsEmpty(value: any): boolean {
         if (value && value.constructor === Array) {
             return value.length === 0

@@ -132,15 +132,13 @@ describe('Dynamic form control section component', function () {
         expect(vueFeatherIcons[0].classes()).toContain("feather-info");
         expect(vueFeatherIcons[1].classes()).toContain("feather-chevron-down");
 
-        //expect(documentation.find("ul").isVisible()).toBe(false);
-
+        expect(documentation.findComponent(BCollapse).props("modelValue")).toBe(false);
         await documentation.find("a").trigger("click");
 
         documentation = rendered.find(".documentation");
         expect(documentation.findComponent(BCollapse).props("modelValue")).toBe(true);
         expect(documentation.findAll("svg")[0].classes()).toContain("feather-info");
         expect(documentation.findAll("svg")[1].classes()).toContain("feather-chevron-up");
-        expect(documentation.find("ul").isVisible()).toBe(true);
     });
 
     it("renders control groups", async () => {

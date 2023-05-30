@@ -1,8 +1,8 @@
 
-import {useFormMixin} from "../src/FormsMixin";
+import {useForm} from "../src/utils";
 
 test('it assess if value is empty', () => {
-    const {valueIsEmpty} = useFormMixin()
+    const {valueIsEmpty} = useForm()
     expect(valueIsEmpty([])).toStrictEqual(true);
     expect(valueIsEmpty(["text"])).toStrictEqual(false);
     expect(valueIsEmpty(false)).toStrictEqual(false);

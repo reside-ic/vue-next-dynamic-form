@@ -130,10 +130,9 @@ describe('Dynamic form control component', function () {
         expect(rendered.findAllComponents(DynamicFormMultiSelect).length).toBe(1);
         expect(rendered.findComponent(DynamicFormMultiSelect).props("selectText")).toBe("Select");
         expect(rendered.findComponent(DynamicFormMultiSelect).props("groupLabel")).toBe("test");
-
-        rendered.findComponent(DynamicFormMultiSelect).findComponent(TreeSelect).vm.$emit("input", "opt1");
-        //expect(rendered.emitted()).toHaveProperty("change")
-        //expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeMultiSelect, value: "opt1"})
+        rendered.findComponent(DynamicFormMultiSelect).findComponent(TreeSelect).vm.$emit("update:modelValue", "opt1");
+        expect(rendered.emitted).toHaveLength(1)
+        expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeMultiSelect, value: "opt1"})
     });
 
     it("renders readonly value when readonly is true", () => {

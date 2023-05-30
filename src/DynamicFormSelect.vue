@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-    import {computed, defineComponent, onMounted, PropType, reactive} from "vue";
+    import {computed, defineComponent, onMounted, PropType} from "vue";
     import {BFormSelect} from "bootstrap-vue-next";
     import {SelectControl} from "./types";
 

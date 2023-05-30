@@ -25,7 +25,7 @@
     import {VTooltip} from 'floating-vue'
     import VueFeather from "vue-feather";
     import {computed, defineComponent, PropType} from "vue";
-    import {useFormMixin} from "./FormsMixin";
+    import {useForm} from "./utils";
 
     export default defineComponent({
         name: "DynamicFormControl",
@@ -51,7 +51,7 @@
         emits: ["change"],
         setup(props, {emit}) {
 
-            const {valueIsEmpty} = useFormMixin()
+            const {valueIsEmpty} = useForm()
 
             const formControlLocal = computed({
                 get() {

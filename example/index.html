@@ -8,25 +8,25 @@
 <div id="app" class="container mt-5">
     <div class="row">
         <h2>Example form</h2>
-        <vue-dynamic-form class="col-12"
+        <vue-next-dynamic-form class="col-12"
                           v-model:form-meta="demoFormMeta"
                           @submit="handleSubmit"
                           @validate="handleValidate"
                           required-text="required"
-                          select-text="Select..."></vue-dynamic-form>
+                          select-text="Select..."></vue-next-dynamic-form>
         <div v-if="!valid" class="text-danger">
             Form is not valid
         </div>
     </div>
     <div class="row">
         <h2 class="mt-4">Read-only form</h2>
-        <vue-dynamic-form class="col-12"
+        <vue-next-dynamic-form class="col-12"
                           v-model:form-meta="demoFormMeta"
-                          :readonly="true"></vue-dynamic-form>
+                          :readonly="true"></vue-next-dynamic-form>
     </div>
 </div>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="../dist/js/vue-dynamic-form.min.js"></script>
+<script src="../dist/js/vue-next-dynamic-form.min.js"></script>
 <script>
     const {createApp} = Vue;
 
@@ -133,7 +133,7 @@
             }
         }
     });
-    vueDynamicForm.default.install(app);
+    vueNextDynamicForm.default.install(app);
     app.mount('#app');
 </script>
 </body>

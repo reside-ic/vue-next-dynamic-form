@@ -1,6 +1,6 @@
 # vue-next-dynamic-form 
 
-![Build Status](https://github.com/reside-ic/vue-next-dynamic-form/actions/workflows/test.yml/badge.svg?branch=mrc-4011)
+![Build Status](https://github.com/reside-ic/vue-next-dynamic-form/actions/workflows/test.yml/badge.svg?branch=mrc-4160)
 
 Vue component for generating a form dynamically from metadata.
 
@@ -69,7 +69,7 @@ const app = createApp({
         }
      }
  });
-vueDynamicForm.default.install(app); 
+vueNextDynamicForm.default.install(app); 
 app.mount('#app');
 
 const myFormMeta = {   

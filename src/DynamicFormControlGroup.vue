@@ -26,7 +26,7 @@
     import DynamicFormControl from "./DynamicFormControl.vue";
     import {VTooltip} from 'floating-vue';
     import VueFeather from "vue-feather";
-    import {useFormMixin} from "./FormsMixin";
+    import {useForm} from "./utils";
     import {computed, defineComponent, PropType} from "vue";
 
     export default defineComponent({
@@ -49,7 +49,7 @@
         emits: ["change", "confirm"],
         setup(props, {emit}){
 
-            const {valueIsEmpty} = useFormMixin();
+            const {valueIsEmpty} = useForm();
 
             const colWidth = computed(() => {
                 const numCols = props.controlGroup?.controls.length;
