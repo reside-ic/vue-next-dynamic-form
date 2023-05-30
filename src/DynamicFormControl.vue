@@ -58,7 +58,11 @@
                     return props.formControl
                 },
                 set(newVal: DynamicControl | undefined) {
-                    emit("change", newVal);
+                    const modifiedVal = {
+                        ...newVal,
+                        value: newVal!.value || "",
+                    };
+                    emit("change", modifiedVal);
                 }
             })
 

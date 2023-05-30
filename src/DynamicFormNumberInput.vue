@@ -26,14 +26,19 @@ import {computed, defineComponent, PropType} from "vue";
         },
         emits: ["update:formControl"],
         setup(props, {emit}) {
-            const value = computed({
+
+            const value = computed<number | null>({
                 get() {
-                    return props.formControl?.value;
+                    return props.formControl?.value || null;
                 },
-                set(newVal: number | null | undefined) {
-                    emit("update:formControl", {...props.formControl, value: newVal});
-                }
-            })
+                set(newVal: number | null) {
+                    emit("update:formControl", {
+                        ...props.formControl,
+                        value: newVal,
+                    });
+                },
+            });
+
             return {
                 value
             }

@@ -181,7 +181,7 @@ describe('Dynamic form component', function () {
 
     it("button is disabled and has btn-secondary class while required values are missing", async () => {
         const rendered = await getWrapper(invalidFormMeta, {});
-        //expect(rendered.find("button").attributes("disabled")).toBe("disabled");
+        await expect(rendered.find("button").attributes("disabled")).toBeDefined();
         expect(rendered.find("button").classes()).toStrictEqual(["btn", "btn-secondary"]);
     });
 

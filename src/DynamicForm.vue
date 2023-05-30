@@ -13,7 +13,7 @@
                 class="btn"
                 :class="disabled? 'btn-secondary' : 'btn-submit'"
                 :disabled="disabled"
-                v-on:click="submit">{{submitText}}
+                @click="submit">{{submitText}}
         </button>
     </b-form>
 </template>
