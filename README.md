@@ -1,28 +1,28 @@
-# vue-dynamic-form 
+# vue-next-dynamic-form 
 
-![Build Status](https://github.com/reside-ic/vue-dynamic-form/actions/workflows/test.yml/badge.svg?branch=mrc-4011)
+![Build Status](https://github.com/reside-ic/vue-next-dynamic-form/actions/workflows/test.yml/badge.svg?branch=mrc-4160)
 
 Vue component for generating a form dynamically from metadata.
 
 ## Installation
 * Install from npm:
   ```
-  npm install @reside-ic/vue-dynamic-form
+  npm install @reside-ic/vue-next-dynamic-form
   ```
 * Import into your project and register as a global or local component:
   ```
-  import {DynamicForm} from "@reside-ic/vue-dynamic-form"
+  import {DynamicForm} from "@reside-ic/vue-next-dynamic-form"
   
   // global
-  Vue.component("dynamic-form", DynamicForm)
+  const app = Vue.createApp({})
+  app.use(DynamicForm);
   
   // or local
-  new Vue({
-    el: '#app',
+  createApp({
     components: {
       DynamicForm
     }
-  })
+  }).mount('#app')
   
   ```
 * Include the following css file in your app: 
@@ -40,35 +40,37 @@ To use the dynamic form component directly in the browser,
 just include `dist/js/vue-dynamic-form.min.js` on the page, after Vue:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script type="text/javascript" src="node_modules/@reside-ic/vue-dynamic-form/dist/vue-dynamic-form.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script type="text/javascript" src="node_modules/@reside-ic/vue-next-dynamic-form/dist/vue-dynamic-form.min.js"></script>
 ```
 
 In this case the component will be automatically registered. 
-See [example/index.html](https://reside-ic.github.io/vue-dynamic-form/example/index.html).
+See [example/index.html](https://reside-ic.github.io/vue-next-dynamic-form/example/index.html).
 
 ## Usage
 ### Example
 
 ```
 <template>
-    <dynamic-form v-model="myFormMeta" 
+    <dynamic-form v-model:form-meta="myFormMeta" 
                   @submit="handleSubmit"></dynamic-form>
 </template>
 <script>
 
-export default {
-    data() {
-        return {
-            myFormMeta: myFormMeta          
-        }
-    },
-    methods: {
-        submit(data) {
+const app = createApp({
+     data() {
+          return {
+             myFormMeta
+           }
+        },
+     methods: {
+         submit(data) {
             axios.post("/my-form", data)
         }
-    }
-}
+     }
+ });
+vueNextDynamicForm.default.install(app); 
+app.mount('#app');
 
 const myFormMeta = {   
     controlSections: [
@@ -174,7 +176,7 @@ the payload would be of the form:
 If the optional `transform` property is present on any control, this string is interpreted as a [jsonata](https://jsonata.org/) 
 transform and will be applied to the value emitted. 
 
-See this as a working example [here](https://reside-ic.github.io/vue-dynamic-form/example/index.html)
+See this as a working example [here](https://reside-ic.github.io/vue-next-dynamic-form/example/index.html)
 
 The form also emits a `validate` event when its valid state changes. The form is valid if all controls which are `required`
  have values. The valid event provides a single boolean parameter which is `true` is the form has become valid, `false` 

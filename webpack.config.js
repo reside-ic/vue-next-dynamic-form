@@ -1,9 +1,9 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 const config = {
-    mode: "production",
+    mode: 'production',
     resolve: {
         extensions: ['.ts', '.js', '.vue', '.json']
     },
@@ -11,55 +11,64 @@ const config = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    loaders: {
-                        // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-                        // the "scss" and "sass" values for the lang attribute to the right configs here.
-                        // other preprocessors should work out of the box, no loader config like this necessary.
-                        'scss': 'vue-style-loader!css-loader!sass-loader',
-                        'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
+                use: [
+                    {
+                        loader: 'vue-loader',
+                        options: {
+                            loaders: {
+                                'scss': 'vue-style-loader!css-loader!sass-loader',
+                                'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
+                            }
+                        }
                     }
-                    // other vue-loader options go here
-                }
+                ]
             },
             {
                 test: /\.tsx?$/,
-                loader: 'ts-loader',
-                exclude: /node_modules/,
-                options: {
-                    appendTsSuffixTo: [/\.vue$/],
-                }
-            },
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            appendTsSuffixTo: [/\.vue$/]
+                        }
+                    }
+                ],
+                exclude: /node_modules/
+            }
         ]
     },
     plugins: [
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
     ]
 };
 
-module.exports = [
-    merge(config, {
-        externals: {
-            'vue': 'vue'
+const mainConfig = {
+    externals: {
+        vue: 'Vue'
+    },
+    entry: path.resolve(__dirname, 'src/index.ts'),
+    output: {
+        filename: 'js/index.js',
+        library: {
+            name: 'vueNextDynamicForm',
+            type: 'umd'
         },
-        entry: path.resolve(__dirname + '/src/index.ts'),
-        output: {
-            filename: 'js/index.js',
-            libraryTarget: 'umd',
-            library: 'vueDynamicForm',
-            umdNamedDefine: true
-        },
-    }),
-    merge(config, {
-        externals: {
-            'vue': 'Vue'
-        },
-        entry: path.resolve(__dirname + '/src/plugin.js'),
-        output: {
-            filename: 'js/vue-dynamic-form.min.js',
-            libraryTarget: 'window',
-            library: 'vueDynamicForm'
+        umdNamedDefine: true
+    }
+};
+
+const pluginConfig = {
+    externals: {
+        vue: 'Vue'
+    },
+    entry: path.resolve(__dirname, 'src/plugin.js'),
+    output: {
+        filename: 'js/vue-next-dynamic-form.min.js',
+        library: {
+            name: 'vueNextDynamicForm',
+            type: 'window'
         }
-    })
-];
+    }
+};
+
+module.exports = [merge(config, mainConfig), merge(config, pluginConfig)];

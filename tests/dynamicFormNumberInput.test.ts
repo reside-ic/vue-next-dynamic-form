@@ -12,7 +12,7 @@ describe('Dynamic form number input component', function () {
 
     it("renders number input with value", () => {
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: {...fakeNumber, value: 1}
             }
         });
@@ -28,7 +28,7 @@ describe('Dynamic form number input component', function () {
 
     it("renders number input with string value", () => {
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: {...fakeNumber, value: "1"}
             }
         });
@@ -41,7 +41,7 @@ describe('Dynamic form number input component', function () {
 
     it("renders number input without value", () => {
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: fakeNumber
             }
         });
@@ -52,7 +52,7 @@ describe('Dynamic form number input component', function () {
 
     it("renders aria-label as groupLabel if no label given", () => {
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: fakeNumber,
                 groupLabel: "groupLabel"
             }
@@ -62,7 +62,7 @@ describe('Dynamic form number input component', function () {
 
     it("renders aria-label as control label if label given", () => {
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: {...fakeNumber, label: "controlLabel"},
                 groupLabel: "groupLabel"
             }
@@ -72,7 +72,7 @@ describe('Dynamic form number input component', function () {
 
     it("is required if formControl.required is true", () => {
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: {...fakeNumber, required: true}
             }
         });
@@ -84,7 +84,7 @@ describe('Dynamic form number input component', function () {
 
     it("is not required if formControl.required is false", () => {
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: {...fakeNumber, required: false}
             }
         });
@@ -95,7 +95,7 @@ describe('Dynamic form number input component', function () {
 
     it("renders number input with min and max", () => {
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: {...fakeNumber, min: 1, max: 5}
             }
         });
@@ -107,7 +107,7 @@ describe('Dynamic form number input component', function () {
 
     it("renders number input with step", () => {
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: {...fakeNumber, step: 0.01}
             }
         });
@@ -116,16 +116,16 @@ describe('Dynamic form number input component', function () {
         expect(inputElement.step).toBe("0.01");
     });
 
-    it("emits change to formControl when underlying input is updated", () => {
+    it("emits update to formControl when underlying input is updated", () => {
         const control = {...fakeNumber};
         const rendered = mount(DynamicFormNumberInput, {
-            propsData: {
+            props: {
                 formControl: control
             }
         });
 
         rendered.find("input").setValue(123);
-        expect(rendered.emitted("change")![0][0]).toStrictEqual({...control, value: 123})
+        expect(rendered.emitted("update:formControl")![0][0]).toStrictEqual({...control, value: 123})
     });
 
 });

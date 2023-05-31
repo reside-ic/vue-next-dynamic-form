@@ -1,26 +1,35 @@
 <html>
 <head>
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../dist/css/style.min.css"/>
-    <title>Vue dynamic form demo</title>
+    <title>Vue next dynamic form demo</title>
 </head>
 <body>
 <div id="app" class="container mt-5">
     <div class="row">
         <h2>Example form</h2>
-        <vue-dynamic-form class="col-12" v-model="demoFormMeta" @submit="handleSubmit" @validate="handleValidate" required-text="required" select-text="Select..."></vue-dynamic-form>
+        <vue-next-dynamic-form class="col-12"
+                          v-model:form-meta="demoFormMeta"
+                          @submit="handleSubmit"
+                          @validate="handleValidate"
+                          required-text="required"
+                          select-text="Select..."></vue-next-dynamic-form>
         <div v-if="!valid" class="text-danger">
             Form is not valid
         </div>
     </div>
     <div class="row">
         <h2 class="mt-4">Read-only form</h2>
-        <vue-dynamic-form class="col-12" v-model="demoFormMeta" :readonly="true"></vue-dynamic-form>
+        <vue-next-dynamic-form class="col-12"
+                          v-model:form-meta="demoFormMeta"
+                          :readonly="true"></vue-next-dynamic-form>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="../dist/js/vue-dynamic-form.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="../dist/js/vue-next-dynamic-form.min.js"></script>
 <script>
+    const {createApp} = Vue;
+
     const demoFormMeta = {
         controlSections: [
             {
@@ -90,7 +99,8 @@
                         controls: [{
                             name: "num_sim",
                             type: "number",
-                            required: true
+                            required: true,
+                            value: 4
                         }]
                     },
                     {
@@ -107,11 +117,12 @@
         ]
     };
 
-    new Vue({
-        el: "#app",
-        data: {
-            demoFormMeta,
-            valid: true
+    const app = createApp({
+        data() {
+            return {
+                demoFormMeta,
+                valid: true
+            }
         },
         methods: {
             handleSubmit(formData) {
@@ -121,7 +132,9 @@
                 this.valid = valid;
             }
         }
-    })
+    });
+    vueNextDynamicForm.default.install(app);
+    app.mount('#app');
 </script>
 </body>
 </html>

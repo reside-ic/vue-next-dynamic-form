@@ -3,31 +3,17 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
-    import {DynamicControl, Option} from "./types";
+import {computed, defineComponent, PropType} from "vue";
+import {Option, SelectControl} from "./types";
 
-    interface Props {
-        formControl: DynamicControl
-    }
-
-    interface Computed {
-        value: string;
-        flattenedOptions: Option[] | null;
-    }
-
-    export default Vue.extend<{}, {}, Computed, Props>({
+    export default defineComponent({
         name: "DynamicFormReadonlyValue",
-        model: {
-            prop: "formControl"
-        },
         props: {
-            formControl: {
-                type: Object
-            }
+            formControl: Object as PropType<SelectControl>
         },
-        computed: {
-            flattenedOptions() {
-                const options: Option[] | undefined = (this.formControl as any).options;
+        setup(props) {
+            const flattenedOptions = computed(() => {
+                const options: Option[] | undefined = (props.formControl as any).options;
                 if (options) {
                     const flattenOptions = (options: Option[]): Option[] => {
                         let result: Option[] = [];
@@ -44,14 +30,15 @@
                 } else {
                     return null;
                 }
-            },
-            value() {
-                const controlValue = this.formControl.value;
+            })
+
+            const value = computed(() => {
+                const controlValue = props.formControl?.value;
                 if (!controlValue || (Array.isArray(controlValue) && controlValue.length == 0)) {
                     return "";
                 }
 
-                const options = this.flattenedOptions;
+                const options = flattenedOptions.value
                 if (options) {
                     const ids = Array.isArray(controlValue) ? controlValue : [controlValue];
                     const readableValues = ids.map(id => {
@@ -61,11 +48,16 @@
                     return readableValues.join(", ");
                 }
 
-                if (typeof this.formControl.value === "number") {
-                    return new Intl.NumberFormat().format(this.formControl.value);
+                if (typeof props.formControl?.value === "number") {
+                    return new Intl.NumberFormat().format(props.formControl.value);
                 }
 
-                return this.formControl.value as string;
+                return props.formControl?.value as string;
+            });
+
+            return {
+                value,
+                flattenedOptions
             }
         }
     });

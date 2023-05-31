@@ -2,9 +2,10 @@
     <div>
         <h3 @click="toggleSection" :class="{'cursor-pointer': controlSection.collapsible}">
             {{controlSection.label}}
-            <component v-if="controlSection.collapsible"
-                       style="vertical-align: initial"
-                       :is="chevronComponent"></component>
+            <vue-feather v-if="controlSection.collapsible"
+                         style="vertical-align: initial"
+                         :type="chevronComponent">
+            </vue-feather>
         </h3>
         <b-collapse v-model="open">
             <p v-if="controlSection.description" class="text-muted">{{controlSection.description}}</p>
@@ -19,10 +20,11 @@
             <b-row v-if="controlSection.documentation" class="documentation mb-4">
                 <b-col>
                     <a href="#" @click="toggleDocumentation">
-                        <info-icon></info-icon>
+                        <vue-feather type="info"></vue-feather>
                         How to use these settings
-                        <component style="vertical-align: top"
-                                   :is="documentationChevronComponent"></component>
+                        <vue-feather style="vertical-align:top"
+                                     :type="documentationChevronComponent">
+                        </vue-feather>
                     </a>
                     <b-collapse v-model="showDocumentation">
                         <div class="my-1" v-html="controlSection.documentation"></div>
@@ -34,97 +36,83 @@
 </template>
 
 <script lang="ts">
-
-    import Vue from "vue";
+import {computed, defineComponent, onBeforeMount, PropType, ref} from "vue";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
     import {DynamicControlGroup, DynamicControlSection} from "./types";
-    import {InfoIcon, ChevronDownIcon, ChevronUpIcon} from "vue-feather-icons";
-    import {BCollapse, BRow, BCol} from "bootstrap-vue";
+    import VueFeather from "vue-feather";
+    import {BCollapse, BRow, BCol} from "bootstrap-vue-next";
 
-    interface Methods {
-        change: (newVal: DynamicControlGroup, index: number) => void
-        toggleDocumentation: (e: Event) => void
-        toggleSection: () => void
-        confirm: (e: Event) => void
-    }
-
-    interface Props {
-        controlSection: DynamicControlSection
-        requiredText?: string
-        selectText?: string
-        readonly: boolean
-    }
-
-    interface Data {
-        open: boolean
-        showDocumentation: boolean
-    }
-
-    export default Vue.extend<Data, Methods, {}, Props>({
+    export default defineComponent({
         name: "DynamicFormControlSection",
-        data() {
-            return {
-                showDocumentation: false,
-                open: true
-            }
+        components: {
+            DynamicFormControlGroup,
+            VueFeather,
+            BCollapse,
+            BRow,
+            BCol
         },
         props: {
             controlSection: {
-                type: Object
+                type: Object as PropType<DynamicControlSection>
             },
             requiredText: String,
             selectText: String,
             readonly: Boolean
         },
-        model: {
-            prop: "controlSection",
-            event: "change"
-        },
-        computed: {
-            chevronComponent() {
-                if (this.open) {
-                    return "chevron-up-icon"
+        emits: ["change", "confirm"],
+        setup(props, {emit}) {
+            const showDocumentation = ref(false)
+            const open = ref(true)
+
+            const controlGroups = computed(() => props.controlSection?.controlGroups || []);
+
+            onBeforeMount(() => {
+                if (props.controlSection?.collapsible && props.controlSection.collapsed) {
+                    open.value = false
                 }
-                return "chevron-down-icon"
-            },
-            documentationChevronComponent() {
-                if (this.showDocumentation) {
-                    return "chevron-up-icon"
-                }
-                return "chevron-down-icon"
+            })
+
+            function change(newVal: DynamicControlGroup, index: number) {
+                const innerControlGroups = [...controlGroups.value];
+                innerControlGroups[index] = newVal;
+                emit("change", {...props.controlSection, controlGroups: innerControlGroups})
             }
-        },
-        methods: {
-            change(newVal: DynamicControlGroup, index: number) {
-                const controlGroups = [...this.controlSection.controlGroups];
-                controlGroups[index] = newVal;
-                this.$emit("change", {...this.controlSection, controlGroups})
-            },
-            toggleDocumentation(e: Event) {
+            function toggleDocumentation(e: Event) {
                 e.preventDefault();
-                this.showDocumentation = !this.showDocumentation
-            },
-            toggleSection() {
-                if (this.controlSection.collapsible) {
-                    this.open = !this.open;
+                showDocumentation.value = !showDocumentation.value
+            }
+            function toggleSection() {
+                if (props.controlSection?.collapsible) {
+                    open.value = !open.value;
                 }
-            },
-          confirm(e: Event) {
-            this.$emit("confirm", e)
-          }
-        },
-        components: {
-            DynamicFormControlGroup,
-            InfoIcon,
-            ChevronDownIcon,
-            ChevronUpIcon,
-            BCollapse,
-            BRow,
-            BCol
-        },
-        beforeMount() {
-            if (this.controlSection.collapsible && this.controlSection.collapsed) {
-                this.open = false
+            }
+            function confirm(e: Event) {
+                emit("confirm", e)
+            }
+
+            const chevronComponent = computed(() => {
+                if (open.value) {
+                    return "chevron-up"
+                }
+                return "chevron-down"
+            })
+
+            const documentationChevronComponent = computed(() => {
+                if (showDocumentation.value) {
+                    return "chevron-up"
+                }
+                return "chevron-down"
+            })
+
+            return {
+                chevronComponent,
+                documentationChevronComponent,
+                change,
+                toggleDocumentation,
+                toggleSection,
+                confirm,
+                showDocumentation,
+                open
             }
         }
     })

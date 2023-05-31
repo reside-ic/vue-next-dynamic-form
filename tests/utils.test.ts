@@ -1,10 +1,8 @@
 
-import {shallowMount} from "@vue/test-utils";
-import FormsMixin from "../src/FormsMixin";
+import {useForm} from "../src/utils";
 
 test('it assess if value is empty', () => {
-    const wrapper = shallowMount(FormsMixin)
-    const valueIsEmpty = wrapper.vm.valueIsEmpty
+    const {valueIsEmpty} = useForm()
     expect(valueIsEmpty([])).toStrictEqual(true);
     expect(valueIsEmpty(["text"])).toStrictEqual(false);
     expect(valueIsEmpty(false)).toStrictEqual(false);

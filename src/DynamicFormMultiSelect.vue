@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="formControl">
         <tree-select :multiple="true"
                      :clearable="false"
                      :aria-label="formControl.label ? formControl.label : groupLabel"
@@ -11,51 +11,40 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+import {computed, defineComponent, PropType} from "vue";
     import {MultiSelectControl} from "./types";
-    import TreeSelect from '@riophae/vue-treeselect';
+    import TreeSelect from "vue3-treeselect";
 
-    interface Props {
-        formControl: MultiSelectControl
-        selectText?: string
-        groupLabel: string
-    }
-
-    interface Computed {
-        value: string[]
-    }
-
-    export default Vue.extend<{}, {}, Computed, Props>({
+    export default defineComponent({
         name: "DynamicFormMultiSelect",
-        model: {
-            prop: "formControl",
-            event: "change"
+        components: {
+            TreeSelect
         },
         props: {
-            formControl: {
-                type: Object
-            },
+            formControl: Object as PropType<MultiSelectControl>,
             selectText: String,
             groupLabel: String
         },
-        computed: {
-            value: {
+        emits: ["update:formControl"],
+        setup(props, {emit}) {
+            const value = computed({
                 get() {
-                    if (Array.isArray(this.formControl.value)) {
-                        return this.formControl.value
+                    const formControlValue = props.formControl?.value
+                    if (Array.isArray(formControlValue)) {
+                        return formControlValue
                     }
-                    if (typeof this.formControl.value == "string") {
-                        return [this.formControl.value]
+                    if (typeof formControlValue == "string") {
+                        return [formControlValue]
                     }
                     return []
                 },
                 set(newVal: string[]) {
-                    this.$emit("change", {...this.formControl, value: newVal});
+                    emit("update:formControl", {...props.formControl, value: newVal});
                 }
-            },
-        },
-        components: {
-            TreeSelect
+            })
+            return {
+                value
+            }
         }
     })
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <b-form-input :name="formControl.name"
+    <b-form-input v-if="formControl" :name="formControl.name"
                   :aria-label="formControl.label ? formControl.label : groupLabel"
                   type="number"
                   :number="true"
@@ -11,43 +11,37 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
-    import {BFormInput} from "bootstrap-vue";
+import {computed, defineComponent, PropType} from "vue";
+    import {BFormInput} from "bootstrap-vue-next";
     import {NumberControl} from "./types";
 
-    interface Props {
-        formControl: NumberControl
-        groupLabel: string
-    }
-
-    interface Computed {
-        value: number | null | undefined
-    }
-
-    export default Vue.extend<{}, {}, Computed, Props>({
+    export default defineComponent({
         name: "DynamicFormNumberInput",
-        model: {
-            prop: "formControl",
-            event: "change"
-        },
-        props: {
-            formControl: {
-                type: Object
-            },
-            groupLabel: String
-        },
-        computed: {
-            value: {
-                get() {
-                    return this.formControl.value;
-                },
-                set(newVal: number) {
-                    this.$emit("change", {...this.formControl, value: newVal});
-                }
-            },
-        },
         components: {
             BFormInput
+        },
+        props: {
+            formControl: Object as PropType<NumberControl>,
+            groupLabel: String
+        },
+        emits: ["update:formControl"],
+        setup(props, {emit}) {
+
+            const value = computed<number | null>({
+                get() {
+                    return props.formControl?.value || null;
+                },
+                set(newVal: number | null) {
+                    emit("update:formControl", {
+                        ...props.formControl,
+                        value: newVal,
+                    });
+                },
+            });
+
+            return {
+                value
+            }
         }
     })
 </script>

@@ -1,6 +1,6 @@
 import {shallowMount, mount} from "@vue/test-utils";
 import {SelectControl} from "../src/types";
-import TreeSelect from "@riophae/vue-treeselect";
+import TreeSelect from "vue3-treeselect";
 import DynamicFormMultiSelect from "../src/DynamicFormMultiSelect.vue";
 
 describe('Dynamic form multi-select component', function () {
@@ -13,15 +13,20 @@ describe('Dynamic form multi-select component', function () {
     };
 
     it("renders treeselect with no value", () => {
-        const rendered = shallowMount(DynamicFormMultiSelect, {
-            propsData: {
+        const rendered = mount(DynamicFormMultiSelect, {
+            props: {
                 formControl: fakeSelect,
                 selectText: "Select..."
+            },
+            global: {
+                components: {
+                    TreeSelect
+                }
             }
         });
 
-        const treeSelect = rendered.find(TreeSelect);
-        expect(treeSelect.props("value")).toStrictEqual([]);
+        const treeSelect = rendered.findComponent(TreeSelect);
+        expect(treeSelect.props("modelValue")).toStrictEqual([]);
         expect(treeSelect.props("options")).toStrictEqual(fakeSelect.options);
         expect(treeSelect.props("multiple")).toBe(true);
         expect(treeSelect.props("clearable")).toBe(false);
@@ -29,33 +34,33 @@ describe('Dynamic form multi-select component', function () {
     });
 
     it("renders treeselect with starting array value", () => {
-        const rendered = shallowMount(DynamicFormMultiSelect, {
-            propsData: {
+        const rendered = mount(DynamicFormMultiSelect, {
+            props: {
                 formControl: {...fakeSelect, value: ["opt2"]}
             }
         });
 
-        const treeSelect = rendered.find(TreeSelect);
-        expect(treeSelect.props("value")).toStrictEqual(["opt2"]);
+        const treeSelect = rendered.findComponent(TreeSelect);
+        expect(treeSelect.props("modelValue")).toStrictEqual(["opt2"]);
         expect(treeSelect.props("options")).toStrictEqual(fakeSelect.options);
     });
 
     it("renders treeselect with string starting value", () => {
-        const rendered = shallowMount(DynamicFormMultiSelect, {
-            propsData: {
+        const rendered = mount(DynamicFormMultiSelect, {
+            props: {
                 formControl: {...fakeSelect, value: "opt2"}
             }
         });
 
-        const treeSelect = rendered.find(TreeSelect);
-        expect(treeSelect.props("value")).toStrictEqual(["opt2"]);
+        const treeSelect = rendered.findComponent(TreeSelect);
+        expect(treeSelect.props("modelValue")).toStrictEqual(["opt2"]);
         expect(treeSelect.props("options")).toStrictEqual(fakeSelect.options);
     });
 
 
     it("initialises hidden input with value", () => {
         const rendered = shallowMount(DynamicFormMultiSelect, {
-            propsData: {
+            props: {
                 formControl: {...fakeSelect, value: ["opt2"]}
             }
         });
@@ -65,7 +70,7 @@ describe('Dynamic form multi-select component', function () {
 
     it("renders aria-label as groupLabel if no label given", () => {
         const rendered = mount(DynamicFormMultiSelect, {
-            propsData: {
+            props: {
                 formControl: fakeSelect,
                 groupLabel: "groupLabel"
             }
@@ -75,7 +80,7 @@ describe('Dynamic form multi-select component', function () {
 
     it("renders aria-label as control label if label given", () => {
         const rendered = mount(DynamicFormMultiSelect, {
-            propsData: {
+            props: {
                 formControl: {...fakeSelect, label: "controlLabel"},
                 groupLabel: "groupLabel"
             }

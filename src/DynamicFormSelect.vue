@@ -1,5 +1,5 @@
 <template>
-    <select class="form-control"
+    <select v-if="formControl" class="form-control"
             :aria-label="formControl.label ? formControl.label : groupLabel"
             v-model="value"
             :name="formControl.name"
@@ -14,49 +14,38 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
-    import {BFormSelect} from "bootstrap-vue";
+    import {computed, defineComponent, onMounted, PropType} from "vue";
+    import {BFormSelect} from "bootstrap-vue-next";
     import {SelectControl} from "./types";
 
-    interface Props {
-        formControl: SelectControl
-        selectText?: string
-        groupLabel: string
-    }
-
-    interface Computed {
-        value: string
-    }
-
-    export default Vue.extend<{}, {}, Computed, Props>({
+    export default defineComponent({
         name: "DynamicFormSelect",
-        props: {
-            formControl: {
-                type: Object
-            },
-            selectText: String,
-            groupLabel: String
-        },
-        model: {
-            prop: "formControl",
-            event: "change"
-        },
-        computed: {
-            value: {
-                get() {
-                    return this.formControl.value || ""
-                },
-                set(newVal: string) {
-                    this.$emit("change", {...this.formControl, value: newVal});
-                }
-            }
-        },
         components: {
             BFormSelect
         },
-        mounted() {
-            if (this.formControl.excludeNullOption && !this.formControl.value) {
-                this.value = this.formControl.options[0].id;
+        props: {
+            formControl: Object as PropType<SelectControl>,
+            selectText: String,
+            groupLabel: String
+        },
+        emits: ["update:formControl"],
+        setup(props, {emit}) {
+            onMounted(() => {
+                if (props.formControl?.excludeNullOption && !props.formControl.value) {
+                    value.value = props.formControl.options[0].id;
+                }
+            })
+            const value = computed({
+                get() {
+                    return props.formControl?.value || "";
+                },
+                set(newVal: string) {
+                    emit("update:formControl", {...props.formControl, value: newVal});
+                }
+            })
+
+            return {
+                value
             }
         }
     })
