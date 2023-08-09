@@ -1,8 +1,10 @@
 <template>
     <b-row v-if="controlGroup" class="my-2">
         <label class="col-form-label col-md-5">{{ controlGroup.label }}
-            <span v-if="helpText" class="icon-small" v-tooltip="helpText">
-                <vue-feather type="help-circle" class="align-text-bottom me-1"></vue-feather>
+            <span v-if="helpText" class="icon-small">
+                <vue-feather type="help-circle"
+                             v-tooltip="helpText"
+                             class="align-text-bottom me-1"></vue-feather>
                 </span>
             <span v-if="required && !readonly" class="small"
                   :class="{'text-danger': anyValueEmpty(controlGroup)}">({{ requiredText }})</span>

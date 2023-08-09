@@ -2,9 +2,10 @@
     <b-col :md="colWidth">
         <label v-if="formControl.label">{{formControl.label}}
             <span v-if="formControl.helpText"
-                  class="icon-small"
-                  v-tooltip="formControl.helpText">
-               <vue-feather type="help-circle" class="align-text-bottom me-1"></vue-feather>
+                  class="icon-small">
+               <vue-feather type="help-circle"
+                            v-tooltip="formControl.helpText"
+                            class="align-text-bottom me-1"></vue-feather>
             </span>
             <span v-if="formControl.required && !readonly" class="small" :class="{'text-danger': valueIsEmpty(formControl.value)}">({{requiredText}})</span>
         </label>

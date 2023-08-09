@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-import {computed, defineComponent, onMounted, PropType, watch} from "vue";
+    import {computed, defineComponent, onMounted, PropType, watch} from "vue";
     import {BForm} from "bootstrap-vue-next";
     import jsonata from "jsonata";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
@@ -32,6 +32,7 @@ import {computed, defineComponent, onMounted, PropType, watch} from "vue";
         DynamicFormData,
         DynamicFormMeta
     } from "./types";
+    import { install } from "floating-vue";
 
     const props = {
         id: {
@@ -74,6 +75,26 @@ import {computed, defineComponent, onMounted, PropType, watch} from "vue";
         emits: ["validate", "update:formMeta", "submit", "confirm"],
 
         setup(props, {emit}) {
+            const options = {
+                // Set float distance so that the arrow does not overlap
+                // the tooltip icon. This was causing multiple mouse
+                // events to be triggered causing the tooltip to flicker
+                distance: 12,
+                themes: {
+                    'tooltip': {
+                        html: true,
+                        delay: {
+                            show: 0,
+                            hide: 0,
+                        },
+                    },
+                }
+            };
+            const dummyApp = {
+                directive: function (name: string, component: any) {},
+                component: function (name: string, component: any) {}
+            };
+            install(dummyApp, options);
 
             onMounted(() =>  emit("validate", !disabled.value))
 
