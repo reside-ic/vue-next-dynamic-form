@@ -90,6 +90,13 @@
                     },
                 }
             };
+            // we hijack the install function and give it a dummy app
+            // so it doesn't error when it executes app.directive or
+            // app.component but we want it to deep assign the options
+            // to floating vue's internal config object
+
+            // This is a way to configure global options of a directive
+            // in a component, i.e. local version of app.use(plugin, options)
             const dummyApp = {
                 directive: function (name: string, component: any) {},
                 component: function (name: string, component: any) {}
