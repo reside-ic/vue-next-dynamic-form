@@ -3,7 +3,7 @@
         <h3 @click="toggleSection" :class="{'cursor-pointer': controlSection.collapsible}">
             {{controlSection.label}}
             <vue-feather v-if="controlSection.collapsible"
-                         style="vertical-align: initial"
+                         style="vertical-align: middle"
                          :type="chevronComponent">
             </vue-feather>
         </h3>
@@ -20,9 +20,9 @@
             <b-row v-if="controlSection.documentation" class="documentation mb-4">
                 <b-col>
                     <a href="#" @click="toggleDocumentation">
-                        <vue-feather type="info"></vue-feather>
+                        <vue-feather type="info" class="align-text-bottom" size="20"></vue-feather>
                         How to use these settings
-                        <vue-feather style="vertical-align:top"
+                        <vue-feather class="align-middle"
                                      :type="documentationChevronComponent">
                         </vue-feather>
                     </a>
