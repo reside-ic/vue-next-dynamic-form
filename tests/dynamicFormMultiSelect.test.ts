@@ -1,6 +1,6 @@
 import {shallowMount, mount} from "@vue/test-utils";
 import {SelectControl} from "../src/types";
-import TreeSelect from "vue3-treeselect";
+import TreeSelect from "@reside-ic/vue3-treeselect";
 import DynamicFormMultiSelect from "../src/DynamicFormMultiSelect.vue";
 
 describe('Dynamic form multi-select component', function () {

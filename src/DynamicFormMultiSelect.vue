@@ -13,7 +13,7 @@
 <script lang="ts">
 import {computed, defineComponent, PropType} from "vue";
     import {MultiSelectControl} from "./types";
-    import TreeSelect from "vue3-treeselect";
+    import TreeSelect from "@reside-ic/vue3-treeselect";
 
     export default defineComponent({
         name: "DynamicFormMultiSelect",
