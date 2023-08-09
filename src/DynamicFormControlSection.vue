@@ -3,7 +3,7 @@
         <h3 @click="toggleSection" :class="{'cursor-pointer': controlSection.collapsible}">
             {{controlSection.label}}
             <vue-feather v-if="controlSection.collapsible"
-                         style="vertical-align: middle"
+                         class="align-middle"
                          :type="chevronComponent">
             </vue-feather>
         </h3>
