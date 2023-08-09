@@ -47,7 +47,7 @@
             tooltip: VTooltip
         },
         emits: ["change", "confirm"],
-        setup(props, {emit}){
+        setup(props, { emit }){
 
             const {valueIsEmpty} = useForm();
 
