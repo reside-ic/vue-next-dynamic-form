@@ -75,34 +75,6 @@
         emits: ["validate", "update:formMeta", "submit", "confirm"],
 
         setup(props, {emit}) {
-            const options = {
-                // Set float distance so that the arrow does not overlap
-                // the tooltip icon. This was causing multiple mouse
-                // events to be triggered causing the tooltip to flicker
-                distance: 12,
-                themes: {
-                    'tooltip': {
-                        html: true,
-                        delay: {
-                            show: 0,
-                            hide: 0,
-                        },
-                    },
-                }
-            };
-            // we hijack the install function and give it a dummy app
-            // so it doesn't error when it executes app.directive or
-            // app.component but we want it to deep assign the options
-            // to floating vue's internal config object
-
-            // This is a way to configure global options of a directive
-            // in a component, i.e. local version of app.use(plugin, options)
-            const dummyApp = {
-                directive: function (name: string, component: any) {},
-                component: function (name: string, component: any) {}
-            };
-            install(dummyApp, options);
-
             onMounted(() =>  emit("validate", !disabled.value))
 
             const controlSections = computed(() => props.formMeta?.controlSections || []);
