@@ -74,6 +74,7 @@ import {computed, defineComponent, onMounted, PropType, watch} from "vue";
         emits: ["validate", "update:formMeta", "submit", "confirm"],
 
         setup(props, {emit}) {
+
             onMounted(() =>  emit("validate", !disabled.value))
 
             const controlSections = computed(() => props.formMeta?.controlSections || []);
