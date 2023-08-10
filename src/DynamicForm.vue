@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-    import {computed, defineComponent, onMounted, PropType, watch} from "vue";
+import {computed, defineComponent, onMounted, PropType, watch} from "vue";
     import {BForm} from "bootstrap-vue-next";
     import jsonata from "jsonata";
     import DynamicFormControlGroup from "./DynamicFormControlGroup.vue";
@@ -32,7 +32,6 @@
         DynamicFormData,
         DynamicFormMeta
     } from "./types";
-    import { install } from "floating-vue";
 
     const props = {
         id: {
