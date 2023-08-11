@@ -4,6 +4,7 @@ import DynamicFormControlGroup from "../src/DynamicFormControlGroup.vue";
 import DynamicFormControl from "../src/DynamicFormControl.vue";
 import {VTooltip} from "floating-vue";
 import {DynamicControlGroup, NumberControl, SelectControl} from "../src/types";
+import VueFeather from "vue-feather";
 
 const tooltipSpy = jest.spyOn(VTooltip, "beforeMount");
 
@@ -107,7 +108,7 @@ describe('Dynamic form control group component', function () {
             }
         });
 
-        expect(rendered.find("label").find("span").classes()).toContain("v-popper--has-tooltip");
+        expect(rendered.findComponent(VueFeather).classes()).toContain("v-popper--has-tooltip");
         expect(tooltipSpy).toHaveBeenCalled();
         expect((tooltipSpy.mock.calls[0][1] as any).value).toBe("Some help text")
     });

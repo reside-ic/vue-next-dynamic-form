@@ -1,3 +1,4 @@
+import VueFeather from 'vue-feather';
 import {mount, shallowMount} from "@vue/test-utils";
 import DynamicFormControl from "../src/DynamicFormControl.vue";
 import DynamicFormNumberInput from "../src/DynamicFormNumberInput.vue";
@@ -6,7 +7,7 @@ import DynamicFormMultiSelect from "../src/DynamicFormMultiSelect.vue";
 import {VTooltip} from 'floating-vue';
 import {NumberControl, SelectControl} from "../src/types";
 import DynamicFormReadonlyValue from "../src/DynamicFormReadonlyValue.vue";
-import TreeSelect from "vue3-treeselect";
+import TreeSelect from "@reside-ic/vue3-treeselect";
 
 const tooltipSpy = jest.spyOn(VTooltip, "beforeMount");
 
@@ -58,7 +59,7 @@ describe('Dynamic form control component', function () {
         const rendered = getWrapper({...fakeNumber, helpText: "Some help text"});
         expect(rendered.find("label").text()).toBe("Number label");
 
-        expect(rendered.find("label").find("span").classes()).toContain("v-popper--has-tooltip");
+        expect(rendered.findComponent(VueFeather).classes()).toContain("v-popper--has-tooltip");
         expect(tooltipSpy).toHaveBeenCalled();
         expect((tooltipSpy.mock.calls[0][1] as any).value).toBe("Some help text")
     });

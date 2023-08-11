@@ -29,6 +29,7 @@
   "homepage": "https://github.com/reside-ic/vue-next-dynamic-form#readme",
   "dependencies": {
     "@popperjs/core": "^2.11.7",
+    "@reside-ic/vue3-treeselect": "^1.0.18",
     "html-webpack-plugin": "^5.5.1"
   },
   "devDependencies": {
@@ -59,7 +60,6 @@
     "vue-feather": "^2.0.0",
     "vue-loader": "^17.0.0",
     "vue3-jest": "^27.0.0-alpha.1",
-    "vue3-treeselect": "^0.1.10",
     "webpack": "^5.79.0",
     "webpack-cli": "^5.0.1",
     "webpack-merge": "^5.8.0"
