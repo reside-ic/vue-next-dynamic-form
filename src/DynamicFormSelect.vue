@@ -1,6 +1,5 @@
 <template>
     <tree-select v-if="formControl"
-                 class="form-control"
                  :aria-label="formControl.label ? formControl.label : groupLabel"
                  v-model="value"
                  :multiple="false"
