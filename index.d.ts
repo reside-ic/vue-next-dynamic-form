@@ -1,7 +1,7 @@
+import { default as DynamicFormComp } from "./src/DynamicForm.vue";
+
 declare module "@reside-ic/vue-next-dynamic-form" {
 }
-
-import Vue from "vue";
 
 export type DynamicControlSection = {
     label: string
@@ -60,14 +60,7 @@ type Dict<V> = { [k: string]: V }
 
 export type DynamicFormData = Dict<string | string[] | number | null>
 
-export declare class DynamicForm extends Vue {
-    formMeta: DynamicFormMeta;
-    includeSubmitButton?: boolean;
-    submitText?: string;
-    id?: string;
-    requiredText?: string;
-    selectText?: string;
-}
+export declare const DynamicForm: typeof DynamicFormComp
 
 export declare function isControl(object: any): Boolean
 

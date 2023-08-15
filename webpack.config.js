@@ -44,7 +44,7 @@ const config = {
 
 const mainConfig = {
     externals: {
-        vue: 'Vue'
+        vue: 'vue'
     },
     entry: path.resolve(__dirname, 'src/index.ts'),
     output: {
@@ -59,7 +59,7 @@ const mainConfig = {
 
 const pluginConfig = {
     externals: {
-        vue: 'Vue'
+        vue: 'vue'
     },
     entry: path.resolve(__dirname, 'src/plugin.js'),
     output: {

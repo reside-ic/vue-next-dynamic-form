@@ -64,6 +64,9 @@ describe('Dynamic form control group component', function () {
         const rendered = mount(DynamicFormControlGroup, {
             props: {
                 controlGroup: fakeFormGroup
+            },
+            global: {
+                stubs: ["dynamic-form-control"]
             }
         });
 
@@ -138,6 +141,9 @@ describe('Dynamic form control group component', function () {
         const wrapper = mount(DynamicFormControlGroup, {
             props: {
                 controlGroup: controlGroup
+            },
+            global: {
+                stubs: ["dynamic-form-control"]
             }
         });
 
@@ -155,6 +161,9 @@ describe('Dynamic form control group component', function () {
         const rendered = mount(DynamicFormControlGroup, {
             props: {
                 controlGroup: fakeFormGroup
+            },
+            global: {
+                stubs: ["dynamic-form-control"]
             }
         });
 
@@ -178,6 +187,9 @@ describe('Dynamic form control group component', function () {
         const rendered = mount(DynamicFormControlGroup, {
             props: {
                 controlGroup: controlGroup
+            },
+            global: {
+                stubs: ["dynamic-form-control"]
             }
         });
 
@@ -190,6 +202,9 @@ describe('Dynamic form control group component', function () {
         const rendered = mount(DynamicFormControlGroup, {
             props: {
                 controlGroup: controlGroup
+            },
+            global: {
+                stubs: ["dynamic-form-control"]
             }
         });
 
