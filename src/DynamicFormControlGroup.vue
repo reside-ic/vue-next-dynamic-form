@@ -4,7 +4,8 @@
             <span v-if="helpText" class="icon-small">
                 <vue-feather type="help-circle"
                              v-tooltip="helpText"
-                             class="align-text-bottom me-1"></vue-feather>
+                             class="align-text-bottom"
+                             style="margin-right: 4px;"></vue-feather>
                 </span>
             <span v-if="required && !readonly" class="small"
                   :class="{'text-danger': anyValueEmpty(controlGroup)}">({{ requiredText }})</span>
