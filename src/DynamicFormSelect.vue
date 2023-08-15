@@ -1,11 +1,12 @@
 <template>
-    <tree-select v-if="formControl"
-                 :aria-label="formControl.label ? formControl.label : groupLabel"
-                 v-model="value"
-                 :multiple="false"
-                 :clearable="false"
-                 :options="formOptions">
-    </tree-select>
+    <div v-if="formControl">
+        <tree-select :aria-label="formControl.label ? formControl.label : groupLabel"
+                     v-model="value"
+                     :multiple="false"
+                     :clearable="false"
+                     :options="formOptions">
+        </tree-select>
+    </div>
 </template>
 
 <script lang="ts">
