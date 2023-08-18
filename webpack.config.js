@@ -59,7 +59,7 @@ const mainConfig = {
 
 const pluginConfig = {
     externals: {
-        vue: 'vue'
+        vue: 'Vue'
     },
     entry: path.resolve(__dirname, 'src/plugin.js'),
     output: {

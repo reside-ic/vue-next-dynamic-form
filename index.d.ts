@@ -62,6 +62,15 @@ export type DynamicFormData = Dict<string | string[] | number | null>
 
 export declare const DynamicForm: typeof DynamicFormComp
 
+/*export declare class DynamicForm extends Vue {
+    formMeta: DynamicFormMeta;
+    includeSubmitButton?: boolean;
+    submitText?: string;
+    id?: string;
+    requiredText?: string;
+    selectText?: string;
+}*/
+
 export declare function isControl(object: any): Boolean
 
 export declare function isNumberControl(object: any): object is NumberControl
