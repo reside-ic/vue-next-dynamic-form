@@ -26,6 +26,9 @@
     </div>
 </div>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    var vue = Vue;
+</script>
 <script src="../dist/js/vue-next-dynamic-form.min.js"></script>
 <script>
     const {createApp} = Vue;
@@ -82,7 +85,7 @@
                                 name: "art_t2",
                                 label: "Time 2",
                                 type: "select",
-                                excludeNullOption: true,
+                                excludeNullOption: false,
                                 helpText: "Quarter matching midpoint of survey",
                                 options: [{id: "q1", label: "Jan - Mar 2015"}, {id: "q2", label: "Apr - Jun 2015"}],
                                 required: false
