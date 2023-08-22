@@ -79,6 +79,28 @@ describe('Dynamic form select component', function () {
         expect(rendered.emitted("update:formControl")![0][0]).toEqual({...formControl, value: "opt1"});
     });
 
+    it("is required if formControl.required is true", () => {
+        const rendered = mount(DynamicFormSelect, {
+            props: {
+                formControl: {...fakeSelect, required: true}
+            }
+        });
+
+        const select = rendered.findComponent(TreeSelect);
+        expect(select.props("required")).toBe(true);
+    });
+
+    it("is not required if formControl.required is false", () => {
+        const rendered = mount(DynamicFormSelect, {
+            props: {
+                formControl: {...fakeSelect, required: false}
+            }
+        });
+
+        const select = rendered.findComponent(TreeSelect);
+        expect(select.props("required")).toBe(false);
+    });
+
     it("renders aria-label as groupLabel if no label given", () => {
         const rendered = mount(DynamicFormSelect, {
             props: {

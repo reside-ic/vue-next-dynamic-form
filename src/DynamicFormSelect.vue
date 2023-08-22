@@ -4,7 +4,8 @@
                      v-model="value"
                      :multiple="false"
                      :clearable="false"
-                     :options="formOptions">
+                     :options="formOptions"
+                     :required="formControl.required">
         </tree-select>
     </div>
 </template>
