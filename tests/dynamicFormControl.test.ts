@@ -122,7 +122,7 @@ describe('Dynamic form control component', function () {
         expect(rendered.findComponent(DynamicFormSelect).props("selectText")).toBe("Select");
         expect(rendered.findComponent(DynamicFormSelect).props("groupLabel")).toBe("test");
 
-        rendered.find("select").trigger("change");
+        rendered.findComponent(TreeSelect).vm.$emit("update:modelValue", "");
         expect(rendered.emitted("change")![0][0]).toStrictEqual({...fakeSelect, value: ""});
     });
 

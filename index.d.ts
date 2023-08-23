@@ -1,4 +1,4 @@
-import DynamicFormComp from "./src/DynamicForm.vue";
+import { default as DynamicFormComp } from "./src/DynamicForm.vue";
 
 declare module "@reside-ic/vue-next-dynamic-form" {
 }
