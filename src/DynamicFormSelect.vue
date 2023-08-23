@@ -1,27 +1,24 @@
 <template>
-    <select v-if="formControl" class="form-control"
-            :aria-label="formControl.label ? formControl.label : groupLabel"
-            v-model="value"
-            :name="formControl.name"
-            :required="formControl.required">
-        <option v-if="!formControl.excludeNullOption" value>{{selectText}}</option>
-        <option v-for="opt in formControl.options"
-                :key="opt.id"
-                :value="opt.id">
-            {{opt.label}}
-        </option>
-    </select>
+    <div v-if="formControl">
+        <tree-select :aria-label="formControl.label ? formControl.label : groupLabel"
+                     v-model="value"
+                     :multiple="false"
+                     :clearable="false"
+                     :options="formOptions"
+                     :required="formControl.required">
+        </tree-select>
+    </div>
 </template>
 
 <script lang="ts">
     import {computed, defineComponent, onMounted, PropType} from "vue";
-    import {BFormSelect} from "bootstrap-vue-next";
     import {SelectControl} from "./types";
+    import TreeSelect from "@reside-ic/vue3-treeselect";
 
     export default defineComponent({
         name: "DynamicFormSelect",
         components: {
-            BFormSelect
+            TreeSelect
         },
         props: {
             formControl: Object as PropType<SelectControl>,
@@ -44,8 +41,21 @@
                 }
             })
 
+            const formOptions = computed(() => {
+                if (props.formControl) {
+                    if (!props.formControl.excludeNullOption) {
+                        const selectOption = {id: "", label: props.selectText}
+                        return [selectOption, ...props.formControl.options];
+                    } else {
+                        return props.formControl.options
+                    }
+                }
+                return [];
+            })
+
             return {
-                value
+                value,
+                formOptions
             }
         }
     })
