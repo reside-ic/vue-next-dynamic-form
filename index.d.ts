@@ -77,3 +77,5 @@ export declare function isDynamicControlGroup(object: any): object is DynamicCon
 export declare function isDynamicControlSection(object: any): object is DynamicControlSection
 
 export declare function isDynamicFormMeta(object: any): object is DynamicFormMeta
+
+export declare function checkOptionsValid(object: any): object is DynamicFormMeta

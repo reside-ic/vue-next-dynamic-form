@@ -17,6 +17,8 @@ import {
     isSelectOption
 } from "./dynamicFormChecker";
 
+import {checkOptionsValid} from "./utils";
+
 export {
     DynamicFormNumberInput,
     DynamicFormSelect,
@@ -32,5 +34,6 @@ export {
     isDynamicControlSection,
     isDynamicControlGroup,
     isControl,
-    isSelectOption
+    isSelectOption,
+    checkOptionsValid
 }
