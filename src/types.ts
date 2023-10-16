@@ -22,6 +22,7 @@ export type Option = {
 
 export type DynamicControlType = "multiselect" | "select" | "number"
 export type Control = SelectControl | MultiSelectControl | NumberControl
+export type ControlWithOptions = SelectControl | MultiSelectControl
 
 export type DynamicControl = {
     name: string,
